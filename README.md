@@ -1,7 +1,7 @@
 # BookExchanger
 
 
-<img src="./assets/bookExchanger.gif" alt=bookexchanger.gif width=80% >
+<img src="./assets/bookExchanger.gif" alt=bookexchanger.gif width=70% >
 
 
 
