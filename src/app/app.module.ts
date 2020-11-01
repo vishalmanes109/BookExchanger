@@ -9,6 +9,8 @@ import { NavbarComponent } from './core/navbar/navbar.component';
 import { AboutComponent } from './core/about/about.component';
 import { ContactComponent } from './core/contact/contact.component';
 import { ProfileComponent } from './users/profile/profile.component';
+import { UpdateprofileComponent } from './users/updateprofile/updateprofile.component';
+import { CreatepostComponent } from './post/createpost/createpost.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ProfileComponent } from './users/profile/profile.component';
     NavbarComponent,
     AboutComponent,
     ContactComponent,
-    ProfileComponent
+    ProfileComponent,
+    UpdateprofileComponent,
+    CreatepostComponent
   ],
   imports: [
     BrowserModule,
