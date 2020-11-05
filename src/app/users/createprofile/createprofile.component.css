@@ -1,0 +1,16 @@
+.custom-step{
+
+    width: 50%;
+    margin: auto;
+}
+.customfield{
+    width: 50%;
+    margin: auto;
+}
+
+@media screen and (max-width: 1000px) {
+  .customfield {
+    width: 80%;
+    margin: auto;
+  }
+}

@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './core/about/about.component';
 import { ContactComponent } from './core/contact/contact.component';
 import { CreatepostComponent } from './post/createpost/createpost.component';
+import { UpdatepostComponent } from './post/updatepost/updatepost.component';
+import { MyfeedComponent } from './postlist/myfeed/myfeed.component';
+import { CreateprofileComponent } from './users/createprofile/createprofile.component';
 import { LoginComponent } from './users/login/login.component';
 import { ProfileComponent } from './users/profile/profile.component';
 import { RegisterComponent } from './users/register/register.component';
@@ -17,6 +20,9 @@ const routes: Routes = [
   {path:'about',component:AboutComponent},
   {path:'updateprofile',component:UpdateprofileComponent},
   {path:'createpost',component:CreatepostComponent},
+  {path:'createprofile',component:CreateprofileComponent},
+  {path:'updatepost',component:UpdatepostComponent},
+  {path:'myfeed',component:MyfeedComponent},
   {path:'',component:RegisterComponent}
 ];
 

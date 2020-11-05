@@ -11,6 +11,9 @@ import { ContactComponent } from './core/contact/contact.component';
 import { ProfileComponent } from './users/profile/profile.component';
 import { UpdateprofileComponent } from './users/updateprofile/updateprofile.component';
 import { CreatepostComponent } from './post/createpost/createpost.component';
+import { UpdatepostComponent } from './post/updatepost/updatepost.component';
+import { MyfeedComponent } from './postlist/myfeed/myfeed.component';
+import { CreateprofileComponent } from './users/createprofile/createprofile.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { CreatepostComponent } from './post/createpost/createpost.component';
     ContactComponent,
     ProfileComponent,
     UpdateprofileComponent,
-    CreatepostComponent
+    CreatepostComponent,
+    UpdatepostComponent,
+    MyfeedComponent,
+    CreateprofileComponent
   ],
   imports: [
     BrowserModule,
