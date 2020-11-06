@@ -14,6 +14,10 @@ import { CreatepostComponent } from './post/createpost/createpost.component';
 import { UpdatepostComponent } from './post/updatepost/updatepost.component';
 import { MyfeedComponent } from './postlist/myfeed/myfeed.component';
 import { CreateprofileComponent } from './users/createprofile/createprofile.component';
+import { PagenotfoundComponent } from './core/pagenotfound/pagenotfound.component';
+import { FooterComponent } from './core/footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -28,13 +32,17 @@ import { CreateprofileComponent } from './users/createprofile/createprofile.comp
     CreatepostComponent,
     UpdatepostComponent,
     MyfeedComponent,
-    CreateprofileComponent
+    CreateprofileComponent,
+    PagenotfoundComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

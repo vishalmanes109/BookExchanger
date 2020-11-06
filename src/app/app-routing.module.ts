@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './core/about/about.component';
 import { ContactComponent } from './core/contact/contact.component';
+import { PagenotfoundComponent } from './core/pagenotfound/pagenotfound.component';
 import { CreatepostComponent } from './post/createpost/createpost.component';
 import { UpdatepostComponent } from './post/updatepost/updatepost.component';
 import { MyfeedComponent } from './postlist/myfeed/myfeed.component';
@@ -23,7 +24,9 @@ const routes: Routes = [
   {path:'createprofile',component:CreateprofileComponent},
   {path:'updatepost',component:UpdatepostComponent},
   {path:'myfeed',component:MyfeedComponent},
-  {path:'',component:RegisterComponent}
+  {path:'404',component:PagenotfoundComponent},
+  {path:'',component:RegisterComponent},
+  {path:'**',redirectTo:'/404'},
 ];
 
 @NgModule({

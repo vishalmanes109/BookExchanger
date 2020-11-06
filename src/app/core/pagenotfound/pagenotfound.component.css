@@ -1,0 +1,9 @@
+.pagenotfound{
+    background-image: url('../../../assets/404.gif');
+    background-position: center;
+    height: 100vh;
+    background-size: contain;
+}
+.customcontainer{
+padding-top: 2%;
+}
