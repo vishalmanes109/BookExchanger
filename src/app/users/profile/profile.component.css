@@ -1,4 +1,8 @@
 .segment{
 width: 90%;
 margin: auto;
+padding:1em;
+}
+.card{
+    width: 70%;
 }
