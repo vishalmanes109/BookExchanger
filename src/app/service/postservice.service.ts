@@ -13,3 +13,4 @@ export class PostserviceService {
     return this.http.get<Post[]>(this.url);
   
 }
+}

@@ -1,18 +1,11 @@
-.custom-step{
-
-    width: 50%;
-    margin: auto;
-    padding-top: 5%;
-
-}
 
 .custom{
 
-    width: 90%;
+    width: 80%;
     margin: auto;
     padding-top: 5%;
-
 }
+
 .main{
 width: 100%;
 margin: auto;
@@ -21,6 +14,8 @@ margin: auto;
   text-align: center;
   text-decoration: none;
   color: black;
+  width: 80%;
+  margin: auto;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
