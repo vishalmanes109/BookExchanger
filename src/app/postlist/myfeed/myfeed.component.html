@@ -1,76 +1,97 @@
 <app-navbar></app-navbar>
-<div class="ui container segments">
-    <div class="ui grid container">
-        <div class="eight wide column">
-            <div class="ui fluid  category search ">
-                <div class="ui icon input">
-                    <input class="prompt" type="text" placeholder="Search post by book name...">
-                    <i class="search icon"></i>
-                </div>
-                <div class="results"></div>
+<br>
+<div class="ui container">
+  <div class="ui container segments">
+    <div class="ui stackable grid container">
+      <div class="eight wide column">
+        <i [routerLink]="['/createpost']" routerLinkActive="router-link-active">
+          <div class="ui fluid category search">
+            <div class="ui icon input post">
+              <input class="" type="text" placeholder="Create Post" />
+              <i class="edit outline icon"></i>
             </div>
-        </div>
-        <div class="eight wide column">
-            <div class="ui  right aligned  category search ">
-                <div class="ui icon input">
-                    <input class="prompt" type="text" placeholder="Search Your post by book name...">
-                    <i class="search icon"></i>
-                </div>
-                <div class="results"></div>
-            </div>
-        </div>
-    </div>
-    
+            <div class="results"></div>
+          </div>
+        </i>
+      </div>
 
-    
-    
+      <div class="eight wide column ">
+        <div class="ui right aligned category search ">
+          <div class="ui icon input post ">
+            <input
+              class="prompt"
+              type="text"
+              placeholder="Search post by book name..."
+            />
+            <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="ui grid container">
-    <div class="twelve wide column">
-        <div class="ui segments container">
-            <p>Title</p>
-            
-            <div class="ui red segment">
-                <p>Middle</p>
-            </div>
-            <div class="ui blue segment">
-                <p>Middle</p>
-            </div>
-            <div class="ui green segment">
-                <p>Middle</p>
-            </div>
-            <div class="ui yellow segment">
-                <p>Bottom</p>
-            </div>
-        </div>
-    </div>
-    <div class="four wide column">
-        <p>Trending Posts</p>
-        <div class="ui segments container">
-            <div class="ui segment">
-                <p>post1</p>
-            </div>
-            <div class="ui segment">
-                <p>post2</p>
-            </div>
-            <div class="ui segment">
-                <p>post3</p>
-            </div>
-        </div>
-        <p>New  Posts</p>
-        <div class="ui segments container">
-            
-            <div class="ui segment">
-                <p>post1</p>
-            </div>
-            <div class="ui segment">
-                <p>post2</p>
-            </div>
-            <div class="ui segment">
-                <p>post3</p>
-            </div>
-        </div>
-    </div>
+<br>
+<div class="ui container">
+  <div class="ui compact menu container">
+    <a class="item">
+      <i class="map marker alternate icon"></i>
+      Location
+    </a>
+    <a class="item">
+      <i class="paperclip icon"></i>
+      Your Post
+    </a>
+    <a class="item">
+      <i class="paper plane icon"></i>
+      New
+    </a>
+  </div>
 </div>
+<br />
+<div class="ui stackable grid container">
+  <div class="twelve wide column">
+    <div class="ui segments container">
+      <p>Title</p>
 
+      <div class="ui red segment">
+        <p>Middle</p>
+      </div>
+      <div class="ui blue segment">
+        <p>Middle</p>
+      </div>
+      <div class="ui green segment">
+        <p>Middle</p>
+      </div>
+      <div class="ui yellow segment">
+        <p>Bottom</p>
+      </div>
+    </div>
+  </div>
+  <div class="four wide column">
+    <p>Trending Posts</p>
+    <div class="ui segments container">
+      <div class="ui segment">
+        <p>post1</p>
+      </div>
+      <div class="ui segment">
+        <p>post2</p>
+      </div>
+      <div class="ui segment">
+        <p>post3</p>
+      </div>
+    </div>
+    <p>New Posts</p>
+    <div class="ui segments container">
+      <div class="ui segment">
+        <p>post1</p>
+      </div>
+      <div class="ui segment">
+        <p>post2</p>
+      </div>
+      <div class="ui segment">
+        <p>post3</p>
+      </div>
+    </div>
+  </div>
+</div>
