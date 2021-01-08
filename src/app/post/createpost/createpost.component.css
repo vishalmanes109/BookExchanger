@@ -1,0 +1,9 @@
+.note{
+ visibility: hidden;
+ color: red;
+}
+@media screen and (max-width: 765px) {
+  .note{
+      visibility: visible;
+  }
+}

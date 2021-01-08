@@ -10,3 +10,13 @@
     margin:20px;
     margin: auto;
 }
+.details{
+    margin: auto;
+    padding: 5px;
+    padding-left: 0px;
+    font-size: medium;
+}
+.label{
+    font-size: medium;
+    font-weight: 700;
+}
