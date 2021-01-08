@@ -7,6 +7,9 @@
     width: 50%;
     margin: auto;
 }
+.image{
+margin: 5px;
+}
 
 @media screen and (max-width: 1000px) {
   .customfield {
