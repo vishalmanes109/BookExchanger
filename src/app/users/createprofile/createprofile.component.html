@@ -45,15 +45,18 @@
           <div class="ui header centered">Basic Info</div>
           <hr />
 
-          <form class="ui form">
+          <form #f="ngForm" class="ui form">
             <div class="field">
               <label> Favourite Genre</label>
-                <select  class="ui dropdown">
-                  <option value="">Select Country</option>
-                  <option value="AF">Afghanistan</option>
-                  <option value="AX">Åland Islands</option>
-                  <option value="AL">Albania</option>
-                </select>
+              <ng-multiselect-dropdown
+                [placeholder]="'Select Genre'"
+                [settings]="dropdownSettings"
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems" name="selecteditems"
+                (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+              >
+              </ng-multiselect-dropdown>
 
               <input type="text" name="first-name" placeholder="First Name" />
             </div>
@@ -67,10 +70,14 @@
                 <label>I agree to the Terms and Conditions</label>
               </div>
             </div>
-            <button class="ui button" type="submit">Submit</button>
+            <button class="ui button" type="submit" onclick="Submit()">
+              Submit
+            </button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<br />
