@@ -24,6 +24,7 @@ const routes: Routes = [
   {path:'createprofile',component:CreateprofileComponent},
   {path:'updatepost',component:UpdatepostComponent},
   {path:'myfeed',component:MyfeedComponent},
+  {path:'updateprofile',component:UpdateprofileComponent},
   {path:'404',component:PagenotfoundComponent},
   {path:'',component:RegisterComponent},
   {path:'**',redirectTo:'/404'},

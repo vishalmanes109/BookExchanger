@@ -24,11 +24,12 @@
       </div>
     </div>
   </div>
-  <div class="ui raised segment container">
+  <br>
+  <div class="ui raised segment container ">
     <div class="ui container stackable internally celled grid">
       <div class="row">
         <div class="six wide column">
-          <p class="ui header teal centered">Create Profile</p>
+          <p class="ui header red centered">Your Avatar</p>
           <div class="ui card container">
             <div class="ui fluid centered image">
               <img src="../../../assets/avatar/22.svg" />
@@ -36,17 +37,19 @@
             <div class="content centered">
               <hr />
               <h3>Kristy</h3>
-              <Button class="ui button primary"> Change Avatar </Button>
+              <Button class="ui button primary"> Choose Avatar </Button>
             </div>
           </div>
           <div class="ui form customfield"></div>
         </div>
-        <div class="ten wide column">
-          <div class="ui header centered">Basic Info</div>
+        <div class="ten wide column ">
+          <div class="ui header red centered ">Basic Info</div>
           <hr />
-          <form #f="ngForm" class="ui form">
+          <br>
+
+          <form #f="ngForm" class="ui form ">
             <div class="field">
-              <label> Favourite Genre</label>
+              <h3 > Favourite Genre</h3>
               <ng-multiselect-dropdown
                 [placeholder]="'Select Genre'"
                 [settings]="dropdownSettings"
