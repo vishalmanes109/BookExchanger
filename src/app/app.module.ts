@@ -19,6 +19,7 @@ import { FooterComponent } from "./core/footer/footer.component";
 import { HttpClientModule } from "@angular/common/http";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FormsModule } from "@angular/forms";
+import { SuiModule } from "ng2-semantic-ui";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FormsModule } from "@angular/forms";
     AppRoutingModule,
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
+    SuiModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

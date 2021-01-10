@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { SuiModule } from "ng2-semantic-ui";
+
 
 @Component({
   selector: "app-createprofile",
@@ -10,36 +12,18 @@ export class CreateprofileComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
-
+  public eCheck;
+  public eCheckDisabled;
+  public eCheckReadonly;
   constructor() {
-    this.dropdownList = [
-      { item_id: 1, item_text: "Mumbai" },
-      { item_id: 2, item_text: "Bangaluru" },
-      { item_id: 3, item_text: "Pune" },
-      { item_id: 4, item_text: "Navsari" },
-      { item_id: 5, item_text: "New Delhi" },
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: "Pune" },
-      { item_id: 4, item_text: "Navsari" },
-    ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: "item_id",
-      textField: "item_text",
-      selectAllText: "Select All",
-      unSelectAllText: "UnSelect All",
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
   }
 
   ngOnInit(): void {
     this.dropdownList = [
-      { id: 3, text: "Barbecue" },
-      { id: 4, text: "Mustard" },
-      { id: 5, text: "Ketchup" },
-      { id: 6, text: "Mayonaise" },
+      { id: 1, text: "Fantasy" },
+      { id: 2, text: "Fiction" },
+      { id: 5, text: "Horror" },
+      { id: 6, text: "Self Help" },
     ];
     this.selectedItems = [
       { id: 1, text: "Fantasy" },
@@ -53,7 +37,7 @@ export class CreateprofileComponent implements OnInit {
       unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
       allowSearchFilter: true,
-      limitSelection: 2,
+      limitSelection: 3,
     };
   }
   onItemSelect(item: any) {
@@ -62,5 +46,15 @@ export class CreateprofileComponent implements OnInit {
   onSelectAll(items: any) {
     console.log(items);
   }
-
+  getLocation(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const longitude = position.coords.longitude;
+        const latitude = position.coords.latitude;
+        console.log(longitude + " :" + latitude);
+      });
+    } else {
+      console.log("No support for geolocation");
+    }
+  }
 }

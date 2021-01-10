@@ -44,7 +44,6 @@
         <div class="ten wide column">
           <div class="ui header centered">Basic Info</div>
           <hr />
-
           <form #f="ngForm" class="ui form">
             <div class="field">
               <label> Favourite Genre</label>
@@ -52,23 +51,44 @@
                 [placeholder]="'Select Genre'"
                 [settings]="dropdownSettings"
                 [data]="dropdownList"
-                [(ngModel)]="selectedItems" name="selecteditems"
+                [(ngModel)]="selectedItems"
+                name="selecteditems"
                 (onSelect)="onItemSelect($event)"
                 (onSelectAll)="onSelectAll($event)"
               >
               </ng-multiselect-dropdown>
-
-              <input type="text" name="first-name" placeholder="First Name" />
             </div>
             <div class="field">
-              <label>Last Name</label>
-              <input type="text" name="last-name" placeholder="Last Name" />
-            </div>
-            <div class="field">
-              <div class="ui checkbox">
-                <input type="checkbox" tabindex="0" class="hidden" />
-                <label>I agree to the Terms and Conditions</label>
+              <label class="ui container">
+                Provide Location: 
+                <div class="ui icon button" data-tooltip="Location required for users and books  recommendation">
+                <i class=" "> Read More</i>
               </div>
+              </label>
+              
+              <br>
+              
+              <div>
+                <input
+                  type="text"
+                  placeholder="Enter Name of your city/village/town"
+                />
+              </div>
+              <h3>OR</h3>
+              <button class="ui button primary" (click)="getLocation()">
+                Provide Location
+              </button>
+            </div>
+            
+            <div class="field">
+              <sui-checkbox
+                [(ngModel)]="eCheck"
+                [isDisabled]="eCheckDisabled"
+                [isReadonly]="eCheckReadonly"
+                name="checkbox"
+              >
+                I agree to the Terms and Conditions
+              </sui-checkbox>
             </div>
             <button class="ui button" type="submit" onclick="Submit()">
               Submit
