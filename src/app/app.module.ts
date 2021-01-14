@@ -21,6 +21,7 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FormsModule } from "@angular/forms";
 import { SuiModule } from "ng2-semantic-ui";
 
+import { AuthService } from "./service/auth.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,7 @@ import { SuiModule } from "ng2-semantic-ui";
     FormsModule,
     SuiModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

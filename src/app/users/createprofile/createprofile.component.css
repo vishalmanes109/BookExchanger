@@ -10,6 +10,13 @@
 .image{
 margin: 5px;
 }
+.uired{
+  color: #D31E49;
+}
+.uiprimary{
+  background:#0079d3;
+  color: whitesmoke;
+}
 
 @media screen and (max-width: 1000px) {
   .customfield {
