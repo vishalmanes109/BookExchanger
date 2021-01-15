@@ -38,12 +38,12 @@ export class RegisterComponent implements OnInit {
       (res) => {
         console.log(res);
         this.isDone = true;
-
+        localStorage.setItem('status','register')
         this.isError=false;
         console.log(res.success);
         setTimeout(() => {
           if (res.success == 1 && this.isDone) {
-            this.router.navigate(["login"]);
+            this.router.navigate(["createprofile"]);
           }
         }, 2000);
       },

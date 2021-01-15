@@ -22,6 +22,7 @@ import { FormsModule } from "@angular/forms";
 import { SuiModule } from "ng2-semantic-ui";
 
 import { AuthService } from "./service/auth.service";
+import { AuthGuard } from "./guard/auth.guard";
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,7 @@ import { AuthService } from "./service/auth.service";
     FormsModule,
     SuiModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService,AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
