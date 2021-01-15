@@ -16,11 +16,11 @@ import { MyfeedComponent } from "./postlist/myfeed/myfeed.component";
 import { CreateprofileComponent } from "./users/createprofile/createprofile.component";
 import { PagenotfoundComponent } from "./core/pagenotfound/pagenotfound.component";
 import { FooterComponent } from "./core/footer/footer.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { FormsModule } from "@angular/forms";
 import { SuiModule } from "ng2-semantic-ui";
-
+import { TokenInterceptorService } from "../app/service/token-interceptor.service";
 import { AuthService } from "./service/auth.service";
 import { AuthGuard } from "./guard/auth.guard";
 @NgModule({
@@ -48,7 +48,15 @@ import { AuthGuard } from "./guard/auth.guard";
     FormsModule,
     SuiModule,
   ],
-  providers: [AuthService,AuthGuard],
+  providers: [
+    AuthService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

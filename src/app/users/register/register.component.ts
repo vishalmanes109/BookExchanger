@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../../service/auth.service";
+import { isValidPassword,isValidEmail} from "../../utility/validation.js"
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
@@ -26,7 +27,8 @@ export class RegisterComponent implements OnInit {
       email: this.email.trim(),
       isAgree: this.isAgree,
     };
-    console.log(this.registerUserData);
+
+    //console.log(this.registerUserData);
     if (!this.isAgree) {
       console.log("Agree terms and conditions to continue");
       this.isError=true;
