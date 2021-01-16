@@ -12,9 +12,9 @@ export class CreateprofileComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
-  public eCheck;
-  public eCheckDisabled;
-  public eCheckReadonly;
+  public isAgree;
+  public latitude;
+  public longitude
   constructor() {
   }
 
@@ -52,6 +52,7 @@ export class CreateprofileComponent implements OnInit {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
         console.log(longitude + " :" + latitude);
+        console.log(position)
       });
     } else {
       console.log("No support for geolocation");
