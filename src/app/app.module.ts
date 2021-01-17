@@ -23,6 +23,7 @@ import { SuiModule } from "ng2-semantic-ui";
 import { TokenInterceptorService } from "../app/service/token-interceptor.service";
 import { AuthService } from "./service/auth.service";
 import { AuthGuard } from "./guard/auth.guard";
+import { LocationService } from "./service/location.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { AuthGuard } from "./guard/auth.guard";
   providers: [
     AuthService,
     AuthGuard,
+    LocationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -75,12 +75,18 @@
                 <input
                   type="text"
                   placeholder="Enter Name of your city/village/town"
+                  [(ngModel)]="location"
+                  name="location"
                 />
               </div>
               <h3>OR</h3>
               <button class="ui button uiteal" (click)="getLocation()">
                 Provide Location
               </button>
+              <div *ngIf="foundLocation">
+                your location is :  {{placeName}} Not your location then provide goelocation 
+              </div>
+
             </div>
             
             <div class="field">
@@ -92,7 +98,7 @@
                 I agree to the Terms and Conditions
               </sui-checkbox>
             </div>
-            <button class="ui button uiprimary" type="submit" onclick="Submit()">
+            <button class="ui button uiprimary" type="submit" (click)="createProfile()">
               Submit
             </button>
           </form>
