@@ -36,12 +36,12 @@
             </div>
             <div class="content centered">
               <hr />
-              <h3>Kristy</h3>
-              <Button class="ui button primary"> Choose Avatar </Button>
+              <h3>{{username}}</h3>
+              <input  type="file" name="avatar" id="avatar" >
             </div>
           </div>
           <div class="ui form customfield"></div>
-        </div>
+        </div>  
         <div class="ten wide column ">
           <div class="ui header uired centered ">Basic Info</div>
           <hr />
@@ -51,12 +51,13 @@
             <div class="field">
               <h3 > Favourite Genre</h3>
               <ng-multiselect-dropdown
-                [placeholder]="'Select Genre'"
+                [placeholder]="'Select exactly 3 different  Genre' "
                 [settings]="dropdownSettings"
                 [data]="dropdownList"
                 [(ngModel)]="selectedItems"
                 name="selecteditems"
                 (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onItemDeSelect($event)"
                 (onSelectAll)="onSelectAll($event)"
               >
               </ng-multiselect-dropdown>
@@ -77,6 +78,7 @@
                   placeholder="Enter Name of your city/village/town"
                   [(ngModel)]="location"
                   name="location"
+                  (blur)="onBlurGetLocation()"
                 />
               </div>
               <h3>OR</h3>

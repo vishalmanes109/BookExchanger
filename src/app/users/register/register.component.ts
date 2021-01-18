@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../../service/auth.service";
-import { isValidPassword,isValidEmail} from "../../utility/validation.js"
+import { isValidPassword, isValidEmail } from "../../utility/validation.js";
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
@@ -21,28 +21,27 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   registerUser() {
-    this.registerUserData = {
-      name: this.username.trim(),
-      password: this.password.trim(),
-      email: this.email.trim(),
-      isAgree: this.isAgree,
-    };
-
     //console.log(this.registerUserData);
     if (!this.isAgree) {
       console.log("Agree terms and conditions to continue");
-      this.isError=true;
-      this.message="Please Agree to terms and condition"
+      this.isError = true;
+      this.message = "Please Agree to terms and condition";
       return;
     }
-
+    this.registerUserData = {
+      name: this.username,
+      password: this.password,
+      email: this.email,
+      isAgree: this.isAgree,
+    };
     this.authService.registerUser(this.registerUserData).subscribe(
       (res) => {
         console.log(res);
         this.isDone = true;
-        localStorage.setItem('status','register')
-        this.isError=false;
+        localStorage.setItem("status", "register");
+        this.isError = false;
         console.log(res.success);
+        localStorage.setItem("username", this.username);
         setTimeout(() => {
           if (res.success == 1 && this.isDone) {
             this.router.navigate(["createprofile"]);
