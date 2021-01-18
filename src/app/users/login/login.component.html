@@ -1,12 +1,13 @@
 <div>
-  <div><br>
+  <div>
+    <br />
     <img
       class="ui centered small image"
       src="../../../assets/logo/logo3.3.png"
       alt="gif"
     />
   </div>
-<br>
+  <br />
 
   <div class="main">
     <br />
@@ -14,7 +15,7 @@
       <div *ngIf="isError" class="ui red message">
         {{ message }}
       </div>
-      
+
       <form class="ui form custom">
         <div class="field">
           <label>Username</label>
@@ -38,6 +39,8 @@
               name="password"
               id="password"
               [(ngModel)]="password"
+              (blur)="isValidPassword()"
+              (click)="reset()"
             />
             <i class="lock icon"></i>
           </div>
@@ -48,11 +51,7 @@
           </sui-checkbox>
         </div>
         <br />
-        <button
-          (click)="login()"
-          class="ui button positive"
-          type="submit"
-        >
+        <button (click)="login()" class="ui button positive" type="submit">
           Submit
         </button>
       </form>

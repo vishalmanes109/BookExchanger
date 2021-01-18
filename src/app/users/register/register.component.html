@@ -48,9 +48,12 @@
               name="username"
               id="username"
               [(ngModel)]="username"
+              (blur)="isUniqueName()"
+              (click)="reset()"
             />
             <i class="user icon"></i>
           </div>
+          
         </div>
         <div class="field">
           <label>Email ID</label>
@@ -62,6 +65,8 @@
               name="Email"
               id="email"
               [(ngModel)]="email"
+              (blur)="isValidEmail()"
+              (click)="reset()"
             />
           </div>
         </div>
@@ -74,6 +79,8 @@
               name="password"
               id="password"
               [(ngModel)]="password"
+              (blur)="isValidPassword()"
+              (click)="reset()"
             />
             <i class="lock icon"></i>
           </div>

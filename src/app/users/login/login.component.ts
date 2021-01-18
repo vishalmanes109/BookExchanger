@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/service/auth.service";
 import { Router } from "@angular/router";
+import { ValidationService } from "src/app/service/validation.service";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -15,10 +16,28 @@ export class LoginComponent implements OnInit {
   public defaulter;
   public isError = false;
   public message;
-  constructor(private authService: AuthService, private router:Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private validationService: ValidationService
+  ) {}
 
   ngOnInit(): void {}
 
+  isValidPassword() {
+
+    if (!this.validationService.isValidPassword(this.password)) {
+      this.isError = true;
+
+      this.message =
+        "Password Must be minimum of 8 characterand maximum of 15 character long and must  contain atleast 1 upper case, 1 lower case, 1 numeric and 1 special character.";
+      this.validationService.isValidEmail(this.password);
+    }
+  }
+  reset(){
+        this.isError = false;
+
+  }
   login() {
     this.userData = {
       name: this.username,
@@ -35,7 +54,7 @@ export class LoginComponent implements OnInit {
       (res) => {
         console.log(res);
         this.isError = false;
-        this.router.navigate(['/myfeed']);
+        this.router.navigate(["/myfeed"]);
         localStorage.setItem("token", res.token);
       },
       (err) => {

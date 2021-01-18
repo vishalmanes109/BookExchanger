@@ -24,6 +24,7 @@ import { TokenInterceptorService } from "../app/service/token-interceptor.servic
 import { AuthService } from "./service/auth.service";
 import { AuthGuard } from "./guard/auth.guard";
 import { LocationService } from "./service/location.service";
+import { ValidationService } from "./service/validation.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { LocationService } from "./service/location.service";
     AuthService,
     AuthGuard,
     LocationService,
+    ValidationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
