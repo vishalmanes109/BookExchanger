@@ -39,30 +39,36 @@ export class CreatepostComponent implements OnInit {
       !this.description ||
       !this.giveBookName ||
       !this.giveBookAuthor ||
-      !this.bookImage
+      !this.bookImage 
     ) {
       this.isError = true;
       this.message = "Please Fill all mendatory details";
       return;
     }
-    console.log(postData)
+    if(this.description.length >140)
+    {
+      this.isError=true;
+      this.message="Maximun 140 characters allowed in description"
+      return
+    }
+   // console.log(postData)
 
     this.postService.addPost(postData).subscribe(
       (res) => {
-        console.log(res);
+        //console.log(res);
         this.isDone = true;
         this.isError = false;
+        this.message="Post added succesfully"
       },
       (err) => {
         this.isError = true;
         this.isDone = false;
         this.message="Post failed! Try again "
-        console.log(err);
+      //  console.log(err);
       }
     );
   }
   discardPost() {
-    console.log("lol");
     this.title = "";
     this.description = "";
     this.giveBookName = "";
