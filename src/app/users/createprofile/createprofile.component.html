@@ -24,34 +24,34 @@
       </div>
     </div>
   </div>
-  <br>
-  <div class="ui raised segment container ">
+  <br />
+  <div class="ui raised segment container">
     <div class="ui container stackable internally celled grid">
       <div class="row">
         <div class="six wide column">
-          <p class="ui header  uired centered">Your Avatar</p>
+          <p class="ui header uired centered">Your Avatar</p>
           <div class="ui card container">
             <div class="ui fluid centered image">
               <img src="../../../assets/avatar/22.svg" />
             </div>
             <div class="content centered">
               <hr />
-              <h3>{{username}}</h3>
-              <input  type="file" name="avatar" id="avatar" >
+              <h3>{{ username }}</h3>
+              <input type="file" name="avatar" id="avatar" />
             </div>
           </div>
           <div class="ui form customfield"></div>
-        </div>  
-        <div class="ten wide column ">
-          <div class="ui header uired centered ">Basic Info</div>
+        </div>
+        <div class="ten wide column">
+          <div class="ui header uired centered">Basic Info</div>
           <hr />
-          <br>
+          <br />
 
-          <form #f="ngForm" class="ui form ">
+          <form class="ui form">
             <div class="field">
-              <h3 > Favourite Genre</h3>
+              <h3>Favourite Genre</h3>
               <ng-multiselect-dropdown
-                [placeholder]="'Select exactly 3 different  Genre' "
+                [placeholder]="'Select exactly 3 different  Genre'"
                 [settings]="dropdownSettings"
                 [data]="dropdownList"
                 [(ngModel)]="selectedItems"
@@ -64,14 +64,17 @@
             </div>
             <div class="field">
               <label class="ui container">
-                Provide Location: 
-                <div class="ui icon button" data-tooltip="Location required for users and books  recommendation">
-                <i class=" "> Read More</i>
-              </div>
+                Provide Location:
+                <div
+                  class="ui icon button"
+                  data-tooltip="Location required for users and books  recommendation"
+                >
+                  <i class=" "> Read More</i>
+                </div>
               </label>
-              
-              <br>
-              
+
+              <br />
+
               <div>
                 <input
                   type="text"
@@ -82,27 +85,35 @@
                 />
               </div>
               <h3>OR</h3>
-              <button class="ui button uiteal" (click)="getLocation()">
+              <button class="ui button" (click)="getLocation()">
                 Provide Location
               </button>
               <div *ngIf="foundLocation">
-                your location is :  {{placeName}} Not your location then provide goelocation 
+                your location is : {{ placeName }} Not your location then
+                provide goelocation
               </div>
-
             </div>
-            
+
             <div class="field">
-              <sui-checkbox
-                [(ngModel)]="isAgree"
-                
-                name="checkbox"
-              >
+              <sui-checkbox [(ngModel)]="isAgree" name="checkbox">
                 I agree to the Terms and Conditions
               </sui-checkbox>
             </div>
-            <button class="ui button uiprimary" type="submit" (click)="createProfile()">
-              Submit
-            </button>
+            <div *ngIf="isDone" class="ui info message">
+              {{ message }}
+            </div>
+            <div *ngIf="isError" class="ui red message">
+              {{ message }}
+            </div>
+            <div class="field">
+              <button
+                class="ui button uiprimary"
+                type="submit"
+                (click)="submit()"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>

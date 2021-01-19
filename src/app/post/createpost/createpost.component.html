@@ -7,16 +7,28 @@
     <div class="row">
       <div class="twelve wide column">
         <h3 class="ui header centered">Create a post</h3>
-        <p class="note">Have you read the Guidelines, if not scoll down </p>
-        <div class="ui form">
+        <p class="note">Have you read the Guidelines, if not scoll down</p>
+
+        <form class="ui form">
           <div class="field">
-            <input required type="text" name="title" placeholder="Title" />
+            <input 
+            required 
+            type="text" 
+            name="title" 
+            placeholder="Title"
+            [(ngModel)]="title"
+            (blur)="onBlur()" 
+            
+            />
           </div>
           <div class="field">
             <textarea
               rows="4"
               spellcheck="true"
               placeholder="Short Discription"
+              name="description"
+              [(ngModel)]="description"
+              (blur)="onBlur()" 
             ></textarea>
           </div>
           <div class="ui field">
@@ -25,6 +37,8 @@
               required
               name="have"
               placeholder="Title of book you have"
+              [(ngModel)]="giveBookName"
+              (blur)="onBlur()" 
             />
           </div>
           <div class="field">
@@ -33,6 +47,8 @@
               required
               name="haveauthor"
               placeholder="Author of book you have"
+              [(ngModel)]="giveBookAuthor"
+              (blur)="onBlur()" 
             />
           </div>
           <div class="field">
@@ -41,6 +57,7 @@
               required
               name="want"
               placeholder="Title of book you want (Optional)"
+              [(ngModel)]="takeBookName"
             />
           </div>
           <div class="field">
@@ -49,21 +66,32 @@
               required
               name="wantauthor"
               placeholder="Author of book you want (Optional)"
+              [(ngModel)]="takeBookAuthor"
             />
           </div>
           <div class="field">
             <label> Upload the Photo of book you have </label>
-            <input required type="file" name="photo" id="" />
+            <input required type="file" name="photo" id=""
+            [(ngModel)]="bookImage" 
+            (blur)="onBlur()" />
           </div>
-          <div class="field">
-            <input class="ui primary button" type="submit" value="Post" />
+          <div *ngIf="isDone" class="ui info message">
+              {{ message }}
+            </div>
+            <div *ngIf="isError" class="ui red message">
+              {{ message }}
+            </div>
+          <div class="field"> 
+            <input class="ui primary button" name="addpost" type="submit" value="Post" (click)="addPost()" />
             <input
-              class="ui  button right floated"
+              class="ui button right floated"
               type="button"
               value="Discard"
+              name="discardpost"
+              (click)="discardPost()"
             />
           </div>
-        </div>
+        </form>
       </div>
       <div class="four wide column">
         <div class="ui segment">
@@ -102,4 +130,4 @@
     </div>
   </div>
 </div>
-<br>
+<br />

@@ -1,12 +1,16 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private _registerUrl = "http://localhost:3000/api/user/";
   private _loginUrl = "http://localhost:3000/api/user/login";
-  private _uniqueUser = "http://localhost:3000/api/user/uniqueuser";
+  private _uniqueUserUrl = "http://localhost:3000/api/user/uniqueuser";
+
+  private httpOptions = {
+    headers: new HttpHeaders({ "Content-Type": "application/json" }),
+  };
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
@@ -22,6 +26,7 @@ export class AuthService {
     return localStorage.getItem("token");
   }
   isUserAvailable(username) {
-    return this.http.get<any>(this._uniqueUser,username);
+    console.log(username);
+    return this.http.get<any>(this._uniqueUserUrl+"/" +username, );
   }
 }

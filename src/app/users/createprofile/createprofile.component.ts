@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { SuiModule } from "ng2-semantic-ui";
 import { LocationService } from "src/app/service/location.service";
+import { ProfileService } from "src/app/service/profile.service";
 
 @Component({
   selector: "app-createprofile",
@@ -12,7 +14,7 @@ export class CreateprofileComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
-  public isAgree=false;
+  public isAgree = false;
   public latitude;
   public longitude;
   public location;
@@ -20,7 +22,15 @@ export class CreateprofileComponent implements OnInit {
   public placeName;
   public username;
   public favGenreList: number[] = new Array();
-  constructor(private locationService: LocationService) {}
+  public isDone = false;
+  public message;
+  public isError = false;
+
+  constructor(
+    private locationService: LocationService,
+    private profileService: ProfileService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.username = localStorage.getItem("username");
@@ -80,20 +90,20 @@ export class CreateprofileComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.favGenreList.push(item.id);
-    console.log(item);
-    console.log(this.favGenreList);
+    //console.log(item);
+    //console.log(this.favGenreList);
   }
   onSelectAll(items: any) {
-    console.log(items);
+    //console.log(items);
   }
-  onItemDeSelect(item:any){
-    console.log(item)
+  onItemDeSelect(item: any) {
+    //console.log(item);
     // delete this.favGenreList[item.id];
-     const index: number = this.favGenreList.indexOf(item.id);
-     if (index !== -1) {
-       this.favGenreList.splice(index, 1);
-     }    
-    console.log(this.favGenreList)
+    const index: number = this.favGenreList.indexOf(item.id);
+    if (index !== -1) {
+      this.favGenreList.splice(index, 1);
+    }
+   // console.log(this.favGenreList);
   }
 
   getLocation(): void {
@@ -101,7 +111,7 @@ export class CreateprofileComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
         this.latitude = position.coords.latitude;
-        console.log(` lol More or less ${position.coords.accuracy} meters.`);
+       // console.log(` lol More or less ${position.coords.accuracy} meters.`);
 
         this.locationService
           .getPlaceNameByCoordinates(this.longitude, this.latitude)
@@ -109,7 +119,7 @@ export class CreateprofileComponent implements OnInit {
             (res) => {
               this.placeName = res.features[0].place_name;
               this.foundLocation = true;
-              console.log(res.features[0].place_name);
+             // console.log(res.features[0].place_name);
             },
             (err) => {
               console.log(err);
@@ -117,7 +127,7 @@ export class CreateprofileComponent implements OnInit {
           );
       });
     } else {
-      console.log("No support for geolocation");
+     // console.log("No support for geolocation");
     }
   }
   onBlurGetLocation() {
@@ -130,10 +140,63 @@ export class CreateprofileComponent implements OnInit {
         };
     });
   }
-  createProfile() {
-    console.log(this.username)
-    console.log(this.favGenreList)
-    console.log(this.placeName)
-    console.log(this.isAgree)
+  submit() {
+    //console.log("lol submit")
+    //  console.log(this.username);
+    //  console.log(this.favGenreList);
+    // // location = this.placeName;
+    //console.log(this.isAgree);
+    if (!this.isAgree) {
+      this.isError = true;
+      this.message = "Please agree to tems and conditions";
+      return;
+    }
+    if (!this.placeName) {
+      this.isError = true;
+      this.message =
+        "Please provide location. either write name of location or give location access";
+    }
+    if (this.favGenreList.length != 3) {
+      this.isError = true;
+      this.message = "Please select exactly 3 genres";
+      return;
+    }
+    let profileData = {
+      location: this.placeName,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      premium: false,
+      username: this.username,
+    };
+    //console.log(profileData);
+    if (this.isError)
+      this.profileService.makeProfile(profileData).subscribe(
+        (res) => {
+          // console.log(res);
+          this.isDone = true;
+          this.isError=false;
+          this.message = "Congratulations Profile is created";
+          setTimeout(() => {
+            if (res.success == 1 && this.isDone) {
+              this.router.navigate(["myfeed"]);
+            }
+          }, 2000);
+        },
+        (err) => {
+          // console.log(err);
+          this.isError = true;
+          this.message = "profile is already created. ";
+          setTimeout(() => {
+            if (this.isError) {
+              this.message = "redirecting towards update profile page";
+            }
+          }, 1000);
+          setTimeout(() => {
+            if (this.isError) {
+              this.router.navigate(["updateprofile"]);
+            }
+          }, 2500);
+        }
+      );
   }
 }

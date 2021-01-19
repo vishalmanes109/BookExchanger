@@ -28,24 +28,28 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   isUniqueName() {
+   // console.log(this.username)
     this.authService.isUserAvailable(this.username).subscribe(
       (res) => {
-        console.log(res);
+       // console.log(res);
       },
       (err) => {
-        console.log(err);
+        this.isError=true;
+        this.message="Username is already taken, please select different username."
+        //console.log(err);
       }
     );
   }
   isValidEmail() {
-    if (!this.validationService.isValidEmail(this.email)) {
+
+    if ( !this.validationService.isValidEmail(this.email)) {
       this.isError = true;
       this.message = "Invalid Email";
-      console.log(this.validationService.isValidEmail(this.email));
+      //console.log(this.validationService.isValidEmail(this.email));
     }
   }
   isValidPassword() {
-    if (!this.validationService.isValidPassword(this.password)) {
+    if ( this.password && !this.validationService.isValidPassword(this.password)) {
       this.isError = true;
 
       this.message =
@@ -60,7 +64,7 @@ export class RegisterComponent implements OnInit {
   registerUser() {
     //console.log(this.registerUserData);
     if (!this.isAgree) {
-      console.log("Agree terms and conditions to continue");
+      //console.log("Agree terms and conditions to continue");
       this.isError = true;
       this.message = "Please Agree to terms and condition";
       return;
