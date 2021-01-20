@@ -27,6 +27,7 @@ import { LocationService } from "./service/location.service";
 import { ValidationService } from "./service/validation.service";
 import { ProfileService } from "./service/profile.service";
 import { PostService } from "./service/post.service";
+import { SinglepostComponent } from './postlist/singlepost/singlepost.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { PostService } from "./service/post.service";
     CreateprofileComponent,
     PagenotfoundComponent,
     FooterComponent,
+    SinglepostComponent,
   ],
   imports: [
     BrowserModule,

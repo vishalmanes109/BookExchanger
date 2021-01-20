@@ -2,16 +2,25 @@
 <br />
 <br />
 <div class="container">
-  <div class="ui stackable two column grid">
-    <div class="column container">
+  <div class="ui stackable   grid">
+    <div class=" ui five wide column   container">
       <div class="ui raised centered link card">
         <div class="content">
-          <div class="header">User Name</div>
-          <div class="meta">
-            <span class="category">Location</span>
-          </div>
+          <div class="header">Username:  {{username}}</div>
+          <br>
+          <div class="content">
+            <span class="category"> Email: {{email}}</span>
+          </div><br>
           <div class="description">
-            <p>Genre1</p>
+            <p>Favourite Genres:</p>
+          </div>
+          <div *ngFor="let genre of genreList">
+
+            {{genre.name}}
+          </div>
+          <br>
+          <div class="description">
+            <p>Location: {{location}} </p>
           </div>
         </div>
         <div class="extra content">
@@ -20,13 +29,12 @@
             routerLinkActive="router-link-active"
             ><button class="ui positive basic button">Edit</button></a
           >
-
           <div class="right floated author">
             <img
               class="ui avatar image"
-              src="../../../assets/avatar/1.svg"
+              src="../../../assets/avatar/12.svg"
             />
-            Matt
+            {{username}}
           </div>
         </div>
       </div>
@@ -34,11 +42,13 @@
       <div class="ui raised centered link card">
         <div class="content">
           <div class="header">Awards</div>
-          <div class="meta">
-            <span class="category">total point</span>
+          <br>
+          <div class="content">
+            <span class="category">total point: {{points}}</span>
           </div>
+          <br>
           <div class="description">
-            <p>None</p>
+            <p>You will get the points based on your activity </p>
           </div>
         </div>
         <div class="extra content">
@@ -47,47 +57,36 @@
               class="ui avatar image"
               src="../../../assets/avatar/12.svg"
             />
-            name
+            {{username}}
           </div>
         </div>
       </div>
     </div>
-    <div class="column">
+    <div class="ui eleven wide column">
       <div class="ui raised segment">
-        <div>Recent Post</div>
-        <div class="ui middle aligned animated list">
-          <div class="item">
+        <h3> Recent Post</h3>
+        
+        <div *ngIf="isPostExist">
+        <div *ngFor="let post of postData" class="ui middle aligned animated list">
+          <div (click)="openPost(post)" class="item">
             <img
-              class="ui avatar image"
+              class="ui avatar image "
               src="../../../assets/avatar/20.svg"
             />
             <div class="content">
-              <div class="header">Helen</div>
-              <div>I want to read the ten thousand doors of january</div>
+              <div class="header">{{post.title}}</div>
+              <div>{{post.description}}</div>
+              <div>{{post.post_time.substring(0,10)}}</div>
             </div>
           </div>
           <br />
-          <div class="item">
-            <img
-              class="ui avatar image"
-              src="../../../assets/avatar/25.svg"
-            />
-            <div class="content">
-              <div class="header">Christian</div>
-              <div>I want to read the ten thousand doors of january</div>
-            </div>
+        </div>
+        </div>
+        <div *ngIf="! isPostExist">
+          <div class="ui container red message ">
+            {{message}}
           </div>
-          <br />
-          <div class="item">
-            <img
-              class="ui avatar image"
-              src="../../../assets/avatar/28.svg"
-            />
-            <div class="content">
-              <div class="header">Daniel</div>
-              <div>Request for harry potter</div>
-            </div>
-          </div>
+          <i class="ui inverted green button" [routerLink]="['/createpost']" routerLinkActive="router-link-active" >Create Post </i>
         </div>
       </div>
     </div>

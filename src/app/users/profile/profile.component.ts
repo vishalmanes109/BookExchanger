@@ -1,15 +1,90 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { PostService } from "src/app/service/post.service";
+import { ProfileService } from "src/app/service/profile.service";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
+  public username;
+  public profileId;
+  public location;
+  public latitude;
+  public longitude;
+  public profileData;
+  public email;
+  public userId;
+  public isPremium;
+  public genreList;
+  public points = 0;
+  public postTitle;
+  public PostDescription;
+  public postData;
+  public isPostExist = true;
+  public message;
 
-  constructor() { }
+  constructor(
+    private ProfileService: ProfileService,
+    private postService: PostService
+  ) {}
 
   ngOnInit(): void {
+    this.username = localStorage.getItem("username");
+    //console.log(this.username);
+    this.ProfileService.getProfile(this.username).subscribe(
+      (res) => {
+        //console.log(res);
+        this.profileData = res.message[0];
+        this.genreList = res.genrelist;
+        console.log(this.profileData);
+        console.log(this.genreList);
+        this.profileId = this.profileData.id;
+        this.location = this.profileData.location;
+        this.latitude = this.profileData.latitude;
+        this.longitude = this.profileData.longitude;
+        this.email = this.profileData.email;
+        this.userId = this.profileData.user_id;
+        this.isPremium = this.profileData.premium;
+        localStorage.setItem("userid", this.userId);
+        localStorage.setItem("profileid", this.profileId);
+
+        this.postService.getPostByProfile(this.profileId).subscribe(
+          (res) => {
+            //console.log(res);
+            this.postData = res.message;
+            //console.log(this.postData);
+            this.isPostExist = true;
+          },
+          (err) => {
+            if (!err.error.isPostExist) {
+              this.isPostExist = false;
+              this.message = "You have not submited any post. ";
+            }
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  openPost(post){
+    console.log(post)
+
   }
 
+  getProfile() {
+    // console.log(this.username);
+    // this.ProfileService.getProfile(this.username).subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
+  }
 }

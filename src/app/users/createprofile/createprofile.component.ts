@@ -36,41 +36,42 @@ export class CreateprofileComponent implements OnInit {
     this.username = localStorage.getItem("username");
     this.dropdownList = [
       { id: 1, text: "Adult Fiction" },
-      { id: 2, text: "Horror" },
-      { id: 3, text: "Fiction" },
-      { id: 4, text: "Fantasy" },
-      { id: 5, text: "Historical Fiction" },
-      { id: 6, text: "Mystery" },
-      { id: 7, text: "Politics" },
-      { id: 8, text: "Science Fiction" },
-      { id: 9, text: "Thriller" },
-      { id: 10, text: "War" },
-      { id: 11, text: "Art" },
-      { id: 12, text: "Biography" },
-      { id: 13, text: "Business" },
-      { id: 14, text: "Classics" },
-      { id: 15, text: "Comics" },
-      { id: 16, text: "Contemporary" },
-      { id: 17, text: "Cookbooks" },
-      { id: 18, text: "Crime" },
-      { id: 19, text: "History" },
-      { id: 20, text: "Humor and Comedy" },
-      { id: 21, text: "Manga" },
-      { id: 22, text: "Memoir" },
-      { id: 23, text: "Nonfiction" },
-      { id: 24, text: "Paranormal" },
-      { id: 25, text: "Philosophy" },
-      { id: 26, text: "Poetry" },
-      { id: 27, text: "Psychology" },
-      { id: 28, text: "Religion" },
-      { id: 29, text: "Romance" },
-      { id: 30, text: "Science" },
-      { id: 31, text: "Self Help" },
-      { id: 32, text: "Suspense" },
-      { id: 33, text: "Spirituality" },
-      { id: 34, text: "Sports" },
+      { id: 2, text: "Epic Fantasy" },
+      { id: 3, text: "Horror" },
+      { id: 4, text: "Fiction" },
+      { id: 5, text: "Fantasy" },
+      { id: 6, text: "Historical Fiction" },
+      { id: 7, text: "Mystery" },
+      { id: 8, text: "Politics" },
+      { id: 9, text: "Science Fiction" },
+      { id: 10, text: "Thriller" },
+      { id: 11, text: "War" },
+      { id: 12, text: "Art" },
+      { id: 13, text: "Biography" },
+      { id: 14, text: "Business" },
+      { id: 15, text: "Classics" },
+      { id: 16, text: "Comics" },
+      { id: 17, text: "Contemporary" },
+      { id: 18, text: "Cookbooks" },
+      { id: 19, text: "Crime" },
+      { id: 20, text: "History" },
+      { id: 21, text: "Humor and Comedy" },
+      { id: 22, text: "Manga" },
+      { id: 23, text: "Memoir" },
+      { id: 24, text: "Nonfiction" },
+      { id: 25, text: "Paranormal" },
+      { id: 26, text: "Philosophy" },
+      { id: 27, text: "Poetry" },
+      { id: 28, text: "Psychology" },
+      { id: 29, text: "Religion" },
+      { id: 30, text: "Romance" },
+      { id: 31, text: "Science" },
+      { id: 32, text: "Self Help" },
+      { id: 33, text: "Suspense" },
+      { id: 34, text: "Spirituality" },
       { id: 35, text: "Sports" },
-      { id: 36, text: "Young Adult" },
+      { id: 36, text: "Travel" },
+      { id: 37, text: "Young Adult" },
     ];
     // this.selectedItems = [
     //   { id: 1, text: "Adult Fiction" },
@@ -111,6 +112,7 @@ export class CreateprofileComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
         this.latitude = position.coords.latitude;
+        //console.log(this.longitude)
        // console.log(` lol More or less ${position.coords.accuracy} meters.`);
 
         this.locationService
@@ -127,18 +129,25 @@ export class CreateprofileComponent implements OnInit {
           );
       });
     } else {
-     // console.log("No support for geolocation");
+     console.log("No support for geolocation");
+     alert("no support for geolocation")
     }
   }
   onBlurGetLocation() {
     this.locationService.getPlaceName(this.location).subscribe((res) => {
       this.foundLocation = true;
+      // console.log(res);
+      this.longitude=res.features[0].center[0]
+
+      this.latitude = res.features[0].center[1];
+      console.log(this.latitude + " ;" + this.longitude);
       this.placeName = res.features[0].place_name;
       console.log(res.features[0].place_name),
         (err) => {
           console.log(err);
         };
     });
+
   }
   submit() {
     //console.log("lol submit")
@@ -167,12 +176,13 @@ export class CreateprofileComponent implements OnInit {
       longitude: this.longitude,
       premium: false,
       username: this.username,
+      fav_genre_list:this.favGenreList
     };
     //console.log(profileData);
-    if (this.isError)
       this.profileService.makeProfile(profileData).subscribe(
         (res) => {
-          // console.log(res);
+          console.log("lol");
+           console.log(res);
           this.isDone = true;
           this.isError=false;
           this.message = "Congratulations Profile is created";
@@ -183,9 +193,13 @@ export class CreateprofileComponent implements OnInit {
           }, 2000);
         },
         (err) => {
-          // console.log(err);
+           console.log(err);
           this.isError = true;
-          this.message = "profile is already created. ";
+          if (err.error.error.code == 23502){
+            this.message="Profile creation failed. please try again! "
+            return
+          }
+            this.message = "profile is already created. ";
           setTimeout(() => {
             if (this.isError) {
               this.message = "redirecting towards update profile page";
