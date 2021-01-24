@@ -28,6 +28,7 @@ import { ValidationService } from "./service/validation.service";
 import { ProfileService } from "./service/profile.service";
 import { PostService } from "./service/post.service";
 import { SinglepostComponent } from './postlist/singlepost/singlepost.component';
+import { SharedService } from "./service/shared.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { SinglepostComponent } from './postlist/singlepost/singlepost.component'
     ValidationService,
     ProfileService,
     PostService,
+    SharedService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

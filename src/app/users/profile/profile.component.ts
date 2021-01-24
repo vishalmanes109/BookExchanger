@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
 import { ProfileService } from "src/app/service/profile.service";
+import { SharedService } from "src/app/service/shared.service";
 
 @Component({
   selector: "app-profile",
@@ -10,6 +12,7 @@ import { ProfileService } from "src/app/service/profile.service";
 export class ProfileComponent implements OnInit {
   public username;
   public profileId;
+  public postId;
   public location;
   public latitude;
   public longitude;
@@ -25,12 +28,17 @@ export class ProfileComponent implements OnInit {
   public isPostExist = true;
   public message;
 
+
   constructor(
     private ProfileService: ProfileService,
-    private postService: PostService
+    private postService: PostService,
+    private SharedService: SharedService,
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
+
     this.username = localStorage.getItem("username");
     //console.log(this.username);
     this.ProfileService.getProfile(this.username).subscribe(
@@ -71,9 +79,22 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  openPost(post){
-    console.log(post)
+  openPost(postId) {
+    this.SharedService.KeepPostId(postId);
+    console.log(`post/${postId}`);
+    this.router.navigate([`post/${postId}`]);
 
+    // console.log(postId);
+    // this.postService.getPostByPostId(postId).subscribe(
+    //   (res)=>{
+    //     console.log(res)
+    //   },
+    //   (err)=>{
+    //     console.log(err)
+    //   }
+    // )
+
+    //select post.id,post.title,post.description,post.post_time,post.give_book_image, user_i.name as username, book.name, book.author from  post,user_i,book,profile where post.id='WRlts7a16X'  and post.give_book_id=book.id and post.profile_id=profile.id and profile.user_id=user_i.id
   }
 
   getProfile() {

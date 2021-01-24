@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class SharedService {
+  private postId;
 
-  constructor() { }
+  constructor() {}
+
+  storePostData(PostData) {}
+  KeepPostId(postId){
+    this.postId=postId
+  }
+  getPostId() {
+    return this.postId;
+  }
 }

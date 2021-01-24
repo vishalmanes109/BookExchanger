@@ -7,6 +7,7 @@ import { AuthGuard } from "./guard/auth.guard";
 import { CreatepostComponent } from "./post/createpost/createpost.component";
 import { UpdatepostComponent } from "./post/updatepost/updatepost.component";
 import { MyfeedComponent } from "./postlist/myfeed/myfeed.component";
+import { SinglepostComponent } from "./postlist/singlepost/singlepost.component";
 import { CreateprofileComponent } from "./users/createprofile/createprofile.component";
 import { LoginComponent } from "./users/login/login.component";
 import { ProfileComponent } from "./users/profile/profile.component";
@@ -41,6 +42,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: UpdateprofileComponent,
   },
+  { path: "post/:postid", canActivate: [AuthGuard], component: SinglepostComponent },
+
   { path: "404", component: PagenotfoundComponent },
   { path: "", component: RegisterComponent },
   { path: "**", redirectTo: "/404" },

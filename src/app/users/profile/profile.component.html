@@ -68,7 +68,7 @@
         
         <div *ngIf="isPostExist">
         <div *ngFor="let post of postData" class="ui middle aligned animated list">
-          <div (click)="openPost(post)" class="item">
+          <div (click)="openPost(post.postid)" class="item">
             <img
               class="ui avatar image "
               src="../../../assets/avatar/20.svg"
