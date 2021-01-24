@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -27,10 +28,10 @@ export class PostService {
     return this.http.get<any>(this._bookUrl + "givebook/" + giveBookId);
   }
 
-  getTakeBook(takeBookId) {
+   getTakeBook(takeBookId):Observable<any> {
     return this.http.get<any>(this._bookUrl + "takebook/" + takeBookId);
   }
-  getNearByPost(profileId){
+   getNearByPost(profileId):Observable<any>{
     return this.http.get<any>(this._postUrl + "nearby/" + profileId);
 
   }

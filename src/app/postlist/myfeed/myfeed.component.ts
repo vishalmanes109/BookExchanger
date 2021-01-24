@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 import { PostService } from "src/app/service/post.service";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: "app-myfeed",
@@ -18,18 +20,20 @@ export class MyfeedComponent implements OnInit {
   public giveBookAuthor;
   public isBookNotAvailable = false;
   public note;
-  public entirePostData;
-  public takeBookData;
+  public entirePostData = {};
+  public takeBookData = new Array();
   public takeBookId;
   private i;
+  private k;
+  public takeBookResult;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     this.profileId = localStorage.getItem("profileid");
     // console.log(this.profileId);
     this.postService.getNearByPost(this.profileId).subscribe(
-      (res) => {
-        console.log(res.message);
+      async (res) => {
+        //  console.log(res.message);
         this.nearByPost = res.message;
         this.isDataFetch = true;
         //  this.entirePostData = {
@@ -54,44 +58,57 @@ export class MyfeedComponent implements OnInit {
         // };
         //console.log("before:", this.entirePostData);
 
-        console.log(this.nearByPost.length);
+        //console.log(this.nearByPost.length);
+        this.entirePostData = {
+          username: this.nearByPost.name,
+          title: this.nearByPost.title,
+          description: this.nearByPost.description,
+          date: this.nearByPost.post_time,
+          distace: this.nearByPost.distance,
+          profileId: this.nearByPost.profileid,
+          postId: this.nearByPost.postid,
+          giveBook: this.nearByPost.givebookname,
+          giveBookAuthor: this.nearByPost.givebookauthor,
+          takeBook: null,
+          takeBookAuthor: null,
+        };
         for (this.i = 0; this.i < this.nearByPost.length; this.i++) {
           //console.log("ji")
           if (this.nearByPost[this.i].take_book_id) {
             //console.log("Hi");
-            //console.log(this.nearByPost[i].take_book_id);
-            this.postService
-              .getTakeBook(this.nearByPost[this.i].take_book_id)
-              .subscribe(
-                (res) => {
-                  console.log(this.i);
-                  console.log(res.message[this.i]);
-                  // this.takeBookId = res.message[i].id;
-                  // this.takeBook = res.message[i].name;
-                  // this.takeBookAuthor = res.message[i].author;
-                  this.note =
-                    "kindly reach out to user by clicking on chat button";
-                 // this.entirePostData.takeBookAuthor = res.message[0].name;
+            // console.log(this.nearByPost[this.i].take_book_id);
 
-                 // this.entirePostData.takeBookAuthor = res.message[0].author;
-                  console.log("after:", this.entirePostData);
-                  this.takeBookData = {
-                    takeBookId: res.message[this.i].id,
-                    takeBookName: res.message[this.i].name,
-                    takeBookAuthor: res.message[this.i].author,
-                  };
+            await this.takeBookData.push(
+              this.postService.getTakeBook(this.nearByPost[this.i].take_book_id)
+            );
+            forkJoin(this.takeBookData).subscribe(
+              async (res) => {
+                //console.log("res lol",res);
+                this.takeBookResult = res;
+                console.log(this.takeBookResult);
+                // for (let j = 0; j < this.nearByPost.length; j++) {
+                //   this.k = 0;
 
-                },
-                (err) => {
-                  console.log(err);
-                  this.isBookNotFound = true;
-                  this.takeBook = "Error while parsing book please try again";
-                  this.takeBookAuthor =
-                    "Error while parsing book please try again";
-                  this.note =
-                    "kindly reach out to user by clicking on chat button";
-                }
-              );
+                //   if (
+                //     this.k < this.takeBookResult.length &&
+                //     this.nearByPost[j].take_book_id ==
+                //       this.takeBookResult[this.k].message[0].id
+                //   ) {
+                //     console.log(
+                //       this.takeBookResult[this.k].message[0],
+                //       this.nearByPost[j]
+                //     );
+                //     this.entirePostData.takeBook = this.takeBookResult[
+                //       this.k
+                //     ].message[0];
+
+                //     this.k++;
+                //   }
+                // }
+              },
+              (err) => console.log(err)
+            );
+            await console.log(this.takeBookResult);
           } else {
             this.isBookNotAvailable = true;
             this.takeBook = "Book is not specified by user";
