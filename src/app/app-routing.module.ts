@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   { path: "createprofile", component: CreateprofileComponent },
   {
-    path: "updatepost",
+    path: "updatepost/:postid",
     canActivate: [AuthGuard],
     component: UpdatepostComponent,
   },

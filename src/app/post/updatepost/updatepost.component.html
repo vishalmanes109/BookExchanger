@@ -8,26 +8,26 @@
 
             <div class="twelve wide column">
                 <p class="ui header teal centered">Update Post</p>
-                <div class="ui form ">
+                <div *ngIf="isDataFetch" class="ui form ">
                     <div class="field ">
-                        <input required type="text" name="title" placeholder="Enter Title of book swap request">
+                        <input required type="text" name="title" placeholder="Enter Title of book swap request" value="{{title}}">
                     </div>
                     <div class="field">
-                        <textarea placeholder="Short Discription"></textarea>
+                        <textarea placeholder="Short Discription" value="{{description}}"></textarea>
                     </div>
                     <div class="field">
-                        <input type="text" required name="have" placeholder="Enter Title of book you have">
+                        <input type="text" required name="have" value="{{giveBookName}}" placeholder="Enter Title of book you have">
                     </div>
                     <div class="field">
-                        <input type="text" required name="title" placeholder="Enter Title of book you want">
+                        <input type="text" required name="title" value="{{giveBookAuthor}}" placeholder="Enter Title of book you want">
                     </div>
                     <div class="field">
                         <label> Upload the Photo of book you have </label>
                         <input required type="file" name="photo" id="">
                     </div>
                     <div class="field">
-                        <input class="ui teal button" type="button" value="Submit">
-                        <input class="ui orange button right floated" type="button" value="Discard">
+                        <input class="ui teal button" type="button" (click)="update()" value="Submit">
+                        <input class="ui orange button right floated"  (click)="discard()" type="button" value="Discard">
                     </div>
                 </div>
             </div>

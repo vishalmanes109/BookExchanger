@@ -8,6 +8,8 @@ import { Observable } from "rxjs";
 export class PostService {
   private _postUrl = "http://localhost:3000/api/post/";
   private _bookUrl = "http://localhost:3000/api/book/";
+  private _postDeleteUrl = "http://localhost:3000/api/post/lol";
+
   constructor(private http: HttpClient) {}
   addPost(postData) {
     //console.log("in servi",postData)
@@ -24,15 +26,21 @@ export class PostService {
     return this.http.get<any>(this._postUrl + "id/" + postId);
   }
   getGiveBook(giveBookId) {
-    console.log(giveBookId)
+    console.log(giveBookId);
     return this.http.get<any>(this._bookUrl + "givebook/" + giveBookId);
   }
 
-   getTakeBook(takeBookId):Observable<any> {
+  getTakeBook(takeBookId): Observable<any> {
     return this.http.get<any>(this._bookUrl + "takebook/" + takeBookId);
   }
-   getNearByPost(profileId):Observable<any>{
+  getNearByPost(profileId): Observable<any> {
     return this.http.get<any>(this._postUrl + "nearby/" + profileId);
-
+  }
+  updatePost(updatePostData) {
+    return this.http.patch<any>(this._postUrl, updatePostData);
+  }
+  deletePost(postId) {
+    console.log("postId", postId);
+    return this.http.delete<any>(this._postUrl +postId);
   }
 }

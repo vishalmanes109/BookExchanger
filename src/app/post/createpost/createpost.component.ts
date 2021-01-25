@@ -28,10 +28,10 @@ export class CreatepostComponent implements OnInit {
       description: this.description,
       give_book_image: this.bookImage,
       give_book_name: this.giveBookName,
-      give_book_author: this.giveBookName,
+      give_book_author: this.giveBookAuthor,
       take_book_name: this.takeBookName,
       take_book_author: this.takeBookAuthor,
-      username:this.username
+      username:this.username,
     };
 
     if (

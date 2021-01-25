@@ -4,14 +4,12 @@
     src="../../../assets/logo/logo3.3.png"
     alt="logo"
   />
-  <div class="ui stackable container grid">
+  <div class="ui stackable  container grid">
     <div class="ten wide column">
       <h3>Post</h3>
       <div class="ui raised segments container">
-        <div class="ui segment">
-          <div class="ui stackable container grid">
-            <div *ngIf="isDataFetch" class="ten wide column">
-              <img
+        <div *ngIf="isDataFetch" class="ui segment">
+          <img
                 class="ui avatar image"
                 src="../../../assets/avatar/24.png"
               />
@@ -23,11 +21,14 @@
                     postData.title.substring(1)
                 }}
               </h3>
+          <div class="ui stackable mobile reversed  container grid">
+            <div  class="ten wide column inverted">
+              
               <p>{{ postData.description }}</p>
-              <p>Book Want to exchange: {{ giveBook }}</p>
-              <p>Author name: {{ giveBookAuthor }}</p>
-              <p>Book looking for : {{ takeBook }}</p>
-              <p>Author Name: {{ takeBookAuthor }}</p>
+              <p>Book Want to exchange: {{ postData.givebookname }}</p>
+              <p>Author name: {{ postData.givebookauthor }}</p>
+              <p>Book looking for : {{ postData.takebookname }}</p>
+              <p>Author Name: {{ postData.takebookauthor }}</p>
               <p>Date: {{ postData.post_time.substring(0, 10) }}</p>
               <div *ngIf="yourPost">
                 <input
@@ -35,12 +36,14 @@
                   class="ui button primary inverted"
                   name="edit"
                   value="Edit"
+                  (click)="editPost()"
                 />
                 <input
                   type="button"
                   class="ui right floated button red inverted"
                   name="delete"
                   value="Delete"
+                  (click)="deletePost()"
                 />
               </div>
               <div *ngIf="!yourPost">
