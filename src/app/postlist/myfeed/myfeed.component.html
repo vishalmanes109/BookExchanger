@@ -51,7 +51,7 @@
 <br />
 <div class="ui stackable grid container">
   <div class="twelve wide column">
-    <div *ngFor="let post of nearByPost">
+    <div *ngFor="let post of nearByPost; let i = index">
       <div class="ui teal padded segment container">
         <div class="ui">
           <h2>
@@ -72,7 +72,7 @@
           <div class="ten wide column container">
             <div class="details">
               <div>Posted by: {{ post.name }}</div>
-              <hr>
+              <hr />
               <div class="details">
                 {{ post.description }}
               </div>
@@ -80,15 +80,21 @@
                 Book to exchange: {{ post.givebookname }}
               </div>
               <div class="details">Author Name: {{ post.givebookauthor }}</div>
-              <div class="details">Book want : {{ takeBook }}</div>
-              <div class="details">Author Name:{{ takeBookAuthor }}</div>
+
+              <div class="details" *ngIf=" post.takebook !== undefined || post.takebook !== null   else takebooknotpresent">
+                
+                Book want : {{ post.takebookname }}
+              </div>
+              <ng-template #takebooknotpresent >Book want : {{ takeBook }}</ng-template>
+
+              <div class="details">Author Name:{{ post.takebookauthor }}</div>
               <div class="details">
                 Date: {{ post.post_time.substring(0, 10) }}
               </div>
               <div class="details">Location: {{ post.location }}</div>
               <br />
               <div class="details">
-                {{ post.name }} is : {{ post.distance }} miles away from your
+                {{ post.name }} is : {{ post.distance.toFixed(1)*1609 }} meters away from your
                 location
               </div>
             </div>
