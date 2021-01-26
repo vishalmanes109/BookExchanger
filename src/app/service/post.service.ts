@@ -35,11 +35,13 @@ export class PostService {
   getNearByPost(profileId): Observable<any> {
     return this.http.get<any>(this._postUrl + "nearby/" + profileId);
   }
+  getAllPost() {
+    return this.http.get<any>(this._postUrl + "all");
+  }
   updatePost(updatePostData) {
     return this.http.patch<any>(this._postUrl, updatePostData);
   }
   deletePost(deletePostData) {
-
     let headers = new HttpHeaders();
 
     headers.append("Content-Type", "application/json");
@@ -48,14 +50,14 @@ export class PostService {
     let params = new HttpParams();
     params = params.append("post_id", deletePostData.postId);
     params = params.append("give_book_id", deletePostData.giveBookId);
-        params = params.append("take_book_id", deletePostData.takeBookId);
+    params = params.append("take_book_id", deletePostData.takeBookId);
 
     const option = {
       headers: headers,
       params: params,
     };
-    console.log(option)
+    console.log(option);
 
-    return this.http.delete<any>(this._postUrl , option);
+    return this.http.delete<any>(this._postUrl, option);
   }
 }

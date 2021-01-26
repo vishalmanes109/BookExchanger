@@ -22,7 +22,7 @@ export class CreatepostComponent implements OnInit {
 
   ngOnInit(): void {}
   addPost() {
-    this.username=localStorage.getItem('username')
+    this.username = localStorage.getItem("username");
     let postData = {
       title: this.title,
       description: this.description,
@@ -31,7 +31,7 @@ export class CreatepostComponent implements OnInit {
       give_book_author: this.giveBookAuthor,
       take_book_name: this.takeBookName,
       take_book_author: this.takeBookAuthor,
-      username:this.username,
+      username: this.username,
     };
 
     if (
@@ -39,32 +39,31 @@ export class CreatepostComponent implements OnInit {
       !this.description ||
       !this.giveBookName ||
       !this.giveBookAuthor ||
-      !this.bookImage 
+      !this.bookImage
     ) {
       this.isError = true;
       this.message = "Please Fill all mendatory details";
       return;
     }
-    if(this.description.length >140)
-    {
-      this.isError=true;
-      this.message="Maximun 140 characters allowed in description"
-      return
+    if (this.description.length > 140) {
+      this.isError = true;
+      this.message = "Maximun 140 characters allowed in description";
+      return;
     }
-   // console.log(postData)
+    // console.log(postData)
 
     this.postService.addPost(postData).subscribe(
       (res) => {
         //console.log(res);
         this.isDone = true;
         this.isError = false;
-        this.message="Post added succesfully"
+        this.message = "Post added succesfully";
       },
       (err) => {
         this.isError = true;
         this.isDone = false;
-        this.message="Post failed! Try again "
-      //  console.log(err);
+        this.message = "Post failed! Try again ";
+        //  console.log(err);
       }
     );
   }
@@ -74,13 +73,15 @@ export class CreatepostComponent implements OnInit {
     this.giveBookName = "";
     this.giveBookName = "";
     this.takeBookAuthor = "";
+    this.takeBookName = "";
+    this.giveBookAuthor = "";
     this.giveBookName = "";
     this.bookImage = null;
     this.message = "";
     this.isError = false;
   }
   onBlur() {
-    this.message=""
-    this.isError=false;
+    this.message = "";
+    this.isError = false;
   }
 }
