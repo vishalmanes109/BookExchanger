@@ -86,9 +86,6 @@ export class SinglepostComponent implements OnInit {
     this.router.navigateByUrl('/post', { skipLocationChange: true }).then(() => {
     this.router.navigate([`post/${postId}`]);
 });
-      
-    
-    
     }
         editPost(){
           console.log(this.postId)
@@ -99,16 +96,20 @@ export class SinglepostComponent implements OnInit {
              });
         }
         deletePost(){
-          console.log(this.postId)
-          this.postService.deletePost(this.postId).subscribe(
-            (res)=>{
-              console.log("deleted")
-              this.router.navigate(['/profile'])
+          let deletablePostData={
+            postId:this.postId,
+            giveBookId:this.postData.give_book_id,
+            takeBookId:this.postData.take_book_id
+          }
+          console.log(deletablePostData);
+          this.postService.deletePost(deletablePostData).subscribe(
+            (res) => {
+              console.log("deleted");
+              this.router.navigate(["/profile"]);
             },
-            (err)=>{
-              console.log("error: Post does not exist")
-            },
-          )
+            (err) => {
+              console.log("error: Post does not exist");
+            }
+          );
         }
-
 }

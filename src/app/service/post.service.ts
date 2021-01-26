@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
@@ -8,7 +8,6 @@ import { Observable } from "rxjs";
 export class PostService {
   private _postUrl = "http://localhost:3000/api/post/";
   private _bookUrl = "http://localhost:3000/api/book/";
-  private _postDeleteUrl = "http://localhost:3000/api/post/lol";
 
   constructor(private http: HttpClient) {}
   addPost(postData) {
@@ -39,8 +38,24 @@ export class PostService {
   updatePost(updatePostData) {
     return this.http.patch<any>(this._postUrl, updatePostData);
   }
-  deletePost(postId) {
-    console.log("postId", postId);
-    return this.http.delete<any>(this._postUrl +postId);
+  deletePost(deletePostData) {
+
+    let headers = new HttpHeaders();
+
+    headers.append("Content-Type", "application/json");
+
+    console.log("deletePostData", deletePostData);
+    let params = new HttpParams();
+    params = params.append("post_id", deletePostData.postId);
+    params = params.append("give_book_id", deletePostData.giveBookId);
+        params = params.append("take_book_id", deletePostData.takeBookId);
+
+    const option = {
+      headers: headers,
+      params: params,
+    };
+    console.log(option)
+
+    return this.http.delete<any>(this._postUrl , option);
   }
 }
