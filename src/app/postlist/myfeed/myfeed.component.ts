@@ -1,4 +1,3 @@
-import { not } from "@angular/compiler/src/output/output_ast";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
@@ -30,9 +29,14 @@ export class MyfeedComponent implements OnInit {
 
   ngOnInit(): void {
     //console.log(this.sortBy);
+    this.note =
+      "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+          
     this.isNearByPost = true;
     this.profileId = localStorage.getItem("profileid");
     // console.log(this.profileId);
+
+    if (!this.profileId) this.router.navigate(["login"]);
     this.postService.getNearByPost(this.profileId).subscribe(
       async (res) => {
         //  console.log(res.message);
@@ -41,6 +45,9 @@ export class MyfeedComponent implements OnInit {
         // console.log(this.postData);
       },
       (err) => {
+        this.note =
+          "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+
         console.log(err);
       }
     );
@@ -48,9 +55,12 @@ export class MyfeedComponent implements OnInit {
   myFeedByLocation() {
     // this.sortBy = "location";
     this.isNearByPost = true;
+    this.isDataFetch = false;
+    this.postData = null;
     //console.log(this.sortBy);
     this.profileId = localStorage.getItem("profileid");
     // console.log(this.profileId);
+    if (!this.profileId) this.router.navigate(["login"]);
     this.postService.getNearByPost(this.profileId).subscribe(
       (res) => {
         //  console.log(res.message);
@@ -59,6 +69,7 @@ export class MyfeedComponent implements OnInit {
         // console.log(this.postData);
       },
       (err) => {
+
         console.log(err);
       }
     );
@@ -68,9 +79,12 @@ export class MyfeedComponent implements OnInit {
   myFeedByMyPost() {
     // this.sortBy = "mypost";
     this.isNearByPost = false;
+    this.isDataFetch = false;
+    this.postData = null;
     //console.log(this.sortBy);
     // this.router.navigate(["/profile"]);
     // this.router.navigate(["/myfeed"]);
+    if (!this.profileId) this.router.navigate(["login"]);
     this.postService.getPostByProfile(this.profileId).subscribe(
       (res) => {
         // console.log(res);
@@ -87,9 +101,12 @@ export class MyfeedComponent implements OnInit {
   myFeedByNewPost() {
     // this.sortBy = "newpost";
     this.isNearByPost = false;
-    //console.log(this.sortBy);
+    this.isDataFetch = false;
+    this.postData = null;
 
+    //console.log(this.sortBy);
     // this.router.navigate(["/myfeed"]);
+    if (!this.profileId) this.router.navigate(["login"]);
     this.postService.getAllPost().subscribe(
       (res) => {
         // console.log(res);
@@ -104,24 +121,20 @@ export class MyfeedComponent implements OnInit {
   }
   getPostByBookName() {
     this.isNearByPost = false;
-    if (this.bookname && this.bookname.length>0) {
+    if (this.bookname && this.bookname.length > 0) {
       console.log(this.bookname);
       this.postService.getPostByBookName(this.bookname).subscribe(
-        (res)=>{
-          console.log(res)
-           this.isDataFetch = true;
-           this.postData = res.message;
-
+        (res) => {
+          console.log(res);
+          this.isDataFetch = true;
+          this.postData = res.message;
         },
-        (err)=>{
-          this.note="0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service."
-          this.isDataFetch=false;
-          this.postData=null;
+        (err) => {
+          this.isDataFetch = false;
+          this.postData = null;
           //console.log(err);
         }
-
-      )
-
+      );
     }
   }
 }

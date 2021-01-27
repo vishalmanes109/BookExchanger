@@ -28,19 +28,18 @@ export class ProfileComponent implements OnInit {
   public isPostExist = true;
   public message;
 
-
   constructor(
     private ProfileService: ProfileService,
     private postService: PostService,
     private SharedService: SharedService,
-    private router: Router,
-
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-
     this.username = localStorage.getItem("username");
     //console.log(this.username);
+    if(!this.username)
+    this.router.navigate(['login'])
     this.ProfileService.getProfile(this.username).subscribe(
       (res) => {
         //console.log(res);
@@ -83,21 +82,9 @@ export class ProfileComponent implements OnInit {
     this.SharedService.KeepPostId(postId);
     console.log(`post/${postId}`);
     this.router.navigate([`post/${postId}`]);
-
-    // console.log(postId);
-    // this.postService.getPostByPostId(postId).subscribe(
-    //   (res)=>{
-    //     console.log(res)
-    //   },
-    //   (err)=>{
-    //     console.log(err)
-    //   }
-    // )
-
-    //select post.id,post.title,post.description,post.post_time,post.give_book_image, user_i.name as username, book.name, book.author from  post,user_i,book,profile where post.id='WRlts7a16X'  and post.give_book_id=book.id and post.profile_id=profile.id and profile.user_id=user_i.id
   }
 
-  getProfile() {
+  EditProfile() {
     // console.log(this.username);
     // this.ProfileService.getProfile(this.username).subscribe(
     //   (res) => {
@@ -107,5 +94,23 @@ export class ProfileComponent implements OnInit {
     //     console.log(err);
     //   }
     // );
+  }
+  deleteProfile() {
+    console.log(this.profileId);
+    console.log(this.username);
+    console.log(this.userId);
+      this.ProfileService.deleteProfile(this.userId).subscribe(
+        (res)=>{
+          console.log(res)
+          localStorage.removeItem('username');
+          localStorage.removeItem('userid');
+          localStorage.removeItem("profileid");
+          this.router.navigate(["register"])
+          console.log("profile deleted")
+        },
+        (err)=>{
+          console.log(err)
+        }
+      )
   }
 }

@@ -2,39 +2,48 @@
 <br />
 <br />
 <div class="container">
-  <div class="ui stackable   grid">
-    <div class=" ui five wide column   container">
+  <div class="ui stackable grid">
+    <div class="ui five wide column container">
       <div class="ui raised centered link card">
         <div class="content">
-          <div class="header">Username:  {{username}}</div>
-          <br>
+          <div class="header">Username: {{ username }}</div>
+          <br />
           <div class="content">
-            <span class="category"> Email: {{email}}</span>
-          </div><br>
+            <span class="category"> Email: {{ email }}</span>
+          </div>
+          <br />
           <div class="description">
             <p>Favourite Genres:</p>
           </div>
           <div *ngFor="let genre of genreList">
-
-            {{genre.name}}
+            {{ genre.name }}
           </div>
-          <br>
+          <br />
           <div class="description">
-            <p>Location: {{location}} </p>
+            <p>Location: {{ location }}</p>
           </div>
         </div>
         <div class="extra content">
-          <a
+          <button
             [routerLink]="['/updateprofile']"
             routerLinkActive="router-link-active"
-            ><button class="ui positive basic button">Edit</button></a
+            class="ui positive basic button"
+            value="Edit"
           >
+            Edit
+          </button>
+          <button
+            class="ui negative basic button"
+            value="Delete"
+            (click)="deleteProfile()"
+          >
+
+            Delete
+          </button>
+
           <div class="right floated author">
-            <img
-              class="ui avatar image"
-              src="../../../assets/avatar/12.svg"
-            />
-            {{username}}
+            <img class="ui avatar image" src="../../../assets/avatar/12.svg" />
+            {{ username }}
           </div>
         </div>
       </div>
@@ -42,51 +51,56 @@
       <div class="ui raised centered link card">
         <div class="content">
           <div class="header">Awards</div>
-          <br>
+          <br />
           <div class="content">
-            <span class="category">total point: {{points}}</span>
+            <span class="category">total point: {{ points }}</span>
           </div>
-          <br>
+          <br />
           <div class="description">
-            <p>You will get the points based on your activity </p>
+            <p>You will get the points based on your activity</p>
           </div>
         </div>
         <div class="extra content">
           <div class="right floated author">
-            <img
-              class="ui avatar image"
-              src="../../../assets/avatar/12.svg"
-            />
-            {{username}}
+            <img class="ui avatar image" src="../../../assets/avatar/12.svg" />
+            {{ username }}
           </div>
         </div>
       </div>
     </div>
     <div class="ui eleven wide column">
       <div class="ui raised segment">
-        <h3> Recent Post</h3>
-        
+        <h3>Recent Post</h3>
+
         <div *ngIf="isPostExist">
-        <div *ngFor="let post of postData" class="ui middle aligned animated list">
-          <div (click)="openPost(post.postid)" class="item">
-            <img
-              class="ui avatar image "
-              src="../../../assets/avatar/20.svg"
-            />
-            <div class="content">
-              <div class="header">{{post.title}}</div>
-              <div>{{post.description}}</div>
-              <div>{{post.post_time.substring(0,10)}}</div>
+          <div
+            *ngFor="let post of postData"
+            class="ui middle aligned animated list"
+          >
+            <div (click)="openPost(post.postid)" class="item">
+              <img
+                class="ui avatar image"
+                src="../../../assets/avatar/20.svg"
+              />
+              <div class="content">
+                <div class="header">{{ post.title }}</div>
+                <div>{{ post.description }}</div>
+                <div>{{ post.post_time.substring(0, 10) }}</div>
+              </div>
             </div>
+            <br />
           </div>
-          <br />
         </div>
-        </div>
-        <div *ngIf="! isPostExist">
-          <div class="ui container red message ">
-            {{message}}
+        <div *ngIf="!isPostExist">
+          <div class="ui container red message">
+            {{ message }}
           </div>
-          <i class="ui inverted green button" [routerLink]="['/createpost']" routerLinkActive="router-link-active" >Create Post </i>
+          <i
+            class="ui inverted green button"
+            [routerLink]="['/createpost']"
+            routerLinkActive="router-link-active"
+            >Create Post
+          </i>
         </div>
       </div>
     </div>

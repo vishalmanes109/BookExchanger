@@ -188,7 +188,7 @@ export class CreateprofileComponent implements OnInit {
           this.message = "Congratulations Profile is created";
           setTimeout(() => {
             if (res.success == 1 && this.isDone) {
-              this.router.navigate(["myfeed"]);
+              this.router.navigate(["profile"]);
             }
           }, 2000);
         },

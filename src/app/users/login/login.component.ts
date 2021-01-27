@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   isValidPassword() {
-
     if (!this.validationService.isValidPassword(this.password)) {
       this.isError = true;
 
@@ -34,9 +33,8 @@ export class LoginComponent implements OnInit {
       this.validationService.isValidEmail(this.password);
     }
   }
-  reset(){
-        this.isError = false;
-
+  reset() {
+    this.isError = false;
   }
   login() {
     this.userData = {
@@ -54,8 +52,10 @@ export class LoginComponent implements OnInit {
       (res) => {
         console.log(res);
         this.isError = false;
-        this.router.navigate(["/myfeed"]);
         localStorage.setItem("token", res.token);
+        localStorage.setItem("username", this.username);
+        console.log(this.username);
+        this.router.navigate(["profile"]);
       },
       (err) => {
         console.log(err.error);

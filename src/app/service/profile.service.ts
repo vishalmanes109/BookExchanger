@@ -19,5 +19,9 @@ export class ProfileService {
 
     return this.http.get<any>(this._profileUrl  +"name/"+ username);
   }
-  
+  deleteProfile(userId){
+    console.log("from ser",userId)
+    return this.http.delete<any>(this._profileUrl+userId)
+  }
 }
+
