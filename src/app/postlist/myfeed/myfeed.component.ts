@@ -1,3 +1,4 @@
+import { not } from "@angular/compiler/src/output/output_ast";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
@@ -21,6 +22,7 @@ export class MyfeedComponent implements OnInit {
   public entirePostData = {};
   public takeBookData = new Array();
   public takeBookId;
+  public bookname;
   //public sortBy = "location";
   public takeBookResult;
   public isNearByPost = false;
@@ -99,5 +101,27 @@ export class MyfeedComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  getPostByBookName() {
+    this.isNearByPost = false;
+    if (this.bookname && this.bookname.length>0) {
+      console.log(this.bookname);
+      this.postService.getPostByBookName(this.bookname).subscribe(
+        (res)=>{
+          console.log(res)
+           this.isDataFetch = true;
+           this.postData = res.message;
+
+        },
+        (err)=>{
+          this.note="0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service."
+          this.isDataFetch=false;
+          this.postData=null;
+          //console.log(err);
+        }
+
+      )
+
+    }
   }
 }

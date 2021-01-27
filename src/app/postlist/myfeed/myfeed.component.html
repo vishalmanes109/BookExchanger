@@ -22,6 +22,9 @@
               class="prompt"
               type="text"
               placeholder="Search post by book name..."
+              name="searchbybook"
+              [(ngModel)]="bookname"
+              (keyup.enter)="getPostByBookName()"
             />
             <i class="search icon"></i>
           </div>
@@ -105,6 +108,13 @@
         </div>
       </div>
       <br />
+    </div>
+    <div *ngIf="!isDataFetch">
+      <div class="ui segment container "> 
+        {{note}}
+
+       <a href="www.bookxchanger.com">BookXchanger</a> 
+        </div>
     </div>
   </div>
   <div class="four wide column">

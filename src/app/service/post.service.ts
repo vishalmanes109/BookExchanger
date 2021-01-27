@@ -60,4 +60,7 @@ export class PostService {
 
     return this.http.delete<any>(this._postUrl, option);
   }
+  getPostByBookName(bookname){
+    return this.http.get<any>(this._postUrl+"book/"+bookname);
+  }
 }
