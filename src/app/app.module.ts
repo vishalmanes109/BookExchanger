@@ -1,6 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { RegisterComponent } from "./users/register/register.component";
@@ -29,6 +28,8 @@ import { ProfileService } from "./service/profile.service";
 import { PostService } from "./service/post.service";
 import { SinglepostComponent } from './postlist/singlepost/singlepost.component';
 import { SharedService } from "./service/shared.service";
+import { DeletepostComponent } from './post/deletepost/deletepost.component';
+import { DeleteprofileComponent } from './users/deleteprofile/deleteprofile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,8 @@ import { SharedService } from "./service/shared.service";
     PagenotfoundComponent,
     FooterComponent,
     SinglepostComponent,
+    DeletepostComponent,
+    DeleteprofileComponent,
   ],
   imports: [
     BrowserModule,

@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   public message;
 
   constructor(
-    private ProfileService: ProfileService,
+    private profileService: ProfileService,
     private postService: PostService,
     private SharedService: SharedService,
     private router: Router
@@ -38,9 +38,8 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.username = localStorage.getItem("username");
     //console.log(this.username);
-    if(!this.username)
-    this.router.navigate(['login'])
-    this.ProfileService.getProfile(this.username).subscribe(
+    if (!this.username) this.router.navigate(["login"]);
+    this.profileService.getProfile(this.username).subscribe(
       (res) => {
         //console.log(res);
         this.profileData = res.message[0];
@@ -79,7 +78,7 @@ export class ProfileComponent implements OnInit {
     );
   }
   openPost(postId) {
-    this.SharedService.KeepPostId(postId);
+    // this.SharedService.KeepPostId(postId);
     console.log(`post/${postId}`);
     this.router.navigate([`post/${postId}`]);
   }
@@ -99,18 +98,11 @@ export class ProfileComponent implements OnInit {
     console.log(this.profileId);
     console.log(this.username);
     console.log(this.userId);
-      this.ProfileService.deleteProfile(this.userId).subscribe(
-        (res)=>{
-          console.log(res)
-          localStorage.removeItem('username');
-          localStorage.removeItem('userid');
-          localStorage.removeItem("profileid");
-          this.router.navigate(["register"])
-          console.log("profile deleted")
-        },
-        (err)=>{
-          console.log(err)
-        }
-      )
+    console.log(`deleteprofile/${this.userId}`);
+    this.router
+      .navigateByUrl("deleteprofile", { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([`deleteprofile/${this.userId}`]);
+      });
   }
 }

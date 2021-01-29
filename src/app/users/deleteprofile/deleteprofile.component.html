@@ -1,0 +1,57 @@
+<div>
+  <div>
+    <img
+      class="ui image centered medium"
+      src="../../../assets/logo/logo3.3.png"
+      alt="BookXchanger Logo"
+    />
+  </div>
+  <div *ngIf="!isDeleted" class="ui container segment">
+    <p>
+      Deleting your profile is irreversible. After deleting your profile ,all of
+      your posts, reward points will get deleted. Enter your profile name below
+      to confirm you want to permanently delete it:
+    </p>
+
+    <form class="ui form">
+      <input
+        class="field"
+        type="text"
+        placeholder="Enter your user name (case sensative))"
+        name="username"
+        [(ngModel)]="username"
+      />
+      <br />
+      <div *ngIf="isUsernameWrong" class="ui message">
+          {{message}}
+      </div>
+      <br />
+      <input
+        [routerLink]="['/profile']"
+        routerLinkActive="router-link-active"
+        class="ui button positive basic"
+        type="button"
+        name="cancel"
+        value="cancel"
+      />
+      <input
+        (click)="deleteProfile()"
+        class="ui button negative basic right floated"
+        type="button"
+        name="delete"
+        value="delete"
+      />
+    </form>
+  </div>
+  <div *ngIf="isDeleted" class="ui segment container">
+    <p>{{ message }}</p>
+    <br />
+    <a [routerLink]="['/register']" routerLinkActive="router-link-active">
+      Click Here to create new account</a
+    >
+    <br>
+    <a [routerLink]="['/register']" routerLinkActive="router-link-active">
+      Tell us why you leave</a
+    >
+  </div>
+</div>
