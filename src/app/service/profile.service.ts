@@ -19,9 +19,24 @@ export class ProfileService {
 
     return this.http.get<any>(this._profileUrl  +"name/"+ username);
   }
+  getProfileByProfileId(profileId){
+    return this.http.get<any>(this._profileUrl + "id/"+profileId);
+
+  }
   deleteProfile(userId){
     console.log("from ser",userId)
     return this.http.delete<any>(this._profileUrl+userId)
   }
+  updateProfileLocation(locationData){
+    return 
+
+  }
+  updateProfileFavGenre(favGenreList){
+    return 
+  }
+  updateEmail(email){
+    return 
+  }
+
 }
 

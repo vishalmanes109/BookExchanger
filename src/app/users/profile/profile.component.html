@@ -25,10 +25,9 @@
         </div>
         <div class="extra content">
           <button
-            [routerLink]="['/updateprofile']"
-            routerLinkActive="router-link-active"
             class="ui positive basic button"
             value="Edit"
+            (click)="EditProfile()"
           >
             Edit
           </button>

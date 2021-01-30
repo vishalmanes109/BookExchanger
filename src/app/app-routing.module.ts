@@ -33,7 +33,7 @@ const routes: Routes = [
     component: CreatepostComponent,
   },
   {
-    path: "deletepost/:userid",
+    path: "deletepost",
     canActivate: [AuthGuard],
     component: DeletepostComponent,
   },
@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   { path: "myfeed", canActivate: [AuthGuard], component: MyfeedComponent },
   {
-    path: "updateprofile",
+    path: "updateprofile/:profileid",
     canActivate: [AuthGuard],
     component: UpdateprofileComponent,
   },

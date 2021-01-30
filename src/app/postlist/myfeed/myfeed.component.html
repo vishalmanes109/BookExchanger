@@ -3,7 +3,7 @@
 <div class="ui container">
   <div class="ui container segments">
     <div class="ui stackable grid container">
-      <div class="eight wide column">
+      <div class="four wide column">
         <i [routerLink]="['/createpost']" routerLinkActive="router-link-active">
           <div class="ui fluid category search">
             <div class="ui icon input post">
@@ -15,7 +15,23 @@
         </i>
       </div>
 
-      <div class="eight wide column">
+      <div class="six wide column">
+        <div class="ui category search">
+          <div class="ui icon input post">
+            <input
+              class="prompt"
+              type="text"
+              placeholder="Search post by book name..."
+              name="searchbybook"
+              [(ngModel)]="bookname"
+              (keyup.enter)="getPostByBookName()"
+            />
+            <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+      </div>
+      <div class="six wide column">
         <div class="ui right aligned category search">
           <div class="ui icon input post">
             <input

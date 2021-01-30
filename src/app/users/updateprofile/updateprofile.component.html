@@ -1,6 +1,5 @@
 <div>
   <app-navbar> </app-navbar>
-
   <br />
   <div class="ui raised segment container">
     <div class="ui container stackable internally celled grid">
@@ -13,8 +12,9 @@
             </div>
             <div class="content centered">
               <hr />
-              <h3>Kristy</h3>
-              <Button class="ui button primary"> Change Avatar </Button>
+              
+              <h3>{{username[0].toUpperCase()+username.substring(1)}}</h3>
+              <input type="file" />
             </div>
           </div>
           <div class="ui form customfield"></div>
@@ -25,7 +25,7 @@
           <br />
 
           <form #f="ngForm" class="ui form">
-            <div class="field">
+            <div *ngIf="isDataFetch" class="field">
               <label>Favourite Genre</label>
               <ng-multiselect-dropdown
                 [placeholder]="'Select Genre'"
@@ -35,6 +35,7 @@
                 name="selecteditems"
                 (onSelect)="onItemSelect($event)"
                 (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onItemDeSelect($event)"
               >
               </ng-multiselect-dropdown>
             </div>
@@ -42,28 +43,28 @@
               <label class="ui container">
                 Change Location:
                 <div
-                  class="ui icon button"
+                  class="ui icon button basic orange"
                   data-tooltip="Location required for users and books  recommendation"
                 >
                   <i class=" "> Read More</i>
                 </div>
               </label>
-
               <br />
-
               <div>
                 <input
                   type="text"
                   placeholder="Enter Name of your city/village/town"
+                  name="location"
+                  [(ngModel)]="placeName"
                 />
               </div>
               <h3>OR</h3>
-              <button class="ui button primary" (click)="getLocation()">
+              <button class="ui button primary basic " (click)="getLocation()">
                 Provide Location
               </button>
+              <p *ngIf="foundLocation" >{{placeName}}</p>
             </div>
 
-        
             <div class="ui header red centered">Account Info</div>
             <hr />
             <br />
@@ -75,9 +76,10 @@
                 <input
                   type="text"
                   placeholder="Enter new Email"
+                  [(ngModel)]="email"
+                  name="email"
                 />
               </div>
-              
             </div>
             <div class="field">
               <sui-checkbox
@@ -89,7 +91,7 @@
                 I agree to the Terms and Conditions
               </sui-checkbox>
             </div>
-            <button class="ui button" type="submit" onclick="Submit()">
+            <button class="ui button positive basic " type="submit" (click)="updateProfile()">
               Submit
             </button>
           </form>

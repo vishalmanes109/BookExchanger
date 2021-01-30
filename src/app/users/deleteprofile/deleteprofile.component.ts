@@ -24,10 +24,9 @@ export class DeleteprofileComponent implements OnInit {
   ngOnInit(): void {
     // if user is not logged in
     if (!localStorage.getItem("username")) this.router.navigate(["login"]);
-    
+
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get("userid");
-      console.log("lol", this.userId);
     });
     this.userName = localStorage.getItem("username");
   }
@@ -36,7 +35,7 @@ export class DeleteprofileComponent implements OnInit {
     if (this.userName == this.username) {
       this.profileService.deleteProfile(this.userId).subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           this.isDeleted = true;
           localStorage.removeItem("username");
           localStorage.removeItem("userid");
@@ -46,7 +45,7 @@ export class DeleteprofileComponent implements OnInit {
             "Profile is deleted. Thanks for your valuable time. We appriciate your decision. feel free to open new account anytime.";
         },
         (err) => {
-          console.log(err);
+         // console.log(err);
           this.message = "Error: Please try again.";
         }
       );

@@ -84,16 +84,13 @@ export class ProfileComponent implements OnInit {
   }
 
   EditProfile() {
-    // console.log(this.username);
-    // this.ProfileService.getProfile(this.username).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
+    this.router
+      .navigateByUrl("updateProfile", { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([`updateprofile/${this.profileId}`]);
+      });
   }
+
   deleteProfile() {
     console.log(this.profileId);
     console.log(this.username);
