@@ -27,15 +27,21 @@ export class ProfileService {
     console.log("from ser",userId)
     return this.http.delete<any>(this._profileUrl+userId)
   }
-  updateProfileLocation(locationData){
-    return 
+  updateLocation(locationData){
+    console.log('locationData',locationData)
+    return this.http.patch<any>(this._profileUrl+"location",locationData)
 
   }
-  updateProfileFavGenre(favGenreList){
+  updateFavGenre(favGenreList){
     return 
   }
-  updateEmail(email){
-    return 
+  updateEmail(email,profileId){
+    let updateEmailData={
+      email,
+      profileId
+    }
+    console.log(updateEmailData)
+    return this.http.patch<any>(this._profileUrl + "email", updateEmailData);
   }
 
 }

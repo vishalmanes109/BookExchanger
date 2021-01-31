@@ -56,6 +56,7 @@
                   placeholder="Enter Name of your city/village/town"
                   name="location"
                   [(ngModel)]="placeName"
+                  (keyup.enter)="onEnterGetLocation()"
                 />
               </div>
               <h3>OR</h3>
@@ -81,16 +82,15 @@
                 />
               </div>
             </div>
-            <div class="field">
-              <sui-checkbox
-                [(ngModel)]="eCheck"
-                [isDisabled]="eCheckDisabled"
-                [isReadonly]="eCheckReadonly"
-                name="checkbox"
-              >
-                I agree to the Terms and Conditions
-              </sui-checkbox>
-            </div>
+             <div *ngIf="isError" class="ui message red" >
+              {{message}}
+             </div>
+
+             <div *ngIf="isDone" class="ui message green" >
+              {{message}}
+             </div>
+            
+             
             <button class="ui button positive basic " type="submit" (click)="updateProfile()">
               Submit
             </button>

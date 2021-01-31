@@ -13,9 +13,6 @@ export class UpdateprofileComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
-  public eCheck;
-  public eCheckDisabled;
-  public eCheckReadonly;
   public profileId;
   public email;
   public profileData;
@@ -28,6 +25,10 @@ export class UpdateprofileComponent implements OnInit {
   public foundLocation;
   public placeName;
   public username;
+  public message;
+  public isError = false;
+  public isDone = false;
+  public newLocationName;
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
@@ -39,7 +40,7 @@ export class UpdateprofileComponent implements OnInit {
       this.profileId = params.get("profileid");
       //console.log(this.profileId);
     });
-    this.username= localStorage.getItem('username')
+    this.username = localStorage.getItem("username");
 
     this.profileService.getProfileByProfileId(this.profileId).subscribe(
       (res) => {
@@ -48,7 +49,7 @@ export class UpdateprofileComponent implements OnInit {
         this.genreList = res.genrelist;
         this.email = this.profileData.email;
         this.location = this.profileData.location;
-
+        this.newLocationName = this.location;
         this.placeName =
           this.location +
           ", latitude: " +
@@ -120,6 +121,7 @@ export class UpdateprofileComponent implements OnInit {
       limitSelection: 3,
     };
   }
+
   onItemSelect(item: any) {
     // console.log(item);
     this.favGenreList.push(item.id);
@@ -151,6 +153,7 @@ export class UpdateprofileComponent implements OnInit {
           .subscribe(
             (res) => {
               this.placeName = res.features[0].place_name;
+              this.newLocationName = this.placeName;
               this.foundLocation = true;
               console.log(res.features[0].place_name);
             },
@@ -164,9 +167,9 @@ export class UpdateprofileComponent implements OnInit {
       alert("no support for geolocation");
     }
   }
-  
+
   onEnterGetLocation() {
-    this.locationService.getPlaceName(this.location).subscribe((res) => {
+    this.locationService.getPlaceName(this.placeName).subscribe((res) => {
       this.foundLocation = true;
       // console.log(res);
       this.longitude = res.features[0].center[0];
@@ -180,5 +183,40 @@ export class UpdateprofileComponent implements OnInit {
         };
     });
   }
-  updateProfile() {}
+  updateProfile() {
+    console.log(this.email);
+    if (this.profileData.email != this.email) {
+      this.profileService.updateEmail(this.email, this.profileId).subscribe(
+        (res) => {
+          console.log(res);
+          this.isError = false;
+          this.isDone = true;
+          this.message = "Profile Updated";
+        },
+        (err) => {
+          this.isError = true;
+          this.message = "Invalid Email";
+          console.log(err);
+        }
+      );
+    }
+    console.log(this.profileData.location);
+    console.log(this.newLocationName);
+       if (this.profileData.location != this.newLocationName) {
+         let locationData={
+           profileid:this.profileId,
+           latitude:this.latitude,
+           longitude:this.longitude,
+           location:this.newLocationName
+         }
+         this.profileService.updateLocation(locationData).subscribe(
+           (res) => {
+             console.log(res);
+           },
+           (err) => {
+             console.log(err);
+           }
+         );
+       }
+  }
 }
