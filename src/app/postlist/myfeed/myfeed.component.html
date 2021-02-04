@@ -10,7 +10,6 @@
               <input class="" type="text" placeholder="Create Post" />
               <i class="edit outline icon"></i>
             </div>
-            <div class="results"></div>
           </div>
         </i>
       </div>
@@ -21,7 +20,7 @@
             <input
               class="prompt"
               type="text"
-              placeholder="Search post by book name..."
+              placeholder="Search by book name..."
               name="searchbybook"
               [(ngModel)]="bookname"
               (keyup.enter)="getPostByBookName()"
@@ -37,10 +36,9 @@
             <input
               class="prompt"
               type="text"
-              placeholder="Search post by book name..."
-              name="searchbybook"
-              [(ngModel)]="bookname"
-              (keyup.enter)="getPostByBookName()"
+              placeholder="Advance search"
+              name="advancesearch"
+              [routerLink]="['/advancesearch']" routerLinkActive="router-link-active" 
             />
             <i class="search icon"></i>
           </div>
@@ -52,7 +50,7 @@
 </div>
 <br />
 <div class="ui container">
-  <div class="ui compact menu container">
+  <div class="ui compact  menu container">
     <a (click)="myFeedByLocation()" class="item">
       <i  class="map marker alternate icon"></i>
       Location

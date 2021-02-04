@@ -15,6 +15,7 @@ import { LoginComponent } from "./users/login/login.component";
 import { ProfileComponent } from "./users/profile/profile.component";
 import { RegisterComponent } from "./users/register/register.component";
 import { UpdateprofileComponent } from "./users/updateprofile/updateprofile.component";
+import { AdvancesearchComponent } from "./postlist/advancesearch/advancesearch.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -58,6 +59,11 @@ const routes: Routes = [
     path: "post/:postid",
     canActivate: [AuthGuard],
     component: SinglepostComponent,
+  },
+  {
+    path: "advancesearch",
+    canActivate: [AuthGuard],
+    component: AdvancesearchComponent,
   },
 
   { path: "404", component: PagenotfoundComponent },

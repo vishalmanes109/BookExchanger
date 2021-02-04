@@ -30,6 +30,7 @@ import { SinglepostComponent } from './postlist/singlepost/singlepost.component'
 import { SharedService } from "./service/shared.service";
 import { DeletepostComponent } from './post/deletepost/deletepost.component';
 import { DeleteprofileComponent } from './users/deleteprofile/deleteprofile.component';
+import { AdvancesearchComponent } from './postlist/advancesearch/advancesearch.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { DeleteprofileComponent } from './users/deleteprofile/deleteprofile.comp
     SinglepostComponent,
     DeletepostComponent,
     DeleteprofileComponent,
+    AdvancesearchComponent,
   ],
   imports: [
     BrowserModule,
