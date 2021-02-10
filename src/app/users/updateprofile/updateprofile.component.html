@@ -11,8 +11,7 @@
               <img src="../../../assets/avatar/7.svg" />
             </div>
             <div class="content centered">
-              <hr />
-              
+              <hr />              
               <h3>{{username[0].toUpperCase()+username.substring(1)}}</h3>
               <input type="file" />
             </div>
@@ -23,7 +22,6 @@
           <div class="ui header red centered">Basic Info</div>
           <hr />
           <br />
-
           <form #f="ngForm" class="ui form">
             <div *ngIf="isDataFetch" class="field">
               <label>Favourite Genre</label>
@@ -65,7 +63,6 @@
               </button>
               <p *ngIf="foundLocation" >{{placeName}}</p>
             </div>
-
             <div class="ui header red centered">Account Info</div>
             <hr />
             <br />

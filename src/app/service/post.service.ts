@@ -60,7 +60,21 @@ export class PostService {
 
     return this.http.delete<any>(this._postUrl, option);
   }
-  getPostByBookName(bookname){
-    return this.http.get<any>(this._postUrl+"book/"+bookname);
+  getPostByBookName(book) {
+    return this.http.get<any>(this._postUrl + "book/" + book);
+  }
+  getPostByAuthor(author) {
+    return this.http.get<any>(this._postUrl + "author/"+ author);
+  }
+  getPostByUser(username) {
+    console.log("username", username);
+    return this.http.get<any>(this._postUrl + "user/"+ username);
+  }
+  getPostByExcatLocation(location) {
+    return this.http.get<any>(this._postUrl + "locations/"+ location);
+  }
+  getPostByTitle(title) {
+    console.log(title)
+    return this.http.get<any>(this._postUrl + "title/"+ title);
   }
 }

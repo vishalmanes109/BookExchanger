@@ -27,14 +27,13 @@ export class ProfileService {
     console.log("locationData", locationData);
     return this.http.patch<any>(this._profileUrl + "location", locationData);
   }
-  updateFavGenre(oldGenreList,newGenreList, profileId) {
-
+  updateFavGenre(oldGenreList, newGenreList, profileId) {
     let favGenreData = {
       new_fav_genre_list: newGenreList,
       old_fav_genre_list: oldGenreList,
       profileid: profileId,
     };
-    console.log(favGenreData)
+    console.log(favGenreData);
     return this.http.patch<any>(this._profileUrl + "genres", favGenreData);
   }
   updateEmail(email, profileId) {
@@ -45,5 +44,24 @@ export class ProfileService {
     console.log(updateEmailData);
     return this.http.patch<any>(this._profileUrl + "email", updateEmailData);
   }
-}
+  // run() {
+  //   let newArr = Array();
+  //   let old = Array();
 
+  //   for (let i = 0; i < 3; i++) {
+  //     if (newArr[0] == old[i] && query1 != false) {
+  //       query1 = false;
+  //       break;
+  //     }
+  //     if (newArr[1] == old[i] && query1 != false) {
+  //       query2 = false;
+  //       break;
+  //     }
+  //     if (newArr[2] == old[i] && query1 != false) {
+  //       query3 = false;
+  //       break;
+  //     }
+  //     keep.push(old[i]);
+  //   }
+  // }
+}

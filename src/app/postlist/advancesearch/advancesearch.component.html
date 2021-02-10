@@ -1,1 +1,83 @@
-<app-navbar></app-navbar>
+<app-navbar></app-navbar> <br /><br />
+<div class="search">
+  <div class="ui form container">
+    <div class="inline fields">
+      <div class="thirteen wide field">
+        <input type="text" placeholder="Enter String" name="text" [(ngModel)]="text" />
+      </div>
+
+      <div class="three wide field">
+        <button class="ui button inverted primary" (click)="searchPost()">
+          Search
+        </button>
+      </div>
+    </div>
+    <label>Search By : (Select ONLY ONE fo the following parameter) </label>
+    <br />
+    <br />
+    <br />
+    <div class="inline fields">
+      <br />
+      <div class="five wide field">
+        <div class="ui checkbox">
+          <input
+            type="checkbox"
+            (change)="changeByBook()"
+            tabindex="0"
+            class=""
+          />
+          <label>Book name</label>
+        </div>
+      </div>
+      <div class="five wide field">
+        <div class="ui checkbox">
+          <input
+            type="checkbox"
+            (change)="changeByAuthor()"
+            tabindex="0"
+            class=""
+          />
+          <label>Author name</label>
+        </div>
+      </div>
+      <div class="five wide field">
+        <div class="ui checkbox">
+          <input
+            type="checkbox"
+            (change)="changeByTitle()"
+            tabindex="0"
+            class=""
+          />
+          <label>Title</label>
+        </div>
+      </div>
+    </div>
+    <div class="inline fields">
+      <div class="five wide field">
+        <div class="ui checkbox">
+          <input
+            type="checkbox"
+            (change)="changeByLocation()"
+            tabindex="0"
+            class=""
+          />
+          <label>Location</label>
+        </div>
+      </div>
+      <div class="five wide field">
+        <div class="ui checkbox">
+          <input
+            type="checkbox"
+            (change)="changeByUser()"
+            tabindex="0"
+            class=""
+          />
+          <label>User Name</label>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div *ngIf="isError" class="ui message red">{{message}}</div>
+    
+  </div>
+</div>
