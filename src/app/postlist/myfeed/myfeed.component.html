@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 <br />
 <div class="ui container">
-  <div class="ui container segments">
-    <div class="ui stackable grid container">
-      <div class="four wide column">
+  <div class="ui container">
+    <div class="ui stackable grid">
+      <div class="eight wide column">
         <i [routerLink]="['/createpost']" routerLinkActive="router-link-active">
           <div class="ui fluid category search">
             <div class="ui icon input post">
@@ -14,23 +14,7 @@
         </i>
       </div>
 
-      <div class="six wide column">
-        <div class="ui category search">
-          <div class="ui icon input post">
-            <input
-              class="prompt"
-              type="text"
-              placeholder="Search by book name..."
-              name="searchbybook"
-              [(ngModel)]="bookname"
-              (keyup.enter)="getPostByBookName()"
-            />
-            <i class="search icon"></i>
-          </div>
-          <div class="results"></div>
-        </div>
-      </div>
-      <div class="six wide column">
+      <div class="eight wide column">
         <div class="ui right aligned category search">
           <div class="ui icon input post">
             <input
@@ -38,7 +22,8 @@
               type="text"
               placeholder="Advance search"
               name="advancesearch"
-              [routerLink]="['/advancesearch']" routerLinkActive="router-link-active" 
+              [routerLink]="['/advancesearch']"
+              routerLinkActive="router-link-active"
             />
             <i class="search icon"></i>
           </div>
@@ -50,13 +35,12 @@
 </div>
 <br />
 <div class="ui container">
-  <div class="ui compact  menu container">
+  <div class="ui compact menu container">
     <a (click)="myFeedByLocation()" class="item">
-      <i  class="map marker alternate icon"></i>
+      <i class="map marker alternate icon"></i>
       Location
     </a>
-    <a  (click)="myFeedByMyPost()"
-    class="item">
+    <a (click)="myFeedByMyPost()" class="item">
       <i class="paperclip icon"></i>
       Your Post
     </a>
@@ -69,6 +53,9 @@
 <br />
 <div class="ui stackable grid container">
   <div class="twelve wide column">
+    <div *ngIf="isDataFetch" class="ui message">
+      {{ note }}
+    </div>
     <div *ngFor="let post of postData; let i = index">
       <div class="ui teal padded segment container">
         <div class="ui">
@@ -99,11 +86,18 @@
               </div>
               <div class="details">Author Name: {{ post.givebookauthor }}</div>
 
-              <div class="details" *ngIf=" post.takebook !== undefined || post.takebook !== null   else takebooknotpresent">
-                
+              <div
+                class="details"
+                *ngIf="
+                  post.takebook !== undefined || post.takebook !== null;
+                  else takebooknotpresent
+                "
+              >
                 Book want : {{ post.takebookname }}
               </div>
-              <ng-template #takebooknotpresent >Book want : {{ takeBook }}</ng-template>
+              <ng-template #takebooknotpresent
+                >Book want : {{ takeBook }}</ng-template
+              >
 
               <div class="details">Author Name:{{ post.takebookauthor }}</div>
               <div class="details">
@@ -111,40 +105,67 @@
               </div>
               <div class="details">Location: {{ post.location }}</div>
               <br />
-              <div *ngIf=" isNearByPost" class="details">
-                {{ post.name }} is : {{ post.distance.toFixed(1)*1609 }} meters away from your
+              <div *ngIf="isNearByPost" class="details">
+                {{ post.name }} is :
+                {{ post.distance.toFixed(1) * 1609 }} meters away from your
                 location
               </div>
             </div>
-            <div class="ui button blue inverted">Message</div>
-            <div class="ui button orange inverted">Recommend</div>
+
+            <div *ngIf="yourPost">
+              <input
+                type="button"
+                class="ui button primary inverted"
+                name="edit"
+                value="Edit"
+                (click)="editPost(post.postid)"
+              />
+              <input
+                type="button"
+                class="ui right floated button red inverted"
+                name="delete"
+                value="Delete"
+                (click)="deletePost(post.postid)"
+              />
+            </div>
+            <div *ngIf="!yourPost">
+              <input
+                type="button"
+                class="ui button primary inverted"
+                name="chat"
+                value="Chat"
+              />
+            </div>
           </div>
         </div>
       </div>
       <br />
     </div>
     <div *ngIf="!isDataFetch">
-      <div class="ui segment container "> 
-        {{note}}
+      <div class="ui segment container">
+        {{ note }}
 
-       <a href="www.bookxchanger.com">BookXchanger</a> 
-        </div>
+        <a href="www.bookxchanger.com">BookXchanger</a>
+      </div>
     </div>
   </div>
   <div class="four wide column">
-    <p>Trending Posts</p>
-    <div class="ui segments container">
-      <div class="ui segment">
-        <p>post1</p>
-      </div>
-      <div class="ui segment">
-        <p>post2</p>
-      </div>
-      <div class="ui segment">
-        <p>post3</p>
+    <p>Search posts by book name</p>
+    <div class="ui category search">
+      <div class="ui icon input">
+        <input
+          class="prompt"
+          type="text"
+          placeholder="Search by book name..."
+          name="searchbybook"
+          [(ngModel)]="bookname"
+          (keyup.enter)="getPostByBookName()"
+        />
+        <i class="search icon"></i>
       </div>
     </div>
-    <p>New Posts</p>
+    <br />
+    <p>About BookXchanger</p>
     <div class="ui segments container">
       <div class="ui segment">
         <p>post1</p>

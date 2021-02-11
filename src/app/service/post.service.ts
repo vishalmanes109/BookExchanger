@@ -70,9 +70,6 @@ export class PostService {
     console.log("username", username);
     return this.http.get<any>(this._postUrl + "user/"+ username);
   }
-  getPostByExcatLocation(location) {
-    return this.http.get<any>(this._postUrl + "locations/"+ location);
-  }
   getPostByTitle(title) {
     console.log(title)
     return this.http.get<any>(this._postUrl + "title/"+ title);

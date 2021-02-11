@@ -22,7 +22,7 @@ export class MyfeedComponent implements OnInit {
   public takeBookData = new Array();
   public takeBookId;
   public bookname;
-  //public sortBy = "location";
+  public yourPost = false;
   public takeBookResult;
   public isNearByPost = false;
   constructor(private postService: PostService, private router: Router) {}
@@ -31,10 +31,11 @@ export class MyfeedComponent implements OnInit {
     //console.log(this.sortBy);
     this.note =
       "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-          
+
     this.isNearByPost = true;
     this.profileId = localStorage.getItem("profileid");
     // console.log(this.profileId);
+    this.yourPost = false;
 
     if (!this.profileId) this.router.navigate(["login"]);
     this.postService.getNearByPost(this.profileId).subscribe(
@@ -42,6 +43,8 @@ export class MyfeedComponent implements OnInit {
         //  console.log(res.message);
         this.postData = res.message;
         this.isDataFetch = true;
+        this.note = this.postData.length + " Post/s found";
+
         // console.log(this.postData);
       },
       (err) => {
@@ -57,6 +60,8 @@ export class MyfeedComponent implements OnInit {
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
+    this.yourPost = false;
+
     //console.log(this.sortBy);
     this.profileId = localStorage.getItem("profileid");
     // console.log(this.profileId);
@@ -66,10 +71,11 @@ export class MyfeedComponent implements OnInit {
         //  console.log(res.message);
         this.postData = res.message;
         this.isDataFetch = true;
+        this.note = this.postData.length + " Post/s found";
+
         // console.log(this.postData);
       },
       (err) => {
-
         console.log(err);
       }
     );
@@ -81,6 +87,7 @@ export class MyfeedComponent implements OnInit {
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
+    this.yourPost = true;
     //console.log(this.sortBy);
     // this.router.navigate(["/profile"]);
     // this.router.navigate(["/myfeed"]);
@@ -91,6 +98,7 @@ export class MyfeedComponent implements OnInit {
         // console.log(this.sortBy);
         this.postData = res.message;
         this.isDataFetch = true;
+        this.note = this.postData.length + " Post/s found";
       },
       (err) => {
         console.log(err);
@@ -103,6 +111,7 @@ export class MyfeedComponent implements OnInit {
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
+    this.yourPost = false;
 
     //console.log(this.sortBy);
     // this.router.navigate(["/myfeed"]);
@@ -113,6 +122,7 @@ export class MyfeedComponent implements OnInit {
         // console.log(this.sortBy);
         this.isDataFetch = true;
         this.postData = res.message;
+        this.note = this.postData.length + " Post/s found";
       },
       (err) => {
         console.log(err);
@@ -121,6 +131,8 @@ export class MyfeedComponent implements OnInit {
   }
   getPostByBookName() {
     this.isNearByPost = false;
+    this.yourPost = false;
+
     if (this.bookname && this.bookname.length > 0) {
       console.log(this.bookname);
       this.postService.getPostByBookName(this.bookname).subscribe(
@@ -128,6 +140,7 @@ export class MyfeedComponent implements OnInit {
           console.log(res);
           this.isDataFetch = true;
           this.postData = res.message;
+          this.note = this.postData.length + " Post/s found";
         },
         (err) => {
           this.isDataFetch = false;
@@ -136,5 +149,30 @@ export class MyfeedComponent implements OnInit {
         }
       );
     }
+  }
+  editPost(postId) {
+    console.log(postId);
+    this.router
+      .navigateByUrl("/updatepost", { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([`updatepost/${postId}`]);
+      });
+  }
+  deletePost(postId) {
+    let deletablePostData = {
+      postId: postId,
+      giveBookId: this.postData.give_book_id,
+      takeBookId: this.postData.take_book_id,
+    };
+    console.log(deletablePostData);
+    this.postService.deletePost(deletablePostData).subscribe(
+      (res) => {
+        console.log("deleted");
+        this.router.navigate(["/profile"]);
+      },
+      (err) => {
+        console.log("error: Post does not exist");
+      }
+    );
   }
 }

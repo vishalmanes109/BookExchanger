@@ -1,3 +1,4 @@
+import { getInterpolationArgsLength } from "@angular/compiler/src/render3/view/util";
 import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/service/post.service";
 
@@ -18,6 +19,20 @@ export class AdvancesearchComponent implements OnInit {
   public text;
   public postData;
   public isDataFetch = false;
+  public profileId;
+  public isBookNotFound = false;
+  public giveBook;
+  public takeBook;
+  public takeBookAuthor;
+  public giveBookAuthor;
+  public isBookNotAvailable = false;
+  public note;
+  public entirePostData = {};
+  public takeBookData = new Array();
+  public takeBookId;
+  public bookname;
+  //public sortBy = "location";
+  public takeBookResult;
 
   constructor(private postService: PostService) {}
 
@@ -61,6 +76,7 @@ export class AdvancesearchComponent implements OnInit {
 
   searchPost() {
     this.isError = false;
+    this.postData = null;
     if (this.counter > 1) {
       this.isError = true;
       this.message = "Select Only ONE of the above parameter";
@@ -72,102 +88,126 @@ export class AdvancesearchComponent implements OnInit {
       return;
     }
     if (!this.isError) {
-      console.log("ready");
       if (this.byBook) {
         this.postService.getPostByBookName(this.text).subscribe(
           (res) => {
             console.log(res);
-            this.postData = res;
             this.isDataFetch = true;
+            this.postData = res.message;
+            this.note = this.postData.length + " Post/s found";
+
             return;
           },
           (err) => {
             console.log(err);
+            if (err.error.message != "Post does not exis") {
+              this.isError = true;
+              this.message =
+                "0 Post found for corrosponding search, Try different keywords, check for spellings";
+              return;
+            }
             this.isError = true;
             this.message = "Error while fetching data please try again ";
           }
         );
       }
-    }
-    if (this.byUser) {
-      this.postService.getPostByUser(this.text).subscribe(
-        (res) => {
-          console.log(res);
-          this.postData = res;
-          this.isDataFetch = true;
-          return;
-        },
-        (err) => {
-          console.log(err);
-          this.isError = true;
-          this.message = "Error while fetching data please try again ";
-        }
-      );
-    }
-    if (this.byTitle) {
-      this.postService.getPostByTitle(this.text).subscribe(
-        (res) => {
-          console.log(res);
-          this.postData = res;
-          this.isDataFetch = true;
-          return;
-        },
-        (err) => {
-          console.log(err);
-          this.isError = true;
-          this.message = "Error while fetching data please try again ";
-        }
-      );
-    }
-    if (this.byLocation) {
-      this.postService.getPostByExcatLocation(this.text).subscribe(
-        (res) => {
-          console.log(res);
-          this.postData = res;
-          this.isDataFetch = true;
-          return;
-        },
-        (err) => {
-          console.log(err);
-          this.isError = true;
-          this.message = "Error while fetching data please try again ";
-        }
-      );
-    }
-    if (this.byAuthor) {
-      this.postService.getPostByAuthor(this.text).subscribe(
-        (res) => {
-          console.log(res);
-          this.postData = res;
-          this.isDataFetch = true;
-          return;
-        },
-        (err) => {
-          console.log(err);
-          if (err.error.message != "Post does not exis") {
-            this.isError=true;
-            this.message = "0 Post found for corrosponding search, Try different keywords, check for spellings";
+      if (this.byUser) {
+        this.postService.getPostByUser(this.text).subscribe(
+          (res) => {
+            console.log(res);
+
+            this.isDataFetch = true;
+            this.postData = res.message;
+            this.note = this.postData.length + " Post/s found";
+
             return;
+          },
+          (err) => {
+            console.log(err);
+            if (err.error.message != "Post does not exis") {
+              this.isError = true;
+              this.message =
+                "0 Post found for corrosponding search, Try different keywords, check for spellings";
+              return;
+            }
+            this.isError = true;
+            this.message = "Error while fetching data please try again ";
           }
-          this.isError = true;
-          this.message = "Error while fetching data please try again ";
-        }
-      );
-    }
-    if (this.byBook) {
-      this.postService.getPostByBookName(this.text).subscribe(
-        (res) => {
-          console.log(res);
-          this.postData = res;
-          this.isDataFetch = true;
-          return;
-        },
-        (err) => {
-          console.log(err);
-          this.isError = true;
-          this.message = "Error while fetching data please try again ";
-        }
-      );
+        );
+      }
+      if (this.byTitle) {
+        this.postService.getPostByTitle(this.text).subscribe(
+          (res) => {
+            console.log(res);
+
+            this.isDataFetch = true;
+            this.postData = res.message;
+            this.note = this.postData.length + " Post/s found";
+
+            return;
+          },
+          (err) => {
+            console.log(err);
+            if (err.error.message != "Post does not exis") {
+              this.isError = true;
+              this.message =
+                "0 Post found for corrosponding search, Try different keywords, check for spellings";
+              return;
+            }
+            this.isError = true;
+            this.message = "Error while fetching data please try again ";
+          }
+        );
+      }
+      if (this.byLocation) {
+        this.postService.getPostByLocation(this.text).subscribe(
+          (res) => {
+            console.log(res);
+
+            this.isDataFetch = true;
+            this.postData = res.message;
+            this.note = this.postData.length + " Post/s found";
+
+            return;
+          },
+          (err) => {
+            console.log(err);
+            if (err.error.message != "Post does not exis") {
+              this.isError = true;
+              this.message =
+                "0 Post found for corrosponding search, Try different keywords, check for spellings";
+              return;
+            }
+            this.isError = true;
+            this.message = "Error while fetching data please try again ";
+          }
+        );
+      }
+      if (this.byAuthor) {
+        this.postService.getPostByAuthor(this.text).subscribe(
+          (res) => {
+            console.log(res);
+
+            this.isDataFetch = true;
+
+            this.postData = res.message;
+            this.note = this.postData.length + " Post/s found";
+
+            return;
+          },
+          (err) => {
+            console.log(err);
+            if (err.error.message != "Post does not exis") {
+              this.isError = true;
+              this.message =
+                "0 Post found for corrosponding search, Try different keywords, check for spellings";
+              return;
+            }
+            this.isError = true;
+            this.message = "Error while fetching data please try again ";
+          }
+        );
+      }
     }
 
     console.log(this.byBook);
@@ -180,3 +220,13 @@ export class AdvancesearchComponent implements OnInit {
     console.log(this.byUser);
   }
 }
+
+// 14th ravivar
+
+// Vishal mane
+// abhishek naik
+// suresh jaiswar
+// ganesh patil
+// shivprasda
+// akshay jadhav sanpada
+// yashpal
