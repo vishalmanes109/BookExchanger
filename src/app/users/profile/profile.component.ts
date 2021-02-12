@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
@@ -42,6 +43,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile(this.username).subscribe(
       (res) => {
         //console.log(res);
+        localStorage.setItem('isUnauth','false')
         this.profileData = res.message[0];
         this.genreList = res.genrelist;
         console.log(this.profileData);
@@ -73,6 +75,13 @@ export class ProfileComponent implements OnInit {
         );
       },
       (err) => {
+        if (err instanceof HttpErrorResponse)
+          if (err.status === 401) {
+            localStorage.setItem("isUnauth", "true");
+
+            this.router.navigate(["/login"]);
+          }
+
         console.log(err);
       }
     );

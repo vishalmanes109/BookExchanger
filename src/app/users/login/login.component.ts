@@ -16,13 +16,20 @@ export class LoginComponent implements OnInit {
   public defaulter;
   public isError = false;
   public message;
+  public isUnauth;
   constructor(
     private authService: AuthService,
     private router: Router,
     private validationService: ValidationService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isUnauth = localStorage.getItem("isUnauth");
+    if (this.isUnauth === "true") {
+      this.isError=true;
+      this.message = "Unauthorized Access! Please log in first";
+    }
+  }
 
   isValidPassword() {
     if (!this.validationService.isValidPassword(this.password)) {
