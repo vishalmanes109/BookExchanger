@@ -1,6 +1,14 @@
 <app-navbar></app-navbar>
 <br />
-<div class="ui container">
+<div *ngIf="!isDataFetch && isUnauth" class="ui ">
+  <div class="ui active inverted dimmer">
+    <div class="ui large text loader">Loading</div>
+  </div>
+  
+</div>
+
+<div *ngIf="isDataFetch">
+<div  class="ui container">
   <div class="ui container">
     <div class="ui stackable grid">
       <div class="eight wide column">
@@ -35,10 +43,10 @@
 </div>
 <br />
 <div class="ui container">
-  <div class="ui compact menu container">
-    <a (click)="myFeedByLocation()" class="item">
+  <div class="ui menu container">
+    <a (click)="myFeedByLocation()" class="item wide">
       <i class="map marker alternate icon"></i>
-      Location
+      Nearby
     </a>
     <a (click)="myFeedByMyPost()" class="item">
       <i class="paperclip icon"></i>
@@ -53,8 +61,10 @@
 <br />
 <div class="ui stackable grid container">
   <div class="twelve wide column">
-    <div *ngIf="isDataFetch" class="ui message">
-      {{ note }}
+    <div class="ui container">
+      <h5 *ngIf="isDataFetch" class="ui">
+        {{ note }}
+      </h5>
     </div>
     <div *ngFor="let post of postData; let i = index">
       <div class="ui teal padded segment container">
@@ -178,4 +188,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

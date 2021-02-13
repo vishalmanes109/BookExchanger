@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router } from "@angular/router";
 @Injectable({
   providedIn: "root",
 })
@@ -11,7 +12,7 @@ export class AuthService {
   private httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient , private router:Router) {}
 
   registerUser(user) {
     return this.http.post<any>(this._registerUrl, user);
@@ -28,5 +29,13 @@ export class AuthService {
   isUserAvailable(username) {
     console.log(username);
     return this.http.get<any>(this._uniqueUserUrl+"/" +username, );
+  }
+  loggedOut(){
+    localStorage.removeItem('token');
+    localStorage.removeItem("username");
+    localStorage.removeItem("userid");
+    localStorage.removeItem("isUnauth");
+    localStorage.removeItem("profileid");
+    
   }
 }

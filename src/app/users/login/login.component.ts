@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.isUnauth = localStorage.getItem("isUnauth");
     if (this.isUnauth === "true") {
-      this.isError=true;
+      this.isError = true;
       this.message = "Unauthorized Access! Please log in first";
     }
   }
@@ -61,8 +61,13 @@ export class LoginComponent implements OnInit {
         this.isError = false;
         localStorage.setItem("token", res.token);
         localStorage.setItem("username", this.username);
+        localStorage.setItem("profileid", res.result[0].id);
+        localStorage.setItem("userid", res.result[0].user_id);
+
+        localStorage.setItem("isUnauth", "false");
+
         console.log(this.username);
-        this.router.navigate(["profile"]);
+        this.router.navigate(["/myfeed"]);
       },
       (err) => {
         console.log(err.error);

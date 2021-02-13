@@ -20,7 +20,9 @@ export class CreatepostComponent implements OnInit {
   private username;
   constructor(private postService: PostService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
   addPost() {
     this.username = localStorage.getItem("username");
     let postData = {

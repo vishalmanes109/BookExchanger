@@ -99,6 +99,8 @@ export class AdvancesearchComponent implements OnInit {
             return;
           },
           (err) => {
+            this.isDataFetch = false;
+
             console.log(err);
             if (err.error.message != "Post does not exis") {
               this.isError = true;
@@ -124,6 +126,8 @@ export class AdvancesearchComponent implements OnInit {
           },
           (err) => {
             console.log(err);
+            this.isDataFetch = false;
+
             if (err.error.message != "Post does not exis") {
               this.isError = true;
               this.message =
@@ -147,6 +151,8 @@ export class AdvancesearchComponent implements OnInit {
             return;
           },
           (err) => {
+            this.isDataFetch = false;
+
             console.log(err);
             if (err.error.message != "Post does not exis") {
               this.isError = true;
@@ -171,6 +177,8 @@ export class AdvancesearchComponent implements OnInit {
             return;
           },
           (err) => {
+            this.isDataFetch = false;
+
             console.log(err);
             if (err.error.message != "Post does not exis") {
               this.isError = true;
@@ -197,6 +205,8 @@ export class AdvancesearchComponent implements OnInit {
           },
           (err) => {
             console.log(err);
+            this.isDataFetch = false;
+
             if (err.error.message != "Post does not exis") {
               this.isError = true;
               this.message =

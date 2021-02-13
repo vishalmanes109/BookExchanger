@@ -25,35 +25,47 @@ export class MyfeedComponent implements OnInit {
   public yourPost = false;
   public takeBookResult;
   public isNearByPost = false;
+  public isUnauth;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     //console.log(this.sortBy);
-    this.note =
-      "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
 
-    this.isNearByPost = true;
-    this.profileId = localStorage.getItem("profileid");
-    // console.log(this.profileId);
-    this.yourPost = false;
+    if (
+      localStorage.getItem("isUnauth") == "true" ||
+      !localStorage.getItem("isUnauth")
+    ) {
+      this.isUnauth = true;
 
-    if (!this.profileId) this.router.navigate(["login"]);
-    this.postService.getNearByPost(this.profileId).subscribe(
-      async (res) => {
-        //  console.log(res.message);
-        this.postData = res.message;
-        this.isDataFetch = true;
-        this.note = this.postData.length + " Post/s found";
+      this.note =
+        "please login in order to access nearby post and your post. However you can access advance search and search by book without login";
+    } else {
+      this.note =
+        "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
 
-        // console.log(this.postData);
-      },
-      (err) => {
-        this.note =
-          "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+      this.isNearByPost = true;
+      this.profileId = localStorage.getItem("profileid");
+      // console.log(this.profileId);
+      this.yourPost = false;
+      this.isUnauth = false;
 
-        console.log(err);
-      }
-    );
+      this.postService.getNearByPost(this.profileId).subscribe(
+        async (res) => {
+          //  console.log(res.message);
+          this.postData = res.message;
+          this.isDataFetch = true;
+          this.note = this.postData.length + " Post/s found";
+
+          // console.log(this.postData);
+        },
+        (err) => {
+          this.note =
+            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+
+          console.log(err);
+        }
+      );
+    }
   }
   myFeedByLocation() {
     // this.sortBy = "location";
@@ -61,26 +73,32 @@ export class MyfeedComponent implements OnInit {
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = false;
+    if (
+      localStorage.getItem("isUnauth") == "true" ||
+      !localStorage.getItem("isUnauth")
+    ) {
+      this.note =
+        "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+    } else {
+      //console.log(this.sortBy);
+      this.profileId = localStorage.getItem("profileid");
+      // console.log(this.profileId);
+      this.postService.getNearByPost(this.profileId).subscribe(
+        (res) => {
+          //  console.log(res.message);
+          this.postData = res.message;
+          this.isDataFetch = true;
+          this.note = this.postData.length + " Post/s found";
 
-    //console.log(this.sortBy);
-    this.profileId = localStorage.getItem("profileid");
-    // console.log(this.profileId);
-    if (!this.profileId) this.router.navigate(["login"]);
-    this.postService.getNearByPost(this.profileId).subscribe(
-      (res) => {
-        //  console.log(res.message);
-        this.postData = res.message;
-        this.isDataFetch = true;
-        this.note = this.postData.length + " Post/s found";
-
-        // console.log(this.postData);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    // this.router.navigate(["/profile"]);
-    // this.router.navigate(["/myfeed"]);
+          // console.log(this.postData);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+      // this.router.navigate(["/profile"]);
+      // this.router.navigate(["/myfeed"]);
+    }
   }
   myFeedByMyPost() {
     // this.sortBy = "mypost";
@@ -88,22 +106,29 @@ export class MyfeedComponent implements OnInit {
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = true;
-    //console.log(this.sortBy);
-    // this.router.navigate(["/profile"]);
-    // this.router.navigate(["/myfeed"]);
-    if (!this.profileId) this.router.navigate(["login"]);
-    this.postService.getPostByProfile(this.profileId).subscribe(
-      (res) => {
-        // console.log(res);
-        // console.log(this.sortBy);
-        this.postData = res.message;
-        this.isDataFetch = true;
-        this.note = this.postData.length + " Post/s found";
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    if (
+      localStorage.getItem("isUnauth") == "true" ||
+      !localStorage.getItem("isUnauth")
+    ) {
+      this.note =
+        "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+    } else {
+      //console.log(this.sortBy);
+      // this.router.navigate(["/profile"]);
+      // this.router.navigate(["/myfeed"]);
+      this.postService.getPostByProfile(this.profileId).subscribe(
+        (res) => {
+          // console.log(res);
+          // console.log(this.sortBy);
+          this.postData = res.message;
+          this.isDataFetch = true;
+          this.note = this.postData.length + " Post/s found";
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 
   myFeedByNewPost() {
@@ -115,7 +140,6 @@ export class MyfeedComponent implements OnInit {
 
     //console.log(this.sortBy);
     // this.router.navigate(["/myfeed"]);
-    if (!this.profileId) this.router.navigate(["login"]);
     this.postService.getAllPost().subscribe(
       (res) => {
         // console.log(res);

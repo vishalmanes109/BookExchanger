@@ -20,9 +20,10 @@ import { AdvancesearchComponent } from "./postlist/advancesearch/advancesearch.c
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
-  { path: "profile", canActivate: [AuthGuard], component: ProfileComponent },
   { path: "contact", component: ContactComponent },
   { path: "about", component: AboutComponent },
+  { path: "profile", canActivate: [AuthGuard], component: ProfileComponent },
+
   {
     path: "updateprofile",
     canActivate: [AuthGuard],
@@ -38,13 +39,17 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: DeletepostComponent,
   },
-  { path: "createprofile", component: CreateprofileComponent },
+  {
+    path: "createprofile",
+    canActivate: [AuthGuard],
+    component: CreateprofileComponent,
+  },
   {
     path: "updatepost/:postid",
     canActivate: [AuthGuard],
     component: UpdatepostComponent,
   },
-  { path: "myfeed", canActivate: [AuthGuard], component: MyfeedComponent },
+  { path: "myfeed",  component: MyfeedComponent },
   {
     path: "updateprofile/:profileid",
     canActivate: [AuthGuard],
@@ -62,7 +67,6 @@ const routes: Routes = [
   },
   {
     path: "advancesearch",
-    canActivate: [AuthGuard],
     component: AdvancesearchComponent,
   },
 
