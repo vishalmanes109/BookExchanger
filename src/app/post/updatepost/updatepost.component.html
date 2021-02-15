@@ -9,7 +9,7 @@
         <p class="ui header teal centered">Update Post</p>
         <div *ngIf="isDataFetch" class="ui form">
           <div class="field">
-              <label >Enter title of post </label>
+            <label>Enter title of post </label>
             <input
               required
               type="text"
@@ -19,15 +19,14 @@
             />
           </div>
           <div class="field">
-              <label >Enter short description Max 140 characters.</label>
+            <label>Enter short description Max 140 characters.</label>
             <textarea
               placeholder="Short Discription"
-
               [(ngModel)]="description"
             ></textarea>
           </div>
           <div class="field">
-              <label >Enter title of book you have</label>
+            <label>Enter title of book you have</label>
             <input
               type="text"
               required
@@ -37,7 +36,7 @@
             />
           </div>
           <div class="field">
-              <label >Enter author of book you have  </label>
+            <label>Enter author of book you have </label>
             <input
               type="text"
               required
@@ -46,80 +45,99 @@
               placeholder="Enter Author of book you have"
             />
             <div class="field">
-                <label >Enter title of book you want(optional) </label>
-            <input
-              type="text"
-              required
-              name="take"
-              [(ngModel)]="takeBookName"
-              placeholder="Enter Title of book you want"
-            />
-          </div>
+              <label>Enter title of book you want(optional) </label>
+              <input
+                type="text"
+                required
+                name="take"
+                [(ngModel)]="takeBookName"
+                placeholder="Enter Title of book you want"
+              />
+            </div>
 
-          <div class="field">
-              <label >Enter author of book you want(optional)</label>
-            <input
-              type="text"
-              required
-              name="title"
-              [(ngModel)]="takeBookAuthor"
-              placeholder="Enter Author of book you want"
-            />
-          </div>
-          <div class="field">
-              <img class="ui image small rounded bordered" src="{{bookImage}}" alt="give_book_image">
-            <label> Upload the Photo of book you have </label>
-            <input required type="file" name="photo" id="" />
-          </div>
-          <div *ngIf="isError" class="ui message red">
-            {{message}} 
-          </div>
-          <div class="field">
-            <input
-              class="ui teal button"
-              type="button"
-              (click)="update()"
-              value="Submit"
-            />
-            <input
-              class="ui orange button right floated"
-              (click)="discard()"
-              type="button"
-              value="Discard"
-            />
+            <div class="field">
+              <label>Enter author of book you want(optional)</label>
+              <input
+                type="text"
+                required
+                name="title"
+                [(ngModel)]="takeBookAuthor"
+                placeholder="Enter Author of book you want"
+              />
+            </div>
+            <div class="field">
+              <img
+                class="ui image small rounded bordered"
+                src="{{ bookImage }}"
+                alt="give_book_image"
+              />
+              <label> Upload the Photo of book you have </label>
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                (change)="fileChangeEvent($event)"
+              />
+              <button class="ui button primary inverted" (click)="upload()">
+                Upload
+              </button>
+              <div *ngIf="isImageUploaded">
+                {{ imageUploadNote }}
+              </div>
+              <div *ngIf="!isImageUploaded">
+                {{ imageUploadNote }}
+              </div>
+            </div>
+            <div *ngIf="isError" class="ui message red">
+              {{ message }}
+            </div>
+            <div class="field">
+              <input
+                class="ui teal button"
+                type="button"
+                (click)="update()"
+                value="Submit"
+              />
+              <input
+                class="ui orange button right floated"
+                (click)="discard()"
+                type="button"
+                value="Discard"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="four wide column">
-        <div class="ui segment">
-          <div class="ui header red">Guidelines</div>
-          <div class="ui relaxed divided list">
-            <div class="item">
-              <div class="ui content positive">
-                <div class="header teal">
-                  1. Enter proper book and author name
+        <div class="four wide column">
+          <div class="ui segment">
+            <div class="ui header red">Guidelines</div>
+            <div class="ui relaxed divided list">
+              <div class="item">
+                <div class="ui content positive">
+                  <div class="header teal">
+                    1. Enter proper book and author name
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">2. Add snapshot of book.</div>
+              <div class="item">
+                <div class="content">
+                  <div class="header">2. Add snapshot of book.</div>
+                </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">3. Book 1: Book you have</div>
+              <div class="item">
+                <div class="content">
+                  <div class="header">3. Book 1: Book you have</div>
+                </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">4. Book 2: Book you want</div>
+              <div class="item">
+                <div class="content">
+                  <div class="header">4. Book 2: Book you want</div>
+                </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="content">
-                <div class="header">
-                  5. Provide location in your profile section.
+              <div class="item">
+                <div class="content">
+                  <div class="header">
+                    5. Provide location in your profile section.
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,9 +1,8 @@
+
+<app-navbar></app-navbar>
+
 <div class="ui container">
-  <img
-    class="ui image small centered"
-    src="../../../assets/logo/logo3.3.png"
-    alt="logo"
-  />
+  
   <div class="ui stackable  container grid">
     <div class="ten wide column">
       <h3>Post</h3>
@@ -11,7 +10,7 @@
         <div *ngIf="isDataFetch" class="ui segment">
           <img
                 class="ui avatar image"
-                src="../../../assets/avatar/24.png"
+                src="{{postData.avatar}}"
               />
               <span>{{ postData.username }}</span>
               <h3>
