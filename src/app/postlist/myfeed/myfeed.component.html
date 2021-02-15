@@ -1,13 +1,12 @@
 <app-navbar></app-navbar>
 <br />
-<div *ngIf="!isDataFetch && isUnauth" class="ui ">
+<!-- <div *ngIf="!isDataFetch && isUnauth" class="ui ">
   <div class="ui active inverted dimmer">
     <div class="ui large text loader">Loading</div>
   </div>
   
-</div>
+</div> -->
 
-<div *ngIf="isDataFetch">
 <div  class="ui container">
   <div class="ui container">
     <div class="ui stackable grid">
@@ -63,7 +62,7 @@
   <div class="twelve wide column">
     <div class="ui container">
       <h5 *ngIf="isDataFetch" class="ui">
-        {{ note }}
+        {{ message }}
       </h5>
     </div>
     <div *ngFor="let post of postData; let i = index">
@@ -73,13 +72,13 @@
             {{ post.title }}
           </h2>
         </div>
-        <br />
+        <br/>
 
         <div class="ui grid container stackable">
           <div class="six wide column">
             <img
               class="ui rounded fluid centered bordered image"
-              src="../../../assets/images/lotr.jpg"
+              src="{{ post.give_book_image }}"
               alt=""
             />
           </div>
@@ -188,5 +187,4 @@
       </div>
     </div>
   </div>
-</div>
 </div>

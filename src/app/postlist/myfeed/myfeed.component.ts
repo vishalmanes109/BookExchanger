@@ -26,6 +26,7 @@ export class MyfeedComponent implements OnInit {
   public takeBookResult;
   public isNearByPost = false;
   public isUnauth;
+  public message;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -54,7 +55,7 @@ export class MyfeedComponent implements OnInit {
           //  console.log(res.message);
           this.postData = res.message;
           this.isDataFetch = true;
-          this.note = this.postData.length + " Post/s found";
+          this.message = this.postData.length + " Post/s found";
 
           // console.log(this.postData);
         },
@@ -88,7 +89,7 @@ export class MyfeedComponent implements OnInit {
           //  console.log(res.message);
           this.postData = res.message;
           this.isDataFetch = true;
-          this.note = this.postData.length + " Post/s found";
+          this.message = this.postData.length + " Post/s found";
 
           // console.log(this.postData);
         },
@@ -119,10 +120,10 @@ export class MyfeedComponent implements OnInit {
       this.postService.getPostByProfile(this.profileId).subscribe(
         (res) => {
           // console.log(res);
-          // console.log(this.sortBy);
+          // console.log(this.sortBy);  
           this.postData = res.message;
           this.isDataFetch = true;
-          this.note = this.postData.length + " Post/s found";
+          this.message = this.postData.length + " Post/s found";
         },
         (err) => {
           console.log(err);
@@ -146,7 +147,7 @@ export class MyfeedComponent implements OnInit {
         // console.log(this.sortBy);
         this.isDataFetch = true;
         this.postData = res.message;
-        this.note = this.postData.length + " Post/s found";
+        this.message = this.postData.length + " Post/s found";
       },
       (err) => {
         console.log(err);
@@ -164,7 +165,7 @@ export class MyfeedComponent implements OnInit {
           console.log(res);
           this.isDataFetch = true;
           this.postData = res.message;
-          this.note = this.postData.length + " Post/s found";
+          this.message = this.postData.length + " Post/s found";
         },
         (err) => {
           this.isDataFetch = false;

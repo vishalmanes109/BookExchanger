@@ -4,6 +4,7 @@ import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { SuiModule } from "ng2-semantic-ui";
 import { LocationService } from "src/app/service/location.service";
 import { ProfileService } from "src/app/service/profile.service";
+import * as _ from "lodash";
 
 @Component({
   selector: "app-createprofile",
@@ -25,7 +26,13 @@ export class CreateprofileComponent implements OnInit {
   public isDone = false;
   public message;
   public isError = false;
-
+  selectedFile: File = null;
+  imageError: string;
+  isImageSaved: boolean;
+  cardImageBase64: string;
+  public imageUploadNote;
+  public isImageUploaded = false;
+  public avatarUrl = "../../../assets/avatar/35.png";
   constructor(
     private locationService: LocationService,
     private profileService: ProfileService,
@@ -104,16 +111,83 @@ export class CreateprofileComponent implements OnInit {
     if (index !== -1) {
       this.favGenreList.splice(index, 1);
     }
-   // console.log(this.favGenreList);
+    // console.log(this.favGenreList);
   }
+  fileChangeEvent(fileInput: any) {
+    this.imageError = null;
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      // Size Filter Bytes
+      const max_size = 20971520;
+      const allowed_types = ["image/png", "image/jpeg"];
+      const max_height = 15200;
+      const max_width = 25600;
 
+      if (fileInput.target.files[0].size > max_size) {
+        this.imageError = "Maximum size allowed is " + max_size / 1000 + "Mb";
+        console.log(this.imageError);
+        return false;
+      }
+
+      if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
+        this.imageError = "Only Images are allowed ( JPG | PNG )";
+        console.log(this.imageError);
+        return false;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const image = new Image();
+        image.src = e.target.result;
+        image.onload = (rs) => {
+          const img_height = rs.currentTarget["height"];
+          const img_width = rs.currentTarget["width"];
+
+          console.log(img_height, img_width);
+
+          if (img_height > max_height && img_width > max_width) {
+            this.imageError =
+              "Maximum dimentions allowed " +
+              max_height +
+              "*" +
+              max_width +
+              "px";
+            console.log(this.imageError);
+            return false;
+          } else {
+            const imgBase64Path = e.target.result;
+            this.cardImageBase64 = imgBase64Path;
+            this.isImageSaved = true;
+            console.log(this.cardImageBase64.substring(1, 20));
+            // this.previewImagePath = imgBase64Path;
+          }
+        };
+      };
+
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+  upload() {
+    console.log(this.cardImageBase64.substring(1, 20));
+    this.profileService.uploadAvtar(this.cardImageBase64).subscribe(
+      (res) => {
+        console.log(res);
+        this.isImageUploaded = true;
+        this.imageUploadNote = "Avtar uploaded";
+        this.avatarUrl = res.message.secure_url;
+        console.log(this.avatarUrl);
+      },
+      (err) => {
+        console.log(err);
+        this.imageUploadNote = "Failed Try Again ";
+      }
+    );
+  }
   getLocation(): void {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
         this.latitude = position.coords.latitude;
         //console.log(this.longitude)
-       // console.log(` lol More or less ${position.coords.accuracy} meters.`);
+        // console.log(` lol More or less ${position.coords.accuracy} meters.`);
 
         this.locationService
           .getPlaceNameByCoordinates(this.longitude, this.latitude)
@@ -121,7 +195,7 @@ export class CreateprofileComponent implements OnInit {
             (res) => {
               this.placeName = res.features[0].place_name;
               this.foundLocation = true;
-             // console.log(res.features[0].place_name);
+              // console.log(res.features[0].place_name);
             },
             (err) => {
               console.log(err);
@@ -129,15 +203,15 @@ export class CreateprofileComponent implements OnInit {
           );
       });
     } else {
-     console.log("No support for geolocation");
-     alert("no support for geolocation")
+      console.log("No support for geolocation");
+      alert("no support for geolocation");
     }
   }
   onBlurGetLocation() {
     this.locationService.getPlaceName(this.location).subscribe((res) => {
       this.foundLocation = true;
       // console.log(res);
-      this.longitude=res.features[0].center[0]
+      this.longitude = res.features[0].center[0];
 
       this.latitude = res.features[0].center[1];
       console.log(this.latitude + " ;" + this.longitude);
@@ -147,7 +221,6 @@ export class CreateprofileComponent implements OnInit {
           console.log(err);
         };
     });
-
   }
   submit() {
     //console.log("lol submit")
@@ -170,47 +243,49 @@ export class CreateprofileComponent implements OnInit {
       this.message = "Please select exactly 3 genres";
       return;
     }
+    console.log(this.avatarUrl);
     let profileData = {
       location: this.placeName,
       latitude: this.latitude,
       longitude: this.longitude,
       premium: false,
       username: this.username,
-      fav_genre_list:this.favGenreList
+      fav_genre_list: this.favGenreList,
+      avatar: this.avatarUrl,
     };
     //console.log(profileData);
-      this.profileService.makeProfile(profileData).subscribe(
-        (res) => {
-          console.log("lol");
-           console.log(res);
-          this.isDone = true;
-          this.isError=false;
-          this.message = "Congratulations Profile is created";
-          setTimeout(() => {
-            if (res.success == 1 && this.isDone) {
-              this.router.navigate(["profile"]);
-            }
-          }, 2000);
-        },
-        (err) => {
-           console.log(err);
-          this.isError = true;
-          if (err.error.error.code == 23502){
-            this.message="Profile creation failed. please try again! "
-            return
+    this.profileService.makeProfile(profileData).subscribe(
+      (res) => {
+        console.log("lol");
+        console.log(res);
+        this.isDone = true;
+        this.isError = false;
+        this.message = "Congratulations Profile is created";
+        setTimeout(() => {
+          if (res.success == 1 && this.isDone) {
+            this.router.navigate(["profile"]);
           }
-            this.message = "profile is already created. ";
-          setTimeout(() => {
-            if (this.isError) {
-              this.message = "redirecting towards update profile page";
-            }
-          }, 1000);
-          setTimeout(() => {
-            if (this.isError) {
-              this.router.navigate(["updateprofile"]);
-            }
-          }, 2500);
+        }, 2000);
+      },
+      (err) => {
+        console.log(err);
+        this.isError = true;
+        if (err.error.error.code == 23502) {
+          this.message = "Profile creation failed. please try again! ";
+          return;
         }
-      );
+        this.message = "profile is already created. ";
+        setTimeout(() => {
+          if (this.isError) {
+            this.message = "redirecting towards update profile page";
+          }
+        }, 1000);
+        setTimeout(() => {
+          if (this.isError) {
+            this.router.navigate(["updateprofile"]);
+          }
+        }, 2500);
+      }
+    );
   }
 }

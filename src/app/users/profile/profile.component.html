@@ -6,6 +6,9 @@
     <div class="ui five wide column container">
       <div class="ui raised centered link card">
         <div class="content">
+          <div class="ui fluid centered image">
+              <img src="{{avatar}}" alt="avatar"/>
+            </div>
           <div class="header">Username: {{ username }}</div>
           <br />
           <div class="content">
@@ -37,6 +40,7 @@
             (click)="deleteProfile()"
           >
 
+          
             Delete
           </button>
 

@@ -32,21 +32,29 @@
           <p class="ui header uired centered">Your Avatar</p>
           <div class="ui card container">
             <div class="ui fluid centered image">
-              <img src="../../../assets/avatar/22.svg" />
+              <img src="{{avatarUrl}}" alt="avatar"/>
             </div>
+            
+            
             <div class="content centered">
               <hr />
               <h3>{{ username }}</h3>
-              <input type="file" name="avatar" id="avatar" />
+              <input type="file" name="avatar" id="avatar"  (change)="fileChangeEvent($event)"/>
+              <button class="ui button primary inverted" (click)="upload()">Upload</button>
+              <div *ngIf="isImageUploaded " >
+                {{imageUploadNote}}
+              </div>
+              <div *ngIf="!isImageUploaded " >
+                {{imageUploadNote}}
+              </div>
             </div>
           </div>
           <div class="ui form customfield"></div>
         </div>
         <div class="ten wide column">
           <div class="ui header uired centered">Basic Info</div>
-          <hr />
-          <br />
-
+          <hr/>
+          <br/>
           <form class="ui form">
             <div class="field">
               <h3>Favourite Genre</h3>
@@ -122,3 +130,7 @@
 </div>
 
 <br />
+
+<div>
+  <img src="{{avatarUrl}}" alt="img">
+</div>

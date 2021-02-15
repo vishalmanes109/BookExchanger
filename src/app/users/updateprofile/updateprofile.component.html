@@ -8,12 +8,19 @@
           <p class="ui header red centered">Your Avatar</p>
           <div class="ui card container">
             <div class="ui fluid centered image">
-              <img src="../../../assets/avatar/7.svg" />
+              <img src="{{oldAvatar}}" />
             </div>
             <div class="content centered">
               <hr />              
               <h3>{{username[0].toUpperCase()+username.substring(1)}}</h3>
-              <input type="file" />
+              <input type="file" name="avatar" id="avatar"  (change)="fileChangeEvent($event)"/>
+              <button class="ui button primary inverted" (click)="upload()">Upload</button>
+              <div *ngIf="isImageUploaded " >
+                {{imageUploadNote}}
+              </div>
+              <div *ngIf="!isImageUploaded " >
+                {{imageUploadNote}}
+              </div>
             </div>
           </div>
           <div class="ui form customfield"></div>

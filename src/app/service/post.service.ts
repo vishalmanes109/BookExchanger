@@ -8,6 +8,7 @@ import { Observable } from "rxjs";
 export class PostService {
   private _postUrl = "http://localhost:3000/api/post/";
   private _bookUrl = "http://localhost:3000/api/book/";
+  private _imageUrl = "http://localhost:3000/api/upload/";
 
   constructor(private http: HttpClient) {}
   addPost(postData) {
@@ -64,14 +65,19 @@ export class PostService {
     return this.http.get<any>(this._postUrl + "book/" + book);
   }
   getPostByAuthor(author) {
-    return this.http.get<any>(this._postUrl + "author/"+ author);
+    return this.http.get<any>(this._postUrl + "author/" + author);
   }
   getPostByUser(username) {
     console.log("username", username);
-    return this.http.get<any>(this._postUrl + "user/"+ username);
+    return this.http.get<any>(this._postUrl + "user/" + username);
   }
   getPostByTitle(title) {
-    console.log(title)
-    return this.http.get<any>(this._postUrl + "title/"+ title);
+    console.log(title);
+    return this.http.get<any>(this._postUrl + "title/" + title);
+  }
+  uploadBookImage(imageData) {
+    let data = { data: imageData };
+    return this.http.post<any>(this._imageUrl, data);
   }
 }
+

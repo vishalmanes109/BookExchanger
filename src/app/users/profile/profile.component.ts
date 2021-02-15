@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
   public postData;
   public isPostExist = true;
   public message;
+  public avatar;
 
   constructor(
     private profileService: ProfileService,
@@ -54,6 +55,7 @@ export class ProfileComponent implements OnInit {
         this.longitude = this.profileData.longitude;
         this.email = this.profileData.email;
         this.userId = this.profileData.user_id;
+        this.avatar=this.profileData.avatar;
         this.isPremium = this.profileData.premium;
         localStorage.setItem("userid", this.userId);
         localStorage.setItem("profileid", this.profileId);

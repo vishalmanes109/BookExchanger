@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 })
 export class ProfileService {
   private _profileUrl = "http://localhost:3000/api/profile/";
+  private _imageUrl="http://localhost:3000/api/upload/"
   //private _favouriteGenreUrl="http://localhost:3000/api//"
   constructor(private http: HttpClient) {}
   makeProfile(profileData) {
@@ -44,6 +45,16 @@ export class ProfileService {
     console.log(updateEmailData);
     return this.http.patch<any>(this._profileUrl + "email", updateEmailData);
   }
+  uploadAvtar(imageData) {
+    console.log(imageData.substring(1,20));
+    let data={data:imageData}
+    return this.http.post<any>(this._imageUrl, data);
+  }
+  updateAvatar(avatrData){
+    return this.http.patch<any>(this._profileUrl + "avatar", avatrData);
+
+  }
+
   // run() {
   //   let newArr = Array();
   //   let old = Array();
