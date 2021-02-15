@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/service/post.service";
 import * as _ from "lodash";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-createpost",
@@ -26,7 +27,7 @@ export class CreatepostComponent implements OnInit {
   public imageUploadNote;
   public isImageUploaded = false;
   public avatarUrl;
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router:Router) {}
 
   ngOnInit(): void {}
   fileChangeEvent(fileInput: any) {
@@ -131,10 +132,13 @@ export class CreatepostComponent implements OnInit {
 
     this.postService.addPost(postData).subscribe(
       (res) => {
-        //console.log(res);
+        console.log(res);
         this.isDone = true;
         this.isError = false;
         this.message = "Post added succesfully";
+        let postId=res.post_id
+        this.router.navigate([`post/${postId}`]);
+
       },
       (err) => {
         this.isError = true;
