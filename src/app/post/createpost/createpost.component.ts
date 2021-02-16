@@ -41,13 +41,11 @@ export class CreatepostComponent implements OnInit {
 
       if (fileInput.target.files[0].size > max_size) {
         this.imageError = "Maximum size allowed is " + max_size / 1000 + "Mb";
-        console.log(this.imageError);
         return false;
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
         this.imageError = "Only Images are allowed ( JPG | PNG )";
-        console.log(this.imageError);
         return false;
       }
       const reader = new FileReader();
@@ -58,7 +56,6 @@ export class CreatepostComponent implements OnInit {
           const img_height = rs.currentTarget["height"];
           const img_width = rs.currentTarget["width"];
 
-          console.log(img_height, img_width);
 
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
@@ -67,13 +64,11 @@ export class CreatepostComponent implements OnInit {
               "*" +
               max_width +
               "px";
-            console.log(this.imageError);
             return false;
           } else {
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
-            console.log(this.cardImageBase64.substring(1, 20));
             // this.previewImagePath = imgBase64Path;
           }
         };
@@ -83,17 +78,13 @@ export class CreatepostComponent implements OnInit {
     }
   }
   upload() {
-    console.log(this.cardImageBase64.substring(1, 20));
     this.postService.uploadBookImage(this.cardImageBase64).subscribe(
       (res) => {
-        console.log(res);
         this.isImageUploaded = true;
         this.imageUploadNote = "Book Image uploaded";
         this.bookImage = res.message.secure_url;
-        console.log(this.avatarUrl);
       },
       (err) => {
-        console.log(err);
         this.imageUploadNote = "Failed Try Again ";
       }
     );
@@ -128,11 +119,9 @@ export class CreatepostComponent implements OnInit {
       this.message = "Maximun 140 characters allowed in description";
       return;
     }
-    // console.log(postData)
 
     this.postService.addPost(postData).subscribe(
       (res) => {
-        console.log(res);
         this.isDone = true;
         this.isError = false;
         this.message = "Post added succesfully";
@@ -144,7 +133,6 @@ export class CreatepostComponent implements OnInit {
         this.isError = true;
         this.isDone = false;
         this.message = "Post failed! Try again ";
-        //  console.log(err);
       }
     );
   }

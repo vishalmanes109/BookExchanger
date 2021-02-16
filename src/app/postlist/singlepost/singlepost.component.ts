@@ -38,14 +38,10 @@ export class SinglepostComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
-      // console.log("lol", this.postId);
     });
-    //console.log("outof", this.postId);
     this.postService.getPostByPostId(this.postId).subscribe(
       (res) => {
-        console.log("from post:", res);
         this.postData = res.message[0];
-        console.log("from post:", this.postData);
         this.isDataFetch = true;
 
         if (!this.postData.take_book_id) {
@@ -59,29 +55,20 @@ export class SinglepostComponent implements OnInit {
         if (this.username == localStorage.getItem("username"))
           this.yourPost = true;
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
 
-    // get post related to that users location
-
     this.profileId = localStorage.getItem("profileid");
-    console.log("profile:", this.profileId);
     this.postService.getNearByPost(this.profileId).subscribe(
       (res) => {
-        // console.log(res.message);
         this.nearByPost = res.message;
         this.isNearByPostExist = true;
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
   openPost(postId) {
     //this.SharedService.KeepPostId(postId);
-    console.log(`post/${postId}`);
     this.router
       .navigateByUrl("/post", { skipLocationChange: true })
       .then(() => {
@@ -89,7 +76,6 @@ export class SinglepostComponent implements OnInit {
       });
   }
   editPost() {
-    console.log(this.postId);
     this.router
       .navigateByUrl("/updatepost", { skipLocationChange: true })
       .then(() => {
@@ -102,15 +88,11 @@ export class SinglepostComponent implements OnInit {
       giveBookId: this.postData.give_book_id,
       takeBookId: this.postData.take_book_id,
     };
-    console.log(deletablePostData);
     this.postService.deletePost(deletablePostData).subscribe(
       (res) => {
-        console.log("deleted");
         this.router.navigate(["/profile"]);
       },
-      (err) => {
-        console.log("error: Post does not exist");
-      }
+      (err) => {}
     );
   }
 }

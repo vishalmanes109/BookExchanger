@@ -53,14 +53,12 @@ export class UpdateprofileComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.profileId = params.get("profileid");
-      //console.log(this.profileId);
     });
     this.username = localStorage.getItem("username");
 
     this.profileService.getProfileByProfileId(this.profileId).subscribe(
       (res) => {
         this.profileData = res.message[0];
-        //console.log(this.profileData)
         this.genreList = res.genrelist;
         this.email = this.profileData.email;
         this.location = this.profileData.location;
@@ -73,7 +71,6 @@ export class UpdateprofileComponent implements OnInit {
           ", longitude: " +
           this.profileData.longitude;
 
-        //console.log(this.genreList);
         this.isDataFetch = true;
         this.selectedItems = [
           { id: this.genreList[0].id, text: this.genreList[0].name },
@@ -81,10 +78,9 @@ export class UpdateprofileComponent implements OnInit {
           { id: this.genreList[2].id, text: this.genreList[2].name },
         ];
         this.oldFavGenre = this.selectedItems;
-        //console.log(res);
       },
       (err) => {
-        console.log(err);
+        this.message = "Error, Try again";
       }
     );
 
@@ -140,25 +136,18 @@ export class UpdateprofileComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    // console.log(item);
     this.isError = false;
     this.favGenreList.push(item.id);
-    //console.log(this.favGenreList)
   }
   onSelectAll(items: any) {
-    // console.log(items);
   }
   onItemDeSelect(item: any) {
     this.isError = false;
 
-    //console.log(item);
-    // delete this.favGenreList[item.id];
     const index: number = this.favGenreList.indexOf(item.id);
     if (index !== -1) {
       this.favGenreList.splice(index, 1);
     }
-    // console.log(this.favGenreList)
-    // console.log(this.favGenreList);
   }
   getLocation(): void {
     this.isError = false;
@@ -167,8 +156,6 @@ export class UpdateprofileComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
         this.latitude = position.coords.latitude;
-        //console.log(this.longitude)
-        // console.log(` lol More or less ${position.coords.accuracy} meters.`);
 
         this.locationService
           .getPlaceNameByCoordinates(this.longitude, this.latitude)
@@ -177,15 +164,11 @@ export class UpdateprofileComponent implements OnInit {
               this.placeName = res.features[0].place_name;
               this.newLocationName = this.placeName;
               this.foundLocation = true;
-              console.log(res.features[0].place_name);
             },
-            (err) => {
-              console.log(err);
-            }
+            (err) => {}
           );
       });
     } else {
-      console.log("No support for geolocation");
       alert("no support for geolocation");
     }
   }
@@ -195,23 +178,17 @@ export class UpdateprofileComponent implements OnInit {
 
     this.locationService.getPlaceName(this.placeName).subscribe((res) => {
       this.foundLocation = true;
-      // console.log(res);
       this.longitude = res.features[0].center[0];
 
       this.latitude = res.features[0].center[1];
-      console.log(this.latitude + " ;" + this.longitude);
       this.placeName = res.features[0].place_name;
       this.newLocationName = this.placeName;
-      console.log(res.features[0].place_name),
-        (err) => {
-          console.log(err);
-        };
+      (err) => {};
     });
   }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
-      // Size Filter Bytes
       const max_size = 20971520;
       const allowed_types = ["image/png", "image/jpeg"];
       const max_height = 15200;
@@ -219,13 +196,11 @@ export class UpdateprofileComponent implements OnInit {
 
       if (fileInput.target.files[0].size > max_size) {
         this.imageError = "Maximum size allowed is " + max_size / 1000 + "Mb";
-        console.log(this.imageError);
         return false;
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
         this.imageError = "Only Images are allowed ( JPG | PNG )";
-        console.log(this.imageError);
         return false;
       }
       const reader = new FileReader();
@@ -236,8 +211,6 @@ export class UpdateprofileComponent implements OnInit {
           const img_height = rs.currentTarget["height"];
           const img_width = rs.currentTarget["width"];
 
-          console.log(img_height, img_width);
-
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
               "Maximum dimentions allowed " +
@@ -245,14 +218,11 @@ export class UpdateprofileComponent implements OnInit {
               "*" +
               max_width +
               "px";
-            console.log(this.imageError);
             return false;
           } else {
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
-            console.log(this.cardImageBase64.substring(1, 20));
-            // this.previewImagePath = imgBase64Path;
           }
         };
       };
@@ -261,43 +231,35 @@ export class UpdateprofileComponent implements OnInit {
     }
   }
   upload() {
-    console.log(this.cardImageBase64.substring(1, 20));
     this.profileService.uploadAvtar(this.cardImageBase64).subscribe(
       (res) => {
-        console.log(res);
         this.isImageUploaded = true;
         this.imageUploadNote = "Avtar uploaded";
         this.avatarUrl = res.message.secure_url;
-        console.log(this.avatarUrl);
       },
       (err) => {
-        console.log(err);
         this.imageUploadNote = "Failed Try Again ";
       }
     );
   }
   updateProfile() {
-    console.log(this.email);
-    console.log(this.selectedItems);
-    console.log(this.oldFavGenre);
-
-    if(this.oldAvatar!=this.avatarUrl){
-      let avatarData={
-        avatar:this.avatarUrl,
-        id:this.profileId
-      }
+    if (this.oldAvatar != this.avatarUrl) {
+      let avatarData = {
+        avatar: this.avatarUrl,
+        id: this.profileId,
+      };
       this.profileService.updateAvatar(avatarData).subscribe(
-        (res)=>{ console.log(res);
-        this.isError = false;
-        this.isDone = true;
-        this.message = "Profile Updated";
-        this.router.navigate(["profile"]);},
-        (err)=>{
-           this.isError = true;
-           this.message = "Avatar updation failed, Please try again ";
-           console.log(err);
+        (res) => {
+          this.isError = false;
+          this.isDone = true;
+          this.message = "Profile Updated";
+          this.router.navigate(["profile"]);
+        },
+        (err) => {
+          this.isError = true;
+          this.message = "Avatar updation failed, Please try again ";
         }
-      )
+      );
     }
     if (this.profileData.email != this.email) {
       if (!this.validationService.isValidEmail(this.email)) {
@@ -306,7 +268,6 @@ export class UpdateprofileComponent implements OnInit {
       }
       this.profileService.updateEmail(this.email, this.profileId).subscribe(
         (res) => {
-          console.log(res);
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
@@ -315,7 +276,6 @@ export class UpdateprofileComponent implements OnInit {
         (err) => {
           this.isError = true;
           this.message = "Invalid Email";
-          console.log(err);
         }
       );
     }
@@ -336,8 +296,6 @@ export class UpdateprofileComponent implements OnInit {
         (err) => {
           this.isError = true;
           this.message = "Invalid Email";
-
-          console.log(err);
         }
       );
     }
@@ -348,16 +306,14 @@ export class UpdateprofileComponent implements OnInit {
     }
 
     if (this.oldFavGenre != this.selectedItems) {
-      console.log(this.profileData.location);
-      console.log(this.newLocationName);
       this.profileService
         .updateFavGenre(this.oldFavGenre, this.selectedItems, this.profileId)
         .subscribe(
           (res) => {
-            console.log(res);
+            this.message = "Profile Updated";
           },
           (err) => {
-            console.log(err);
+            this.message = "Profile Updation Failed, Try again";
           }
         );
     }

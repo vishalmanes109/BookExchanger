@@ -12,7 +12,6 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
   addPost(postData) {
-    //console.log("in servi",postData)
 
     return this.http.post<any>(this._postUrl, postData);
   }
@@ -26,7 +25,6 @@ export class PostService {
     return this.http.get<any>(this._postUrl + "id/" + postId);
   }
   getGiveBook(giveBookId) {
-    console.log(giveBookId);
     return this.http.get<any>(this._bookUrl + "givebook/" + giveBookId);
   }
 
@@ -47,7 +45,6 @@ export class PostService {
 
     headers.append("Content-Type", "application/json");
 
-    console.log("deletePostData", deletePostData);
     let params = new HttpParams();
     params = params.append("post_id", deletePostData.postId);
     params = params.append("give_book_id", deletePostData.giveBookId);
@@ -57,7 +54,6 @@ export class PostService {
       headers: headers,
       params: params,
     };
-    console.log(option);
 
     return this.http.delete<any>(this._postUrl, option);
   }
@@ -68,11 +64,9 @@ export class PostService {
     return this.http.get<any>(this._postUrl + "author/" + author);
   }
   getPostByUser(username) {
-    console.log("username", username);
     return this.http.get<any>(this._postUrl + "user/" + username);
   }
   getPostByTitle(title) {
-    console.log(title);
     return this.http.get<any>(this._postUrl + "title/" + title);
   }
   uploadBookImage(imageData) {

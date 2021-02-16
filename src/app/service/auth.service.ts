@@ -27,7 +27,6 @@ export class AuthService {
     return localStorage.getItem("token");
   }
   isUserAvailable(username) {
-    console.log(username);
     return this.http.get<any>(this._uniqueUserUrl+"/" +username, );
   }
   loggedOut(){

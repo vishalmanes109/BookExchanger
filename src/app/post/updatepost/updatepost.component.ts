@@ -48,10 +48,8 @@ export class UpdatepostComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
-      //console.log("lol", this.postId);
       this.postService.getPostByPostId(this.postId).subscribe(
         (res) => {
-          //console.log("from post:", res);
           this.postData = res.message[0];
           this.postId = this.postData.postid;
           this.title = this.postData.title;
@@ -63,7 +61,6 @@ export class UpdatepostComponent implements OnInit {
           this.takeBookAuthor = this.postData.takebookauthor;
           this.give_book_id = this.postData.give_book_id;
           this.take_book_id = this.postData.take_book_id;
-          console.log("from update:", this.postData);
           this.isDataFetch = true;
 
           if (!this.postData.take_book_id) {
@@ -74,7 +71,6 @@ export class UpdatepostComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
         }
       );
     });
@@ -98,13 +94,11 @@ export class UpdatepostComponent implements OnInit {
 
       if (fileInput.target.files[0].size > max_size) {
         this.imageError = "Maximum size allowed is " + max_size / 1000 + "Mb";
-        console.log(this.imageError);
         return false;
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
         this.imageError = "Only Images are allowed ( JPG | PNG )";
-        console.log(this.imageError);
         return false;
       }
       const reader = new FileReader();
@@ -115,7 +109,6 @@ export class UpdatepostComponent implements OnInit {
           const img_height = rs.currentTarget["height"];
           const img_width = rs.currentTarget["width"];
 
-          console.log(img_height, img_width);
 
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
@@ -124,13 +117,11 @@ export class UpdatepostComponent implements OnInit {
               "*" +
               max_width +
               "px";
-            console.log(this.imageError);
             return false;
           } else {
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
-            console.log(this.cardImageBase64.substring(1, 20));
             // this.previewImagePath = imgBase64Path;
           }
         };
@@ -140,18 +131,14 @@ export class UpdatepostComponent implements OnInit {
     }
   }
   upload() {
-    console.log(this.cardImageBase64.substring(1, 20));
     this.postService.uploadBookImage(this.cardImageBase64).subscribe(
       (res) => {
-        console.log(res);
         this.isImageUploaded = true;
         this.imageUploadNote = "Image uploaded";
         this.avatarUrl = res.message.secure_url;
-        console.log(this.avatarUrl);
         this.bookImage=this.avatarUrl
       },
       (err) => {
-        console.log(err);
         this.imageUploadNote = "Failed Try Again ";
       }
     );
@@ -172,7 +159,6 @@ export class UpdatepostComponent implements OnInit {
       take_book_id: this.take_book_id,
       username: this.username,
     };
-    console.log("updatePostData", updatePostData);
 
     if (
       !this.title ||
@@ -192,8 +178,6 @@ export class UpdatepostComponent implements OnInit {
     }
     this.postService.updatePost(updatePostData).subscribe(
       (res) => {
-        console.log(res);
-        console.log("data updated");
         this.router
           .navigateByUrl("/post", { skipLocationChange: true })
           .then(() => {
@@ -201,8 +185,7 @@ export class UpdatepostComponent implements OnInit {
           });
       },
       (err) => {
-        console.log(err);
-        // console.log("error while updating");
+        // console.log(err);
       }
     );
   }

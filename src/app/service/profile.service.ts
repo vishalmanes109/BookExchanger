@@ -6,12 +6,10 @@ import { Injectable } from "@angular/core";
 })
 export class ProfileService {
   private _profileUrl = "http://localhost:3000/api/profile/";
-  private _imageUrl="http://localhost:3000/api/upload/"
+  private _imageUrl = "http://localhost:3000/api/upload/";
   //private _favouriteGenreUrl="http://localhost:3000/api//"
   constructor(private http: HttpClient) {}
   makeProfile(profileData) {
-    // console.log("hi",profileData)
-
     return this.http.post<any>(this._profileUrl, profileData);
   }
   getProfile(username) {
@@ -21,11 +19,9 @@ export class ProfileService {
     return this.http.get<any>(this._profileUrl + "id/" + profileId);
   }
   deleteProfile(userId) {
-    console.log("from ser", userId);
     return this.http.delete<any>(this._profileUrl + userId);
   }
   updateLocation(locationData) {
-    console.log("locationData", locationData);
     return this.http.patch<any>(this._profileUrl + "location", locationData);
   }
   updateFavGenre(oldGenreList, newGenreList, profileId) {
@@ -34,7 +30,6 @@ export class ProfileService {
       old_fav_genre_list: oldGenreList,
       profileid: profileId,
     };
-    console.log(favGenreData);
     return this.http.patch<any>(this._profileUrl + "genres", favGenreData);
   }
   updateEmail(email, profileId) {
@@ -42,17 +37,14 @@ export class ProfileService {
       email,
       profileId,
     };
-    console.log(updateEmailData);
     return this.http.patch<any>(this._profileUrl + "email", updateEmailData);
   }
   uploadAvtar(imageData) {
-    console.log(imageData.substring(1,20));
-    let data={data:imageData}
+    let data = { data: imageData };
     return this.http.post<any>(this._imageUrl, data);
   }
-  updateAvatar(avatrData){
+  updateAvatar(avatrData) {
     return this.http.patch<any>(this._profileUrl + "avatar", avatrData);
-
   }
 
   // run() {

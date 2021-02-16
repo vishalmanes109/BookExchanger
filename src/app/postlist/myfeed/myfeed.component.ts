@@ -30,7 +30,6 @@ export class MyfeedComponent implements OnInit {
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
-    //console.log(this.sortBy);
 
     if (
       localStorage.getItem("isUnauth") == "true" ||
@@ -46,18 +45,14 @@ export class MyfeedComponent implements OnInit {
 
       this.isNearByPost = true;
       this.profileId = localStorage.getItem("profileid");
-      // console.log(this.profileId);
       this.yourPost = false;
       this.isUnauth = false;
 
       this.postService.getNearByPost(this.profileId).subscribe(
         async (res) => {
-          //  console.log(res.message);
           this.postData = res.message;
           this.isDataFetch = true;
           this.message = this.postData.length + " Post/s found";
-
-          // console.log(this.postData);
         },
         (err) => {
           this.note =
@@ -69,7 +64,6 @@ export class MyfeedComponent implements OnInit {
     }
   }
   myFeedByLocation() {
-    // this.sortBy = "location";
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
@@ -81,28 +75,22 @@ export class MyfeedComponent implements OnInit {
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
     } else {
-      //console.log(this.sortBy);
       this.profileId = localStorage.getItem("profileid");
-      // console.log(this.profileId);
       this.postService.getNearByPost(this.profileId).subscribe(
         (res) => {
-          //  console.log(res.message);
           this.postData = res.message;
           this.isDataFetch = true;
           this.message = this.postData.length + " Post/s found";
 
-          // console.log(this.postData);
         },
         (err) => {
-          console.log(err);
+           this.note =
+             "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
         }
       );
-      // this.router.navigate(["/profile"]);
-      // this.router.navigate(["/myfeed"]);
     }
   }
   myFeedByMyPost() {
-    // this.sortBy = "mypost";
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
@@ -114,43 +102,38 @@ export class MyfeedComponent implements OnInit {
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
     } else {
-      //console.log(this.sortBy);
-      // this.router.navigate(["/profile"]);
-      // this.router.navigate(["/myfeed"]);
+      
       this.postService.getPostByProfile(this.profileId).subscribe(
         (res) => {
-          // console.log(res);
-          // console.log(this.sortBy);  
           this.postData = res.message;
           this.isDataFetch = true;
           this.message = this.postData.length + " Post/s found";
         },
         (err) => {
-          console.log(err);
+           this.note =
+             "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+
         }
       );
     }
   }
 
   myFeedByNewPost() {
-    // this.sortBy = "newpost";
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = false;
 
-    //console.log(this.sortBy);
-    // this.router.navigate(["/myfeed"]);
     this.postService.getAllPost().subscribe(
       (res) => {
-        // console.log(res);
-        // console.log(this.sortBy);
         this.isDataFetch = true;
         this.postData = res.message;
         this.message = this.postData.length + " Post/s found";
       },
       (err) => {
-        console.log(err);
+ this.note =
+   "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+
       }
     );
   }
@@ -159,10 +142,8 @@ export class MyfeedComponent implements OnInit {
     this.yourPost = false;
 
     if (this.bookname && this.bookname.length > 0) {
-      console.log(this.bookname);
       this.postService.getPostByBookName(this.bookname).subscribe(
         (res) => {
-          console.log(res);
           this.isDataFetch = true;
           this.postData = res.message;
           this.message = this.postData.length + " Post/s found";
@@ -170,13 +151,11 @@ export class MyfeedComponent implements OnInit {
         (err) => {
           this.isDataFetch = false;
           this.postData = null;
-          //console.log(err);
         }
       );
     }
   }
   editPost(postId) {
-    console.log(postId);
     this.router
       .navigateByUrl("/updatepost", { skipLocationChange: true })
       .then(() => {
@@ -189,14 +168,11 @@ export class MyfeedComponent implements OnInit {
       giveBookId: this.postData.give_book_id,
       takeBookId: this.postData.take_book_id,
     };
-    console.log(deletablePostData);
     this.postService.deletePost(deletablePostData).subscribe(
       (res) => {
-        console.log("deleted");
         this.router.navigate(["/profile"]);
       },
       (err) => {
-        console.log("error: Post does not exist");
       }
     );
   }

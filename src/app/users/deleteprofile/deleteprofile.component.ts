@@ -31,21 +31,17 @@ export class DeleteprofileComponent implements OnInit {
     this.userName = localStorage.getItem("username");
   }
   deleteProfile() {
-    console.log(this.username);
     if (this.userName == this.username) {
       this.profileService.deleteProfile(this.userId).subscribe(
         (res) => {
-          //console.log(res);
           this.isDeleted = true;
           localStorage.removeItem("username");
           localStorage.removeItem("userid");
           localStorage.removeItem("profileid");
-          console.log("profile deleted");
           this.message =
             "Profile is deleted. Thanks for your valuable time. We appriciate your decision. feel free to open new account anytime.";
         },
         (err) => {
-         // console.log(err);
           this.message = "Error: Please try again.";
         }
       );

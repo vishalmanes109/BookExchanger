@@ -40,38 +40,28 @@ export class AdvancesearchComponent implements OnInit {
 
   changeByBook() {
     this.byBook = !this.byBook;
-    console.log(this.byBook);
     if (this.byBook == true) this.counter++;
     else this.counter--;
-    console.log(this.counter);
   }
   changeByAuthor() {
     this.byAuthor = !this.byAuthor;
-    console.log(this.byAuthor);
     if (this.byAuthor == true) this.counter++;
     else this.counter--;
-    console.log(this.counter);
   }
   changeByTitle() {
     this.byTitle = !this.byTitle;
-    console.log(this.byTitle);
     if (this.byTitle == true) this.counter++;
     else this.counter--;
-    console.log(this.counter);
   }
   changeByLocation() {
     this.byLocation = !this.byLocation;
-    console.log(this.byLocation);
     if (this.byLocation == true) this.counter++;
     else this.counter--;
-    console.log(this.counter);
   }
   changeByUser() {
     this.byUser = !this.byUser;
-    console.log(this.byUser);
     if (this.byUser == true) this.counter++;
     else this.counter--;
-    console.log(this.counter);
   }
 
   searchPost() {
@@ -91,7 +81,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byBook) {
         this.postService.getPostByBookName(this.text).subscribe(
           (res) => {
-            console.log(res);
             this.isDataFetch = true;
             this.postData = res.message;
             this.note = this.postData.length + " Post/s found";
@@ -101,7 +90,6 @@ export class AdvancesearchComponent implements OnInit {
           (err) => {
             this.isDataFetch = false;
 
-            console.log(err);
             if (err.error.message != "Post does not exis") {
               this.isError = true;
               this.message =
@@ -116,8 +104,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byUser) {
         this.postService.getPostByUser(this.text).subscribe(
           (res) => {
-            console.log(res);
-
             this.isDataFetch = true;
             this.postData = res.message;
             this.note = this.postData.length + " Post/s found";
@@ -125,7 +111,6 @@ export class AdvancesearchComponent implements OnInit {
             return;
           },
           (err) => {
-            console.log(err);
             this.isDataFetch = false;
 
             if (err.error.message != "Post does not exis") {
@@ -142,8 +127,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byTitle) {
         this.postService.getPostByTitle(this.text).subscribe(
           (res) => {
-            console.log(res);
-
             this.isDataFetch = true;
             this.postData = res.message;
             this.note = this.postData.length + " Post/s found";
@@ -168,7 +151,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byLocation) {
         this.postService.getPostByLocation(this.text).subscribe(
           (res) => {
-            console.log(res);
 
             this.isDataFetch = true;
             this.postData = res.message;
@@ -179,7 +161,6 @@ export class AdvancesearchComponent implements OnInit {
           (err) => {
             this.isDataFetch = false;
 
-            console.log(err);
             if (err.error.message != "Post does not exis") {
               this.isError = true;
               this.message =
@@ -194,7 +175,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byAuthor) {
         this.postService.getPostByAuthor(this.text).subscribe(
           (res) => {
-            console.log(res);
 
             this.isDataFetch = true;
 
@@ -204,7 +184,6 @@ export class AdvancesearchComponent implements OnInit {
             return;
           },
           (err) => {
-            console.log(err);
             this.isDataFetch = false;
 
             if (err.error.message != "Post does not exis") {
@@ -220,23 +199,5 @@ export class AdvancesearchComponent implements OnInit {
       }
     }
 
-    console.log(this.byBook);
-    console.log(this.byAuthor);
-
-    console.log(this.byTitle);
-
-    console.log(this.byLocation);
-
-    console.log(this.byUser);
   }
 }
-
-// 14th ravivar
-
-// Vishal mane
-// abhishek naik
-// suresh jaiswar
-// ganesh patil
-// shivprasda
-// akshay jadhav sanpada
-// yashpal

@@ -98,20 +98,13 @@ export class CreateprofileComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.favGenreList.push(item.id);
-    //console.log(item);
-    //console.log(this.favGenreList);
   }
-  onSelectAll(items: any) {
-    //console.log(items);
-  }
+  onSelectAll(items: any) {}
   onItemDeSelect(item: any) {
-    //console.log(item);
-    // delete this.favGenreList[item.id];
     const index: number = this.favGenreList.indexOf(item.id);
     if (index !== -1) {
       this.favGenreList.splice(index, 1);
     }
-    // console.log(this.favGenreList);
   }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
@@ -124,13 +117,11 @@ export class CreateprofileComponent implements OnInit {
 
       if (fileInput.target.files[0].size > max_size) {
         this.imageError = "Maximum size allowed is " + max_size / 1000 + "Mb";
-        console.log(this.imageError);
         return false;
       }
 
       if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
         this.imageError = "Only Images are allowed ( JPG | PNG )";
-        console.log(this.imageError);
         return false;
       }
       const reader = new FileReader();
@@ -141,8 +132,6 @@ export class CreateprofileComponent implements OnInit {
           const img_height = rs.currentTarget["height"];
           const img_width = rs.currentTarget["width"];
 
-          console.log(img_height, img_width);
-
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
               "Maximum dimentions allowed " +
@@ -150,14 +139,11 @@ export class CreateprofileComponent implements OnInit {
               "*" +
               max_width +
               "px";
-            console.log(this.imageError);
             return false;
           } else {
             const imgBase64Path = e.target.result;
             this.cardImageBase64 = imgBase64Path;
             this.isImageSaved = true;
-            console.log(this.cardImageBase64.substring(1, 20));
-            // this.previewImagePath = imgBase64Path;
           }
         };
       };
@@ -166,17 +152,13 @@ export class CreateprofileComponent implements OnInit {
     }
   }
   upload() {
-    console.log(this.cardImageBase64.substring(1, 20));
     this.profileService.uploadAvtar(this.cardImageBase64).subscribe(
       (res) => {
-        console.log(res);
         this.isImageUploaded = true;
         this.imageUploadNote = "Avtar uploaded";
         this.avatarUrl = res.message.secure_url;
-        console.log(this.avatarUrl);
       },
       (err) => {
-        console.log(err);
         this.imageUploadNote = "Failed Try Again ";
       }
     );
@@ -186,8 +168,6 @@ export class CreateprofileComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
         this.latitude = position.coords.latitude;
-        //console.log(this.longitude)
-        // console.log(` lol More or less ${position.coords.accuracy} meters.`);
 
         this.locationService
           .getPlaceNameByCoordinates(this.longitude, this.latitude)
@@ -195,39 +175,25 @@ export class CreateprofileComponent implements OnInit {
             (res) => {
               this.placeName = res.features[0].place_name;
               this.foundLocation = true;
-              // console.log(res.features[0].place_name);
             },
-            (err) => {
-              console.log(err);
-            }
+            (err) => {}
           );
       });
     } else {
-      console.log("No support for geolocation");
       alert("no support for geolocation");
     }
   }
   onBlurGetLocation() {
     this.locationService.getPlaceName(this.location).subscribe((res) => {
       this.foundLocation = true;
-      // console.log(res);
       this.longitude = res.features[0].center[0];
 
       this.latitude = res.features[0].center[1];
-      console.log(this.latitude + " ;" + this.longitude);
       this.placeName = res.features[0].place_name;
-      console.log(res.features[0].place_name),
-        (err) => {
-          console.log(err);
-        };
+      (err) => {};
     });
   }
   submit() {
-    //console.log("lol submit")
-    //  console.log(this.username);
-    //  console.log(this.favGenreList);
-    // // location = this.placeName;
-    //console.log(this.isAgree);
     if (!this.isAgree) {
       this.isError = true;
       this.message = "Please agree to tems and conditions";
@@ -243,7 +209,6 @@ export class CreateprofileComponent implements OnInit {
       this.message = "Please select exactly 3 genres";
       return;
     }
-    console.log(this.avatarUrl);
     let profileData = {
       location: this.placeName,
       latitude: this.latitude,
@@ -253,11 +218,8 @@ export class CreateprofileComponent implements OnInit {
       fav_genre_list: this.favGenreList,
       avatar: this.avatarUrl,
     };
-    //console.log(profileData);
     this.profileService.makeProfile(profileData).subscribe(
       (res) => {
-        console.log("lol");
-        console.log(res);
         this.isDone = true;
         this.isError = false;
         this.message = "Congratulations Profile is created";
@@ -268,7 +230,6 @@ export class CreateprofileComponent implements OnInit {
         }, 2000);
       },
       (err) => {
-        console.log(err);
         this.isError = true;
         if (err.error.error.code == 23502) {
           this.message = "Profile creation failed. please try again! ";

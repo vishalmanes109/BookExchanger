@@ -39,16 +39,12 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = localStorage.getItem("username");
-    //console.log(this.username);
     if (!this.username) this.router.navigate(["login"]);
     this.profileService.getProfile(this.username).subscribe(
       (res) => {
-        //console.log(res);
         localStorage.setItem('isUnauth','false')
         this.profileData = res.message[0];
         this.genreList = res.genrelist;
-        console.log(this.profileData);
-        console.log(this.genreList);
         this.profileId = this.profileData.id;
         this.location = this.profileData.location;
         this.latitude = this.profileData.latitude;
@@ -62,9 +58,7 @@ export class ProfileComponent implements OnInit {
 
         this.postService.getPostByProfile(this.profileId).subscribe(
           (res) => {
-            //console.log(res);
             this.postData = res.message;
-            //console.log(this.postData);
             this.isPostExist = true;
           },
           (err) => {
@@ -72,7 +66,6 @@ export class ProfileComponent implements OnInit {
               this.isPostExist = false;
               this.message = "You have not submited any post. ";
             }
-            console.log(err);
           }
         );
       },
@@ -83,14 +76,10 @@ export class ProfileComponent implements OnInit {
 
             this.router.navigate(["/login"]);
           }
-
-        console.log(err);
       }
     );
   }
   openPost(postId) {
-    // this.SharedService.KeepPostId(postId);
-    console.log(`post/${postId}`);
     this.router.navigate([`post/${postId}`]);
   }
 
@@ -103,10 +92,6 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteProfile() {
-    console.log(this.profileId);
-    console.log(this.username);
-    console.log(this.userId);
-    console.log(`deleteprofile/${this.userId}`);
     this.router
       .navigateByUrl("deleteprofile", { skipLocationChange: true })
       .then(() => {

@@ -49,15 +49,12 @@ export class LoginComponent implements OnInit {
       password: this.password,
     };
     if (!this.isAgree) {
-      console.log(this.isAgree);
-      console.log("Agree terms and conditions to continue");
       this.isError = true;
       this.message = "Please Agree to terms and condition";
       return;
     }
     this.authService.loginUser(this.userData).subscribe(
       (res) => {
-        console.log(res);
         this.isError = false;
         localStorage.setItem("token", res.token);
         localStorage.setItem("username", this.username);
@@ -66,11 +63,9 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem("isUnauth", "false");
 
-        console.log(this.username);
         this.router.navigate(["/myfeed"]);
       },
       (err) => {
-        console.log(err.error);
         this.isError = true;
         this.defaulter = err.error.defaulter;
         if (this.defaulter == "email") {
@@ -79,8 +74,7 @@ export class LoginComponent implements OnInit {
           this.isError = true;
           this.message = "Invalid Username";
         } else {
-          this.message =
-            "Password Must be minimum of 8 characterand maximum of 15 character long and must  contain atleast 1 upper case, 1 lower case, 1 numeric and 1 special character.";
+          this.message ="Incorrect Password"
         }
       }
     );
