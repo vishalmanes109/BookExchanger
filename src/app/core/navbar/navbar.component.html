@@ -1,6 +1,7 @@
 <div class="ui menu">
   <div>
-    <img class="ui small image" src="../../../assets/logo/logo3.3.png" />
+    <a [routerLink]="['/myfeed']" routerLinkActive="router-link-active">    <img class="ui small image" src="../../../assets/logo/logo3.3.png" />
+</a>
   </div>
   <div class="right menu">
     <a
@@ -24,7 +25,7 @@
       >Login</a
     >
     <div *ngIf="isLoggedIn" class="ui simple dropdown item">
-      {{ username.substring(0,10) }}
+      {{ username.substring(0, 10) }}
       <i class="dropdown icon"></i>
       <div class="menu">
         <a
@@ -33,7 +34,7 @@
           routerLinkActive="router-link-active"
           >Profile</a
         >
-        <a  class="item" (click)="logout()">Logout</a>
+        <a class="item" (click)="logout()">Logout</a>
       </div>
     </div>
   </div>
