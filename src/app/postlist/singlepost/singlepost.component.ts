@@ -27,6 +27,8 @@ export class SinglepostComponent implements OnInit {
   private profileId;
   public nearByPost;
   public isNearByPostExist;
+  public isError;
+  public message;
 
   constructor(
     private postService: PostService,
@@ -36,6 +38,8 @@ export class SinglepostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isError=false;
+    this.message='';
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
     });
@@ -62,6 +66,10 @@ export class SinglepostComponent implements OnInit {
     this.postService.getNearByPost(this.profileId).subscribe(
       (res) => {
         this.nearByPost = res.message;
+        // if (this.nearByPost.length == 0){
+        //   this.isError=true;
+        //   this.message=this.nearByPost.lenght+" post found"
+        // }
         this.isNearByPostExist = true;
       },
       (err) => {}

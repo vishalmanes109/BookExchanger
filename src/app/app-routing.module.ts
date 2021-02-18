@@ -16,6 +16,7 @@ import { ProfileComponent } from "./users/profile/profile.component";
 import { RegisterComponent } from "./users/register/register.component";
 import { UpdateprofileComponent } from "./users/updateprofile/updateprofile.component";
 import { AdvancesearchComponent } from "./postlist/advancesearch/advancesearch.component";
+import { LoaderComponent } from "./core/loader/loader.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -23,7 +24,7 @@ const routes: Routes = [
   { path: "contact", component: ContactComponent },
   { path: "about", component: AboutComponent },
   { path: "profile", canActivate: [AuthGuard], component: ProfileComponent },
-
+  { path: "loader", component: LoaderComponent },
   {
     path: "updateprofile",
     canActivate: [AuthGuard],
@@ -48,7 +49,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: UpdatepostComponent,
   },
-  { path: "myfeed",  component: MyfeedComponent },
+  { path: "myfeed", component: MyfeedComponent },
   {
     path: "updateprofile/:profileid",
     canActivate: [AuthGuard],

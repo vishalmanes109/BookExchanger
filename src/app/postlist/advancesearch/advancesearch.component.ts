@@ -31,12 +31,15 @@ export class AdvancesearchComponent implements OnInit {
   public takeBookData = new Array();
   public takeBookId;
   public bookname;
+  public loadingStart = false;
   //public sortBy = "location";
   public takeBookResult;
 
   constructor(private postService: PostService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.note = "";
+  }
 
   changeByBook() {
     this.byBook = !this.byBook;
@@ -67,28 +70,37 @@ export class AdvancesearchComponent implements OnInit {
   searchPost() {
     this.isError = false;
     this.postData = null;
+
     if (this.counter > 1) {
+      this.note = "";
+
       this.isError = true;
       this.message = "Select Only ONE of the above parameter";
       return;
     }
     if (this.counter == 0) {
+      this.note = "";
+
       this.isError = true;
       this.message = "Select Atleast ONE of the above parameter ";
       return;
     }
     if (!this.isError) {
       if (this.byBook) {
+        this.loadingStart = true;
+
         this.postService.getPostByBookName(this.text).subscribe(
           (res) => {
             this.isDataFetch = true;
             this.postData = res.message;
             this.note = this.postData.length + " Post/s found";
+            this.loadingStart = false;
 
             return;
           },
           (err) => {
             this.isDataFetch = false;
+            this.loadingStart = false;
 
             if (err.error.message != "Post does not exis") {
               this.isError = true;
@@ -151,7 +163,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byLocation) {
         this.postService.getPostByLocation(this.text).subscribe(
           (res) => {
-
             this.isDataFetch = true;
             this.postData = res.message;
             this.note = this.postData.length + " Post/s found";
@@ -175,7 +186,6 @@ export class AdvancesearchComponent implements OnInit {
       if (this.byAuthor) {
         this.postService.getPostByAuthor(this.text).subscribe(
           (res) => {
-
             this.isDataFetch = true;
 
             this.postData = res.message;
@@ -198,6 +208,5 @@ export class AdvancesearchComponent implements OnInit {
         );
       }
     }
-
   }
 }

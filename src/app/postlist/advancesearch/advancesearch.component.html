@@ -83,64 +83,69 @@
     </div>
     <br />
     <div *ngIf="isError" class="ui message red">{{ message }}</div>
-    <div *ngIf="isDataFetch" class="ui message primary">{{note}} </div>
+    <div *ngIf="isDataFetch" class="ui message primary">{{ note }}</div>
   </div>
+  <ng-container *ngIf="!isDataFetch && loadingStart; else elseTemplate">
+    <img class="ui fluid image" src="../../../assets/loader/book.gif" />
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div *ngFor="let post of postData; let i = index">
+      <div class="ui teal padded segment container">
+        <div class="ui">
+          <h2>
+            {{ post.title }}
+          </h2>
+        </div>
+        <br />
 
-  <div *ngFor="let post of postData; let i = index">
-    <div class="ui teal padded segment container">
-      <div class="ui">
-        <h2>
-          {{ post.title }}
-        </h2>
+        <div class="ui grid container stackable">
+          <div class="six wide column">
+            <img
+              class="ui rounded fluid centered bordered image"
+              src="{{ post.give_book_image }}"
+              alt=""
+            />
+          </div>
+
+          <div class="ten wide column container">
+            <div class="details">
+              <div>Posted by: {{ post.name }}</div>
+              <hr />
+              <div class="details">
+                {{ post.description }}
+              </div>
+              <div class="details">
+                Book to exchange: {{ post.givebookname }}
+              </div>
+              <div class="details">Author Name: {{ post.givebookauthor }}</div>
+
+              <div
+                class="details"
+                *ngIf="
+                  post.takebook !== undefined || post.takebook !== null;
+                  else takebooknotpresent
+                "
+              >
+                Book want : {{ post.takebookname }}
+              </div>
+              <ng-template #takebooknotpresent
+                >Book want : {{ takeBook }}</ng-template
+              >
+
+              <div class="details">Author Name:{{ post.takebookauthor }}</div>
+              <div class="details">
+                Date: {{ post.post_time.substring(0, 10) }}
+              </div>
+              <div class="details">Location: {{ post.location }}</div>
+              <br />
+            </div>
+
+            <div class="ui button blue inverted">Message</div>
+            <div class="ui button orange inverted">Recommend</div>
+          </div>
+        </div>
       </div>
       <br />
-
-      <div class="ui grid container stackable">
-        <div class="six wide column">
-          <img
-            class="ui rounded fluid centered bordered image"
-            src="{{post.give_book_image}}"
-            alt=""
-          />
-        </div>
-
-        <div class="ten wide column container">
-          <div class="details">
-            <div>Posted by: {{ post.name }}</div>
-            <hr />
-            <div class="details">
-              {{ post.description }}
-            </div>
-            <div class="details">Book to exchange: {{ post.givebookname }}</div>
-            <div class="details">Author Name: {{ post.givebookauthor }}</div>
-
-            <div
-              class="details"
-              *ngIf="
-                post.takebook !== undefined || post.takebook !== null;
-                else takebooknotpresent
-              "
-            >
-              Book want : {{ post.takebookname }}
-            </div>
-            <ng-template #takebooknotpresent
-              >Book want : {{ takeBook }}</ng-template
-            >
-
-            <div class="details">Author Name:{{ post.takebookauthor }}</div>
-            <div class="details">
-              Date: {{ post.post_time.substring(0, 10) }}
-            </div>
-            <div class="details">Location: {{ post.location }}</div>
-            <br />
-            
-          </div>
-          
-          <div class="ui button blue inverted">Message</div>
-          <div class="ui button orange inverted">Recommend</div>
-        </div>
-      </div>
     </div>
-    <br />
-  </div>
+  </ng-template>
 </div>

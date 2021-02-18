@@ -31,6 +31,9 @@ import { SharedService } from "./service/shared.service";
 import { DeletepostComponent } from './post/deletepost/deletepost.component';
 import { DeleteprofileComponent } from './users/deleteprofile/deleteprofile.component';
 import { AdvancesearchComponent } from './postlist/advancesearch/advancesearch.component';
+import { LoaderComponent } from './core/loader/loader.component';
+import { NgHttpLoaderModule } from "ng-http-loader";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +62,7 @@ import { AdvancesearchComponent } from './postlist/advancesearch/advancesearch.c
     NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
     SuiModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [
     AuthService,
@@ -75,5 +79,6 @@ import { AdvancesearchComponent } from './postlist/advancesearch/advancesearch.c
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [LoaderComponent],
 })
 export class AppModule {}

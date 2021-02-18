@@ -243,11 +243,12 @@ export class UpdateprofileComponent implements OnInit {
     );
   }
   updateProfile() {
-    if (this.oldAvatar != this.avatarUrl) {
+    if ( this.avatarUrl && this.oldAvatar != this.avatarUrl) {
       let avatarData = {
         avatar: this.avatarUrl,
         id: this.profileId,
       };
+      console.log(avatarData)
       this.profileService.updateAvatar(avatarData).subscribe(
         (res) => {
           this.isError = false;

@@ -1,34 +1,29 @@
-
 <app-navbar></app-navbar>
 
 <div class="ui container">
-  
-  <div class="ui stackable  container grid">
+  <div class="ui stackable container grid">
     <div class="ten wide column">
       <h3>Post</h3>
       <div class="ui raised segments container">
         <div *ngIf="isDataFetch" class="ui segment">
-          <img
-                class="ui avatar image"
-                src="{{postData.avatar}}"
-              />
-              <span>{{ postData.username }}</span>
-              <h3>
-                Title:
-                {{
-                  postData.title.charAt(0).toUpperCase() +
-                    postData.title.substring(1)
-                }}
-              </h3>
-          <div class="ui stackable mobile reversed  container grid">
-            <div  class="ten wide column inverted">
-              
+          <img class="ui avatar image" src="{{ postData.avatar }}" />
+          <span>{{ postData.username }}</span>
+          <h3>
+            Title:
+            {{
+              postData.title.charAt(0).toUpperCase() +
+                postData.title.substring(1)
+            }}
+          </h3>
+          <div class="ui stackable mobile reversed container grid">
+            <div class="ten wide column inverted">
               <p>{{ postData.description }}</p>
               <p>Book Want to exchange: {{ postData.givebookname }}</p>
               <p>Author name: {{ postData.givebookauthor }}</p>
               <p>Book looking for : {{ postData.takebookname }}</p>
               <p>Author Name: {{ postData.takebookauthor }}</p>
               <p>Date: {{ postData.post_time.substring(0, 10) }}</p>
+             
               <div *ngIf="yourPost">
                 <input
                   type="button"
@@ -57,7 +52,7 @@
             <div class="six wide column">
               <img
                 class="ui medium image"
-                src="{{postData.give_book_image}}"
+                src="{{ postData.give_book_image }}"
                 alt="image"
               />
             </div>
@@ -76,12 +71,8 @@
               class="ui middle aligned animated list"
             >
               <div *ngIf="postData.postid != post.postid">
-
                 <div (click)="openPost(post.postid)" class="item">
-                  <img
-                    class="ui avatar image"
-                    src="{{post.avatar}}"
-                  />
+                  <img class="ui avatar image" src="{{ post.avatar }}" />
                   <span class="">{{ post.name }}</span>
                   <div class="content">
                     <div class="header">{{ post.title }}</div>
@@ -93,8 +84,9 @@
             </div>
           </div>
           <div *ngIf="!isNearByPostExist">
-            No one from your location posted on bookxchanger. 
-            please share the bookxchanger with your friends family .more users means more books to read for free.
+            No one from your location posted on bookxchanger. please share the
+            bookxchanger with your friends family .more users means more books
+            to read for free.
           </div>
         </div>
       </div>

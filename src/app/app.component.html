@@ -1,1 +1,10 @@
 <router-outlet></router-outlet>
+<ng-http-loader
+[backdrop]="true"
+    [backgroundColor]="'#ff000'"
+    [debounceDelay]="10"
+    [extraDuration]="500"
+    [minDuration]="1500"
+    [opacity]=".8"
+    [backdropBackgroundColor]="'#777777'"
+     [entryComponent]="loaderComponent"></ng-http-loader>
