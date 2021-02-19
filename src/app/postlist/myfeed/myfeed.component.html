@@ -59,7 +59,10 @@
         {{ message }}
       </h5>
     </div>
-    <div *ngFor="let post of postData">
+    <div
+      *ngFor="
+        let post of postData | paginate: { itemsPerPage: 2, currentPage: page }"
+    >
       <div class="ui teal padded segment container">
         <div class="ui">
           <h2>
@@ -144,6 +147,8 @@
       </div>
       <br />
     </div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
     <div class="ui container" *ngIf="!isDataFetch">
       <div class="ui segment">
         {{ note }}
@@ -152,9 +157,9 @@
       </div>
       <h3>Most Popular books Available</h3>
 
-      <div  class="ui grid ">
+      <div class="ui grid container">
         <div *ngFor="let post of bookPost" class="four wide column">
-          <img 
+          <img
             class="ui image small bordered centered"
             src="{{ post.give_book_image }}"
             alt="popular books"
@@ -180,23 +185,42 @@
     </div>
     <br />
     <div>
-      <div class="ui segment red container">
-        <h3>How BookXchanger works?</h3>
-        <div class="ui ordered list">
-          <li class="item">Create account</li>
-          <li class="item">Submit post</li>
-          <li class="item">
-            Get match you with other users from nearby location.
-          </li>
-          <li class="item">
-            Chat with other user and decide how to swap book.
-          </li>
-          <li class="item">Get award points for every succesful swapping.</li>
-          <li class="item">
-            Search other user with same interest in books to build communty.
-          </li>
+      <ng-container class="ui container" *ngIf="isDataFetch; else elseTemplate">
+        <h3>Most Popular books Available</h3>
+
+        <div class="ui grid">
+          <div
+            *ngFor="let post of bookPost | slice: 0:2"
+            class="eight wide column"
+          >
+            <img
+              class="ui image small bordered centered"
+              src="{{ post.give_book_image }}"
+              alt="popular books"
+            />
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="ui segment red container">
+          <h3>How BookXchanger works?</h3>
+          <div class="ui ordered list">
+            <li class="item">Create account</li>
+            <li class="item">Submit post</li>
+            <li class="item">
+              Get match you with other users from nearby location.
+            </li>
+            <li class="item">
+              Chat with other user and decide how to swap book.
+            </li>
+            <li class="item">Get award points for every succesful swapping.</li>
+            <li class="item">
+              Search other user with same interest in books to build communty.
+            </li>
+          </div>
+        </div></ng-template
+      >
+
       <div class="ui segment teal container">
         <h3>Why BookXchanger?</h3>
         <h3>Well, let see</h3>

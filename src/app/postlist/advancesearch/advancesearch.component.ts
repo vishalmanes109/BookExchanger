@@ -34,6 +34,7 @@ export class AdvancesearchComponent implements OnInit {
   public loadingStart = false;
   //public sortBy = "location";
   public takeBookResult;
+  public page=1;
 
   constructor(private postService: PostService) {}
 

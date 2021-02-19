@@ -28,10 +28,21 @@ export class MyfeedComponent implements OnInit {
   public isUnauth;
   public message;
   public bookPost;
+  public totalPages;
+  public page = 1;
+
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
-
+    this.postService.getPopularBook().subscribe(
+      (res) => {
+        this.bookPost = res.message;
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     if (
       localStorage.getItem("isUnauth") == "true" ||
       !localStorage.getItem("isUnauth")
@@ -40,16 +51,6 @@ export class MyfeedComponent implements OnInit {
 
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search by book without login";
-
-        this.postService.getPopularBook().subscribe(
-          (res)=>{
-            this.bookPost=res.message;
-            console.log(res)
-          },
-          (err)=>{
-            console.log(err)
-          }
-        )
     } else {
       this.note =
         "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
@@ -62,6 +63,7 @@ export class MyfeedComponent implements OnInit {
       this.postService.getNearByPost(this.profileId).subscribe(
         async (res) => {
           this.postData = res.message;
+          this.totalPages = this.postData.length;
           this.isDataFetch = true;
           this.message = this.postData.length + " Post/s found";
         },
@@ -91,12 +93,13 @@ export class MyfeedComponent implements OnInit {
         (res) => {
           this.postData = res.message;
           this.isDataFetch = true;
-          this.message = this.postData.length + " Post/s found";
+          this.totalPages = this.postData.length;
 
+          this.message = this.postData.length + " Post/s found";
         },
         (err) => {
-           this.note =
-             "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+          this.note =
+            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
         }
       );
     }
@@ -113,17 +116,17 @@ export class MyfeedComponent implements OnInit {
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
     } else {
-      
       this.postService.getPostByProfile(this.profileId).subscribe(
         (res) => {
           this.postData = res.message;
           this.isDataFetch = true;
+          this.totalPages = this.postData.length;
+
           this.message = this.postData.length + " Post/s found";
         },
         (err) => {
-           this.note =
-             "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-
+          this.note =
+            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
         }
       );
     }
@@ -139,12 +142,14 @@ export class MyfeedComponent implements OnInit {
       (res) => {
         this.isDataFetch = true;
         this.postData = res.message;
+        this.totalPages = this.postData.length;
+
+        //console.log(this.postData)
         this.message = this.postData.length + " Post/s found";
       },
       (err) => {
- this.note =
-   "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-
+        this.note =
+          "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
       }
     );
   }
@@ -157,6 +162,8 @@ export class MyfeedComponent implements OnInit {
         (res) => {
           this.isDataFetch = true;
           this.postData = res.message;
+          this.totalPages = this.postData.length;
+
           this.message = this.postData.length + " Post/s found";
         },
         (err) => {
@@ -183,8 +190,7 @@ export class MyfeedComponent implements OnInit {
       (res) => {
         this.router.navigate(["/profile"]);
       },
-      (err) => {
-      }
+      (err) => {}
     );
   }
 }

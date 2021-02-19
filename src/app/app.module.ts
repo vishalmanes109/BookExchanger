@@ -33,7 +33,7 @@ import { DeleteprofileComponent } from './users/deleteprofile/deleteprofile.comp
 import { AdvancesearchComponent } from './postlist/advancesearch/advancesearch.component';
 import { LoaderComponent } from './core/loader/loader.component';
 import { NgHttpLoaderModule } from "ng-http-loader";
-
+import { NgxPaginationModule } from "ngx-pagination";
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +63,7 @@ import { NgHttpLoaderModule } from "ng-http-loader";
     FormsModule,
     SuiModule,
     NgHttpLoaderModule.forRoot(),
+    NgxPaginationModule,
   ],
   providers: [
     AuthService,

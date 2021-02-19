@@ -89,7 +89,12 @@
     <img class="ui fluid image" src="../../../assets/loader/book.gif" />
   </ng-container>
   <ng-template #elseTemplate>
-    <div *ngFor="let post of postData; let i = index">
+    <div
+      *ngFor="
+        let post of postData | paginate: { itemsPerPage: 1, currentPage: page };
+        let i = index
+      "
+    >
       <div class="ui teal padded segment container">
         <div class="ui">
           <h2>
@@ -147,5 +152,6 @@
       </div>
       <br />
     </div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </ng-template>
 </div>

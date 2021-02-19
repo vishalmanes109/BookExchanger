@@ -25,6 +25,7 @@
     "ng-multiselect-dropdown": "^0.2.14",
     "ng2-file-upload": "^1.4.0",
     "ng2-semantic-ui": "^0.9.7",
+    "ngx-pagination": "^5.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
