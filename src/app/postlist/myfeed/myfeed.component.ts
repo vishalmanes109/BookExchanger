@@ -34,6 +34,7 @@ export class MyfeedComponent implements OnInit {
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
+    this.postData = null;
     this.postService.getPopularBook().subscribe(
       (res) => {
         this.bookPost = res.message;
@@ -156,6 +157,7 @@ export class MyfeedComponent implements OnInit {
   getPostByBookName() {
     this.isNearByPost = false;
     this.yourPost = false;
+    this.postData = null;
 
     if (this.bookname && this.bookname.length > 0) {
       this.postService.getPostByBookName(this.bookname).subscribe(

@@ -35,6 +35,7 @@ export class AdvancesearchComponent implements OnInit {
   //public sortBy = "location";
   public takeBookResult;
   public page=1;
+  public pageSize=1;
 
   constructor(private postService: PostService) {}
 
@@ -71,6 +72,7 @@ export class AdvancesearchComponent implements OnInit {
   searchPost() {
     this.isError = false;
     this.postData = null;
+    this.isDataFetch=false;
 
     if (this.counter > 1) {
       this.note = "";
@@ -89,7 +91,6 @@ export class AdvancesearchComponent implements OnInit {
     if (!this.isError) {
       if (this.byBook) {
         this.loadingStart = true;
-
         this.postService.getPostByBookName(this.text).subscribe(
           (res) => {
             this.isDataFetch = true;
@@ -142,6 +143,7 @@ export class AdvancesearchComponent implements OnInit {
           (res) => {
             this.isDataFetch = true;
             this.postData = res.message;
+            console.log(this.postData)
             this.note = this.postData.length + " Post/s found";
 
             return;

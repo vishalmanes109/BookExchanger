@@ -85,13 +85,11 @@
     <div *ngIf="isError" class="ui message red">{{ message }}</div>
     <div *ngIf="isDataFetch" class="ui message primary">{{ note }}</div>
   </div>
-  <ng-container *ngIf="!isDataFetch && loadingStart; else elseTemplate">
-    <img class="ui fluid image" src="../../../assets/loader/book.gif" />
-  </ng-container>
-  <ng-template #elseTemplate>
+  <div *ngIf="isDataFetch">
     <div
       *ngFor="
-        let post of postData | paginate: { itemsPerPage: 1, currentPage: page };
+        let post of postData
+          | paginate: { itemsPerPage: pageSize, currentPage: page };
         let i = index
       "
     >
@@ -114,7 +112,10 @@
 
           <div class="ten wide column container">
             <div class="details">
-              <div>Posted by: {{ post.name }}</div>
+              
+              <img class="ui avatar image" src="{{ post.avatar }}" />
+              Posted by: {{ post.name }}
+
               <hr />
               <div class="details">
                 {{ post.description }}
@@ -152,6 +153,9 @@
       </div>
       <br />
     </div>
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  </ng-template>
+    <pagination-controls
+      *ngIf="isDataFetch"
+      (pageChange)="page = $event"
+    ></pagination-controls>
+  </div>
 </div>

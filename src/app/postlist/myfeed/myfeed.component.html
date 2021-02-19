@@ -59,95 +59,102 @@
         {{ message }}
       </h5>
     </div>
-    <div
-      *ngFor="
-        let post of postData | paginate: { itemsPerPage: 2, currentPage: page }"
-    >
-      <div class="ui teal padded segment container">
-        <div class="ui">
-          <h2>
-            {{ post.title }}
-          </h2>
+    <div *ngIf="isDataFetch">
+      <div
+        *ngFor="
+          let post of postData
+            | paginate: { itemsPerPage: 2, currentPage: page }
+        "
+      >
+        <div class="ui teal padded segment container">
+          <div class="ui">
+            <h2>
+              {{ post.title }}
+            </h2>
+          </div>
+          <br />
+
+          <div class="ui grid container stackable">
+            <div class="six wide column">
+              <img
+                class="ui rounded fluid centered bordered image"
+                src="{{ post.give_book_image }}"
+                alt=""
+              />
+            </div>
+
+            <div class="ten wide column container">
+              <div class="details">
+                <img class="ui avatar image" src="{{ post.avatar }}" />
+                Posted by: {{ post.name }}
+                <hr />
+                <div class="details">
+                  {{ post.description }}
+                </div>
+                <div class="details">
+                  Book to exchange: {{ post.givebookname }}
+                </div>
+                <div class="details">
+                  Author Name: {{ post.givebookauthor }}
+                </div>
+
+                <div
+                  class="details"
+                  *ngIf="
+                    post.takebook !== undefined || post.takebook !== null;
+                    else takebooknotpresent
+                  "
+                >
+                  Book want : {{ post.takebookname }}
+                </div>
+                <ng-template #takebooknotpresent
+                  >Book want : {{ takeBook }}</ng-template
+                >
+
+                <div class="details">Author Name:{{ post.takebookauthor }}</div>
+                <div class="details">
+                  Date: {{ post.post_time.substring(0, 10) }}
+                </div>
+                <div class="details">Location: {{ post.location }}</div>
+                <br />
+                <div *ngIf="isNearByPost" class="details">
+                  {{ post.name }} is :
+                  {{ post.distance.toFixed(1) * 1609 }} meters away from your
+                  location
+                </div>
+              </div>
+
+              <div *ngIf="yourPost">
+                <input
+                  type="button"
+                  class="ui button primary inverted"
+                  name="edit"
+                  value="Edit"
+                  (click)="editPost(post.postid)"
+                />
+                <input
+                  type="button"
+                  class="ui right floated button red inverted"
+                  name="delete"
+                  value="Delete"
+                  (click)="deletePost(post.postid)"
+                />
+              </div>
+              <div *ngIf="!yourPost">
+                <input
+                  type="button"
+                  class="ui button primary inverted"
+                  name="chat"
+                  value="Chat"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <br />
-
-        <div class="ui grid container stackable">
-          <div class="six wide column">
-            <img
-              class="ui rounded fluid centered bordered image"
-              src="{{ post.give_book_image }}"
-              alt=""
-            />
-          </div>
-
-          <div class="ten wide column container">
-            <div class="details">
-              <div>Posted by: {{ post.name }}</div>
-              <hr />
-              <div class="details">
-                {{ post.description }}
-              </div>
-              <div class="details">
-                Book to exchange: {{ post.givebookname }}
-              </div>
-              <div class="details">Author Name: {{ post.givebookauthor }}</div>
-
-              <div
-                class="details"
-                *ngIf="
-                  post.takebook !== undefined || post.takebook !== null;
-                  else takebooknotpresent
-                "
-              >
-                Book want : {{ post.takebookname }}
-              </div>
-              <ng-template #takebooknotpresent
-                >Book want : {{ takeBook }}</ng-template
-              >
-
-              <div class="details">Author Name:{{ post.takebookauthor }}</div>
-              <div class="details">
-                Date: {{ post.post_time.substring(0, 10) }}
-              </div>
-              <div class="details">Location: {{ post.location }}</div>
-              <br />
-              <div *ngIf="isNearByPost" class="details">
-                {{ post.name }} is :
-                {{ post.distance.toFixed(1) * 1609 }} meters away from your
-                location
-              </div>
-            </div>
-
-            <div *ngIf="yourPost">
-              <input
-                type="button"
-                class="ui button primary inverted"
-                name="edit"
-                value="Edit"
-                (click)="editPost(post.postid)"
-              />
-              <input
-                type="button"
-                class="ui right floated button red inverted"
-                name="delete"
-                value="Delete"
-                (click)="deletePost(post.postid)"
-              />
-            </div>
-            <div *ngIf="!yourPost">
-              <input
-                type="button"
-                class="ui button primary inverted"
-                name="chat"
-                value="Chat"
-              />
-            </div>
-          </div>
-        </div>
       </div>
-      <br />
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
 
     <div class="ui container" *ngIf="!isDataFetch">
       <div class="ui segment">
