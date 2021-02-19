@@ -1,11 +1,5 @@
 <app-navbar></app-navbar>
 <br />
-<!-- <div *ngIf="!isDataFetch && isUnauth" class="ui ">
-  <div class="ui active inverted dimmer">
-    <div class="ui large text loader">Loading</div>
-  </div>
-  
-</div> -->
 
 <div class="ui container">
   <div class="ui container">
@@ -65,7 +59,7 @@
         {{ message }}
       </h5>
     </div>
-    <div *ngFor="let post of postData; let i = index">
+    <div *ngFor="let post of postData">
       <div class="ui teal padded segment container">
         <div class="ui">
           <h2>
@@ -150,16 +144,27 @@
       </div>
       <br />
     </div>
-    <div *ngIf="!isDataFetch">
-      <div class="ui segment container">
+    <div class="ui container" *ngIf="!isDataFetch">
+      <div class="ui segment">
         {{ note }}
 
         <a href="www.bookxchanger.com">BookXchanger</a>
       </div>
+      <h3>Most Popular books Available</h3>
+
+      <div  class="ui grid ">
+        <div *ngFor="let post of bookPost" class="four wide column">
+          <img 
+            class="ui image small bordered centered"
+            src="{{ post.give_book_image }}"
+            alt="popular books"
+          />
+        </div>
+      </div>
     </div>
   </div>
   <div class="four wide column">
-    <p>Search posts by book name</p>
+    <p class="ui container">Search posts by book name</p>
     <div class="ui category search">
       <div class="ui icon input">
         <input

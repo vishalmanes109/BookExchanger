@@ -12,7 +12,6 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
   addPost(postData) {
-
     return this.http.post<any>(this._postUrl, postData);
   }
   getPostByLocation(location) {
@@ -69,9 +68,11 @@ export class PostService {
   getPostByTitle(title) {
     return this.http.get<any>(this._postUrl + "title/" + title);
   }
+  getPopularBook() {
+    return this.http.get<any>(this._bookUrl + "popularbooks");
+  }
   uploadBookImage(imageData) {
     let data = { data: imageData };
     return this.http.post<any>(this._imageUrl, data);
   }
 }
-

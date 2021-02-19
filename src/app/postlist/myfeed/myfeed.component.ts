@@ -27,6 +27,7 @@ export class MyfeedComponent implements OnInit {
   public isNearByPost = false;
   public isUnauth;
   public message;
+  public bookPost;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -39,6 +40,16 @@ export class MyfeedComponent implements OnInit {
 
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search by book without login";
+
+        this.postService.getPopularBook().subscribe(
+          (res)=>{
+            this.bookPost=res.message;
+            console.log(res)
+          },
+          (err)=>{
+            console.log(err)
+          }
+        )
     } else {
       this.note =
         "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
