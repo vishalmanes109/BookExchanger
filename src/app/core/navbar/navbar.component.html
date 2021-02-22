@@ -6,12 +6,6 @@
   <div class="right menu">
     <a
       class="item"
-      [routerLink]="['/myfeed']"
-      routerLinkActive="router-link-active"
-      >Home</a
-    >
-    <a
-      class="item"
       [routerLink]="['/createpost']"
       routerLinkActive="router-link-active"
       >Post</a
@@ -23,6 +17,13 @@
       [routerLink]="['/login']"
       routerLinkActive="router-link-active"
       >Login</a
+    >
+    <a
+      *ngIf="!isLoggedIn"
+      class="item"
+      [routerLink]="['/register']"
+      routerLinkActive="router-link-active"
+      >Sign Up</a
     >
     <div *ngIf="isLoggedIn" class="ui simple dropdown item">
       {{ username.substring(0, 10) }}

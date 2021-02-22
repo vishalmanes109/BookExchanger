@@ -115,15 +115,14 @@
                 <div class="details">
                   Date: {{ post.post_time.substring(0, 10) }}
                 </div>
-                <div class="details">Location: {{ post.location }}</div>
+                <!-- <div class="details">Location: {{ post.location }}</div> -->
                 <br />
                 <div *ngIf="isNearByPost" class="details">
                   {{ post.name }} is :
-                  {{ post.distance.toFixed(1) * 1609 }} meters away from your
+                  {{ (post.distance * 1609/1000).toFixed(2) }} Km away from your
                   location
                 </div>
               </div>
-
               <div *ngIf="yourPost">
                 <input
                   type="button"

@@ -72,9 +72,9 @@ export class LoginComponent implements OnInit {
           this.message = "Invalid Email";
         } else if (this.defaulter == "username") {
           this.isError = true;
-          this.message = "Invalid Username";
+          this.message = "Invalid Username/Password";
         } else {
-          this.message ="Incorrect Password"
+          this.message = "Invalid Username/Password";
         }
       }
     );

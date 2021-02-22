@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   public isError = false;
   public message;
   public isUnique = false;
+  public confirmpassword:string;
 
   ngOnInit(): void {}
   constructor(
@@ -63,6 +64,11 @@ export class RegisterComponent implements OnInit {
     if (!this.isAgree) {
       this.isError = true;
       this.message = "Please Agree to terms and condition";
+      return;
+    }
+    if(this.password!=this.confirmpassword){
+      this.isError = true;
+      this.message = "Password and Confirmed password does not match";
       return;
     }
     this.registerUserData = {

@@ -53,7 +53,6 @@
             />
             <i class="user icon"></i>
           </div>
-          
         </div>
         <div class="field">
           <label>Email ID</label>
@@ -86,6 +85,21 @@
           </div>
         </div>
         <div class="field">
+          <label> Confirm Password</label>
+          <div class="ui icon input">
+            <input
+              type="password"
+              placeholder="Password must be minimum 8 character long"
+              name="confirmpassword"
+              id="confirmpassword"
+              [(ngModel)]="confirmpassword"
+              (blur)="isValidPassword()"
+              (click)="reset()"
+            />
+            <i class="lock icon"></i>
+          </div>
+        </div>
+        <div class="field">
           <sui-checkbox [(ngModel)]="isAgree" name="isAgree">
             I agree to the <a href="">Terms and Conditions</a>
           </sui-checkbox>
@@ -98,11 +112,10 @@
         >
           Submit
         </button>
-        
       </form>
       <br /><br />
 
-      <div class="ui  message">
+      <div class="ui message">
         <a [routerLink]="['/login']" routerLinkActive="router-link-active"
           >Already Have An Account</a
         >
