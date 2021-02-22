@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
   public isPostExist = true;
   public message;
   public avatar;
+  public title;
 
   constructor(
     private profileService: ProfileService,
@@ -42,7 +43,7 @@ export class ProfileComponent implements OnInit {
     if (!this.username) this.router.navigate(["login"]);
     this.profileService.getProfile(this.username).subscribe(
       (res) => {
-        localStorage.setItem('isUnauth','false')
+        localStorage.setItem("isUnauth", "false");
         this.profileData = res.message[0];
         this.genreList = res.genrelist;
         this.profileId = this.profileData.id;
@@ -51,7 +52,7 @@ export class ProfileComponent implements OnInit {
         this.longitude = this.profileData.longitude;
         this.email = this.profileData.email;
         this.userId = this.profileData.user_id;
-        this.avatar=this.profileData.avatar;
+        this.avatar = this.profileData.avatar;
         this.isPremium = this.profileData.premium;
         localStorage.setItem("userid", this.userId);
         localStorage.setItem("profileid", this.profileId);
@@ -80,7 +81,12 @@ export class ProfileComponent implements OnInit {
     );
   }
   openPost(postId) {
-    this.router.navigate([`post/${postId}`]);
+    this.title = this.postData[0].title;
+    // this.router.navigate([
+    //   "post",
+    //   { postid: postId, slug: this.title },
+    // ]);
+    this.router.navigate([`post/${postId}/${this.title}` ]);
   }
 
   EditProfile() {

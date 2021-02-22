@@ -61,7 +61,7 @@ const routes: Routes = [
     component: DeleteprofileComponent,
   },
   {
-    path: "post/:postid",
+    path: "post/:postid/:slug",
     canActivate: [AuthGuard],
     component: SinglepostComponent,
   },

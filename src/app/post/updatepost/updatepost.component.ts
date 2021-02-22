@@ -70,8 +70,7 @@ export class UpdatepostComponent implements OnInit {
             // this.note = "kindly reach out to user by clicking on chat button";
           }
         },
-        (err) => {
-        }
+        (err) => {}
       );
     });
   }
@@ -109,7 +108,6 @@ export class UpdatepostComponent implements OnInit {
           const img_height = rs.currentTarget["height"];
           const img_width = rs.currentTarget["width"];
 
-
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
               "Maximum dimentions allowed " +
@@ -136,7 +134,7 @@ export class UpdatepostComponent implements OnInit {
         this.isImageUploaded = true;
         this.imageUploadNote = "Image uploaded";
         this.avatarUrl = res.message.secure_url;
-        this.bookImage=this.avatarUrl
+        this.bookImage = this.avatarUrl;
       },
       (err) => {
         this.imageUploadNote = "Failed Try Again ";
@@ -181,7 +179,8 @@ export class UpdatepostComponent implements OnInit {
         this.router
           .navigateByUrl("/post", { skipLocationChange: true })
           .then(() => {
-            this.router.navigate([`post/${this.postId}`]);
+            //this.router.navigate([`post/${this.postId}`]);
+            this.router.navigate([`post/${this.postId}/${this.title}`]);
           });
       },
       (err) => {

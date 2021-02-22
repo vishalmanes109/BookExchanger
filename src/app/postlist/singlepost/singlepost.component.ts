@@ -37,9 +37,9 @@ export class SinglepostComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.isError=false;
-    this.message='';
+  ngOnInit():  void {
+    this.isError = false;
+    this.message = "";
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
     });

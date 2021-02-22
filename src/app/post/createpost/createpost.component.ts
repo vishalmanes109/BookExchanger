@@ -126,7 +126,9 @@ export class CreatepostComponent implements OnInit {
         this.isError = false;
         this.message = "Post added succesfully";
         let postId=res.post_id
-        this.router.navigate([`post/${postId}`]);
+       // this.router.navigate([`post/${postId}`]);
+        this.router.navigate([`post/${postId}/${this.title}`]);
+
 
       },
       (err) => {
