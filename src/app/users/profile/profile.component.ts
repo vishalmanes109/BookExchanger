@@ -30,6 +30,8 @@ export class ProfileComponent implements OnInit {
   public message;
   public avatar;
   public title;
+  public contact;
+  public createdOn;
 
   constructor(
     private profileService: ProfileService,
@@ -54,6 +56,8 @@ export class ProfileComponent implements OnInit {
         this.userId = this.profileData.user_id;
         this.avatar = this.profileData.avatar;
         this.isPremium = this.profileData.premium;
+        this.contact = this.profileData.contact;
+        this.createdOn = this.profileData.created_on.substring(0,10);
         localStorage.setItem("userid", this.userId);
         localStorage.setItem("profileid", this.profileId);
 
@@ -86,7 +90,7 @@ export class ProfileComponent implements OnInit {
     //   "post",
     //   { postid: postId, slug: this.title },
     // ]);
-    this.router.navigate([`post/${postId}/${this.title}` ]);
+    this.router.navigate([`post/${postId}/${this.title}`]);
   }
 
   EditProfile() {

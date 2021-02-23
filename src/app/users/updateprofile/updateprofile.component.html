@@ -8,18 +8,25 @@
           <p class="ui header red centered">Your Avatar</p>
           <div class="ui card container">
             <div class="ui fluid centered image">
-              <img src="{{oldAvatar}}" />
+              <img src="{{ oldAvatar }}" />
             </div>
             <div class="content centered">
-              <hr />              
-              <h3>{{username[0].toUpperCase()+username.substring(1)}}</h3>
-              <input type="file" name="avatar" id="avatar"  (change)="fileChangeEvent($event)"/>
-              <button class="ui button primary inverted" (click)="upload()">Upload</button>
-              <div *ngIf="isImageUploaded " >
-                {{imageUploadNote}}
+              <hr />
+              <h3>{{ username[0].toUpperCase() + username.substring(1) }}</h3>
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                (change)="fileChangeEvent($event)"
+              />
+              <button class="ui button primary inverted" (click)="upload()">
+                Upload
+              </button>
+              <div *ngIf="isImageUploaded">
+                {{ imageUploadNote }}
               </div>
-              <div *ngIf="!isImageUploaded " >
-                {{imageUploadNote}}
+              <div *ngIf="!isImageUploaded">
+                {{ imageUploadNote }}
               </div>
             </div>
           </div>
@@ -65,18 +72,16 @@
                 />
               </div>
               <h3>OR</h3>
-              <button class="ui button primary basic " (click)="getLocation()">
+              <button class="ui button primary basic" (click)="getLocation()">
                 Provide Location
               </button>
-              <p *ngIf="foundLocation" >{{placeName}}</p>
+              <p *ngIf="foundLocation">{{ placeName }}</p>
             </div>
             <div class="ui header red centered">Account Info</div>
             <hr />
             <br />
             <div class="field">
-              <label class="ui ">
-                Change Email:
-              </label>
+              <label class="ui"> Change Email: </label>
               <div>
                 <input
                   type="text"
@@ -86,16 +91,29 @@
                 />
               </div>
             </div>
-             <div *ngIf="isError" class="ui message red" >
-              {{message}}
-             </div>
+            <div class="field">
+              <label>Change Contact Details</label>
+              <input
+                type="text"
+                placeholder="Enter Mobile Number"
+                [(ngModel)]="contact"
+                name="contact"
+                (blur)="onBlurValidateContact()"
+              />
+            </div>
+            <div *ngIf="isError" class="ui message red">
+              {{ message }}
+            </div>
 
-             <div *ngIf="isDone" class="ui message green" >
-              {{message}}
-             </div>
-            
-             
-            <button class="ui button positive basic " type="submit" (click)="updateProfile()">
+            <div *ngIf="isDone" class="ui message green">
+              {{ message }}
+            </div>
+
+            <button
+              class="ui button positive basic"
+              type="submit"
+              (click)="updateProfile()"
+            >
               Submit
             </button>
           </form>

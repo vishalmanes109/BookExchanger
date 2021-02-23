@@ -32,19 +32,26 @@
           <p class="ui header uired centered">Your Avatar</p>
           <div class="ui card container">
             <div class="ui fluid centered image">
-              <img src="{{avatarUrl}}" alt="avatar"/>
+              <img src="{{ avatarUrl }}" alt="avatar" />
             </div>
 
             <div class="content centered">
               <hr />
               <h3>{{ username }}</h3>
-              <input type="file" name="avatar" id="avatar"  (change)="fileChangeEvent($event)"/>
-              <button class="ui button primary inverted" (click)="upload()">Upload</button>
-              <div *ngIf="isImageUploaded " >
-                {{imageUploadNote}}
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                (change)="fileChangeEvent($event)"
+              />
+              <button class="ui button primary inverted" (click)="upload()">
+                Upload
+              </button>
+              <div *ngIf="isImageUploaded">
+                {{ imageUploadNote }}
               </div>
-              <div *ngIf="!isImageUploaded " >
-                {{imageUploadNote}}
+              <div *ngIf="!isImageUploaded">
+                {{ imageUploadNote }}
               </div>
             </div>
           </div>
@@ -52,8 +59,8 @@
         </div>
         <div class="ten wide column">
           <div class="ui header uired centered">Basic Info</div>
-          <hr/>
-          <br/>
+          <hr />
+          <br />
           <form class="ui form">
             <div class="field">
               <h3>Favourite Genre</h3>
@@ -100,7 +107,16 @@
                 provide goelocation
               </div>
             </div>
-
+            <div class="field">
+              <h3>Provide Contact Details</h3>
+              <input
+                type="text"
+                placeholder="Enter Mobile Number"
+                [(ngModel)]="contact"
+                name="contact"
+                (blur)="onBlurValidateContact()"
+              />
+            </div>
             <div class="field">
               <sui-checkbox [(ngModel)]="isAgree" name="checkbox">
                 I agree to the Terms and Conditions

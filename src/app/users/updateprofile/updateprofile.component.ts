@@ -41,6 +41,7 @@ export class UpdateprofileComponent implements OnInit {
   public isImageUploaded = false;
   public avatarUrl;
   public oldAvatar;
+  public contact;
 
   constructor(
     private route: ActivatedRoute,
@@ -70,7 +71,7 @@ export class UpdateprofileComponent implements OnInit {
           this.profileData.latitude +
           ", longitude: " +
           this.profileData.longitude;
-
+        this.contact = this.profileData.contact;
         this.isDataFetch = true;
         this.selectedItems = [
           { id: this.genreList[0].id, text: this.genreList[0].name },
@@ -139,8 +140,7 @@ export class UpdateprofileComponent implements OnInit {
     this.isError = false;
     this.favGenreList.push(item.id);
   }
-  onSelectAll(items: any) {
-  }
+  onSelectAll(items: any) {}
   onItemDeSelect(item: any) {
     this.isError = false;
 
@@ -230,6 +230,24 @@ export class UpdateprofileComponent implements OnInit {
       reader.readAsDataURL(fileInput.target.files[0]);
     }
   }
+  onBlurValidateContact() {
+    //  console.log(this.contact);
+    this.isError = false;
+    let mobile = this.contact;
+    console.log(mobile);
+    try {
+      console.log(this.contact);
+      let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+      if (!mobile.match(regex)) {
+        this.isError = true;
+        this.message = "Please enter valid mobile number";
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
   upload() {
     this.profileService.uploadAvtar(this.cardImageBase64).subscribe(
       (res) => {
@@ -243,12 +261,12 @@ export class UpdateprofileComponent implements OnInit {
     );
   }
   updateProfile() {
-    if ( this.avatarUrl && this.oldAvatar != this.avatarUrl) {
+    if (this.avatarUrl && this.oldAvatar != this.avatarUrl) {
       let avatarData = {
         avatar: this.avatarUrl,
         id: this.profileId,
       };
-      console.log(avatarData)
+      console.log(avatarData);
       this.profileService.updateAvatar(avatarData).subscribe(
         (res) => {
           this.isError = false;
@@ -277,6 +295,24 @@ export class UpdateprofileComponent implements OnInit {
         (err) => {
           this.isError = true;
           this.message = "Invalid Email";
+        }
+      );
+    }
+    if (this.profileData.contact != this.contact) {
+      if (!this.onBlurValidateContact()) {
+        this.isError = true;
+        this.message = "Invalid Mobile Number";
+      }
+      this.profileService.updateContact(this.contact, this.profileId).subscribe(
+        (res) => {
+          this.isError = false;
+          this.isDone = true;
+          this.message = "Profile Updated";
+          this.router.navigate(["profile"]);
+        },
+        (err) => {
+          this.isError = true;
+          this.message = "Invalid Contact details";
         }
       );
     }

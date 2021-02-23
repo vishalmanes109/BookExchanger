@@ -46,7 +46,14 @@ export class ProfileService {
   updateAvatar(avatrData) {
     return this.http.patch<any>(this._profileUrl + "avatar", avatrData);
   }
-
+  updateContact(contact, profileId) {
+    let updateContactData = {
+      contact,
+      profileId,
+    };
+    console.log(updateContactData);
+    return this.http.patch<any>(this._profileUrl + "contact",updateContactData);
+  }
   // run() {
   //   let newArr = Array();
   //   let old = Array();

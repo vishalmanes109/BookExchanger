@@ -26,6 +26,7 @@ export class CreateprofileComponent implements OnInit {
   public isDone = false;
   public message;
   public isError = false;
+  public contact;
   selectedFile: File = null;
   imageError: string;
   isImageSaved: boolean;
@@ -193,6 +194,24 @@ export class CreateprofileComponent implements OnInit {
       (err) => {};
     });
   }
+  onBlurValidateContact() {
+    //  console.log(this.contact);
+    this.isError=false;
+    let mobile = this.contact;
+    console.log(mobile)
+    try {
+      console.log(this.contact);
+      let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+      if (!mobile.match(regex)) {
+        this.isError = true;
+        this.message = "Please enter valid mobile number";
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
   submit() {
     if (!this.isAgree) {
       this.isError = true;
@@ -209,6 +228,11 @@ export class CreateprofileComponent implements OnInit {
       this.message = "Please select exactly 3 genres";
       return;
     }
+    if (!this.onBlurValidateContact()) {
+      this.isError = true;
+      this.message = "Please enter valid mobile number";
+      return;
+    }
     let profileData = {
       location: this.placeName,
       latitude: this.latitude,
@@ -217,6 +241,7 @@ export class CreateprofileComponent implements OnInit {
       username: this.username,
       fav_genre_list: this.favGenreList,
       avatar: this.avatarUrl,
+      contact:this.contact
     };
     this.profileService.makeProfile(profileData).subscribe(
       (res) => {
