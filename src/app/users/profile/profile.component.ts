@@ -3,7 +3,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
 import { ProfileService } from "src/app/service/profile.service";
-import { SharedService } from "src/app/service/shared.service";
 
 @Component({
   selector: "app-profile",
@@ -11,6 +10,8 @@ import { SharedService } from "src/app/service/shared.service";
   styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
+  public UrlUsername;
+  public storesUsername;
   public username;
   public profileId;
   public postId;
@@ -32,20 +33,39 @@ export class ProfileComponent implements OnInit {
   public title;
   public contact;
   public createdOn;
+  public isUnauth;
+  public isYourProfile;
+  public contactVisibility = false;
+  public isProfileAvailable = true;
 
   constructor(
     private profileService: ProfileService,
     private postService: PostService,
-    private SharedService: SharedService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.username = localStorage.getItem("username");
+    this.isUnauth = localStorage.getItem("isUnauth");
+    if (!this.isUnauth) {
+      this.isUnauth = "true";
+    }
+    console.log(this.isUnauth);
+
+    this.storesUsername = localStorage.getItem("username");
+    this.route.paramMap.subscribe((params) => {
+      this.UrlUsername = params.get("username");
+    });
+    if (this.storesUsername === this.UrlUsername) {
+      this.username = this.storesUsername;
+      this.isYourProfile = true;
+    } else {
+      this.username = this.UrlUsername;
+      this.isYourProfile = false;
+    }
     if (!this.username) this.router.navigate(["login"]);
     this.profileService.getProfile(this.username).subscribe(
       (res) => {
-        localStorage.setItem("isUnauth", "false");
         this.profileData = res.message[0];
         this.genreList = res.genrelist;
         this.profileId = this.profileData.id;
@@ -57,7 +77,8 @@ export class ProfileComponent implements OnInit {
         this.avatar = this.profileData.avatar;
         this.isPremium = this.profileData.premium;
         this.contact = this.profileData.contact;
-        this.createdOn = this.profileData.created_on.substring(0,10);
+        this.createdOn = this.profileData.created_on.substring(0, 10);
+        this.contactVisibility = this.profileData.contact_visible;
         localStorage.setItem("userid", this.userId);
         localStorage.setItem("profileid", this.profileId);
 
@@ -81,6 +102,7 @@ export class ProfileComponent implements OnInit {
 
             this.router.navigate(["/login"]);
           }
+        this.isProfileAvailable = false;
       }
     );
   }

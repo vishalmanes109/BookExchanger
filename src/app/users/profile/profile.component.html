@@ -1,19 +1,20 @@
 <app-navbar></app-navbar>
 <br />
 <br />
-<div class="container">
+<div *ngIf="!isProfileAvailable">
+  <div class="ui segment container message red">Profile does not exist</div>
+</div>
+<div *ngIf="isProfileAvailable" class="container">
   <div class="ui stackable grid">
     <div class="ui five wide column container">
       <div class="ui raised centered link card">
         <div class="content">
           <div class="ui fluid centered image">
-              <img src="{{avatar}}" alt="avatar"/>
-            </div>
+            <img src="{{ avatar }}" alt="avatar" />
+          </div>
           <div class="header">Username: {{ username }}</div>
           <br />
-          <div class="content">
-            <span class="category"> Email: {{ email }}</span>
-          </div>
+
           <br />
           <div class="description">
             <p>Favourite Genres:</p>
@@ -22,39 +23,80 @@
             {{ genre.name }}
           </div>
           <br />
+
+          <ng-container *ngIf="isUnauth === 'false'; else elseTemplate">
+            <div *ngIf="contactVisibility; else contactVisibilityTemp">
+              <div class="description">
+                <p>Location: {{ location }}</p>
+              </div>
+              <div class="content">
+                <span class="category"> Email: {{ email }}</span>
+              </div>
+              <div class="description">
+                <p>Mobile No.: {{ contact }}</p>
+              </div>
+            </div>
+            <ng-template #contactVisibilityTemp>
+              <div class="description">
+                <p>Location: Hidden</p>
+              </div>
+              <div class="content">
+                <span class="category"> Email: Hidden</span>
+              </div>
+              <div class="description">
+                <p>Mobile No.: Hidden</p>
+              </div>
+            </ng-template>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <div class="description">
+              <p>Location: Hidden</p>
+            </div>
+            <div class="content">
+              <span class="category"> Email: Hidden</span>
+            </div>
+            <div class="description">
+              <p>Mobile No.: Hidden</p>
+            </div>
+          </ng-template>
+
           <div class="description">
-            <p>Location: {{ location }}</p>
-          </div>
-          <div class="description">
-            <p>Mobile No.: {{ contact }}</p>
-          </div>
-          <div class="description">
-            <p> created On: {{ createdOn }}</p>
+            <p>created On: {{ createdOn }}</p>
           </div>
         </div>
-        <div class="extra content">
-          <button
-            class="ui positive basic button"
-            value="Edit"
-            (click)="EditProfile()"
-          >
-            Edit
-          </button>
-          <button
-            class="ui negative basic button"
-            value="Delete"
-            (click)="deleteProfile()"
-          >
-
-          
-            Delete
-          </button>
-
-          <div class="right floated author">
-            <img class="ui avatar  image" src="{{avatar}}" />
-            {{ username }}
+        <ng-container *ngIf="isYourProfile; else elsTemplate">
+          <div class="extra content">
+            <button
+              class="ui positive basic button"
+              value="Edit"
+              (click)="EditProfile()"
+            >
+              Edit
+            </button>
+            <button
+              class="ui negative basic button"
+              value="Delete"
+              (click)="deleteProfile()"
+            >
+              Delete
+            </button>
+            <div class="right floated author">
+              <img class="ui avatar image" src="{{ avatar }}" />
+              {{ username }}
+            </div>
           </div>
-        </div>
+        </ng-container>
+        <ng-template #elsTemplate>
+          <div class="extra content">
+            <button class="ui primary basic button" value="message">
+              Message
+            </button>
+            <div class="right floated author">
+              <img class="ui avatar image" src="{{ avatar }}" />
+              {{ username }}
+            </div>
+          </div>
+        </ng-template>
       </div>
       <br />
       <div class="ui raised centered link card">
@@ -101,15 +143,22 @@
           </div>
         </div>
         <div *ngIf="!isPostExist">
-          <div class="ui container red message">
-            {{ message }}
-          </div>
-          <i
-            class="ui inverted green button"
-            [routerLink]="['/createpost']"
-            routerLinkActive="router-link-active"
-            >Create Post
-          </i>
+          <ng-container *ngIf="isYourProfile; else elseTemplate">
+            <div class="ui container red message">
+              {{ message }}
+            </div>
+            <i
+              class="ui inverted green button"
+              [routerLink]="['/createpost']"
+              routerLinkActive="router-link-active"
+              >Create Post
+            </i>
+          </ng-container>
+          <ng-template #elseTemplate
+            ><div class="ui container red message">
+              {{ username }} does not have any activity on BookXchanger
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

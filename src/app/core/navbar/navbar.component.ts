@@ -18,6 +18,9 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = true;
     }
   }
+  profile() {
+    this.router.navigate([`profile/${this.username}`]);
+  }
   logout() {
     this.authService.loggedOut();
     this.isLoggedIn = false;

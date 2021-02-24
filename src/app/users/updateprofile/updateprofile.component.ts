@@ -272,7 +272,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate(["profile"]);
+          this.router.navigate([[`profile/${this.username}`]]);
         },
         (err) => {
           this.isError = true;
@@ -290,7 +290,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate(["profile"]);
+          this.router.navigate([[`profile/${this.username}`]]);
         },
         (err) => {
           this.isError = true;
@@ -308,7 +308,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate(["profile"]);
+          this.router.navigate([[`profile/${this.username}`]]);
         },
         (err) => {
           this.isError = true;
@@ -328,7 +328,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate(["profile"]);
+          this.router.navigate([[`profile/${this.username}`]]);
         },
         (err) => {
           this.isError = true;
@@ -348,6 +348,7 @@ export class UpdateprofileComponent implements OnInit {
         .subscribe(
           (res) => {
             this.message = "Profile Updated";
+            this.router.navigate([[`profile/${this.username}`]]);
           },
           (err) => {
             this.message = "Profile Updation Failed, Try again";

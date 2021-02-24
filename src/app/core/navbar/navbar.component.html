@@ -1,7 +1,8 @@
 <div class="ui menu">
   <div>
-    <a [routerLink]="['/myfeed']" routerLinkActive="router-link-active">    <img class="ui small image" src="../../../assets/logo/logo3.3.png" />
-</a>
+    <a [routerLink]="['/myfeed']" routerLinkActive="router-link-active">
+      <img class="ui small image" src="../../../assets/logo/logo3.3.png" />
+    </a>
   </div>
   <div class="right menu">
     <a
@@ -31,7 +32,7 @@
       <div class="menu">
         <a
           class="item"
-          [routerLink]="['/profile']"
+          (click)="profile()"
           routerLinkActive="router-link-active"
           >Profile</a
         >

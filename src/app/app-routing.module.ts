@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "contact", component: ContactComponent },
   { path: "about", component: AboutComponent },
-  { path: "profile", canActivate: [AuthGuard], component: ProfileComponent },
+  { path: "profile/:username",  component: ProfileComponent },
   { path: "loader", component: LoaderComponent },
   {
     path: "updateprofile",

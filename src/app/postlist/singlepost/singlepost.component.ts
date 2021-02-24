@@ -75,12 +75,12 @@ export class SinglepostComponent implements OnInit {
       (err) => {}
     );
   }
-  openPost(postId) {
+  openPost(postId,title) {
     //this.SharedService.KeepPostId(postId);
     this.router
       .navigateByUrl("/post", { skipLocationChange: true })
       .then(() => {
-        this.router.navigate([`post/${postId}`]);
+        this.router.navigate([`post/${postId}/${title}`]);
       });
   }
   editPost() {

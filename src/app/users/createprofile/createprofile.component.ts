@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { SuiModule } from "ng2-semantic-ui";
 import { LocationService } from "src/app/service/location.service";
@@ -37,11 +37,14 @@ export class CreateprofileComponent implements OnInit {
   constructor(
     private locationService: LocationService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.username = localStorage.getItem("username");
+    
+
     this.dropdownList = [
       { id: 1, text: "Adult Fiction" },
       { id: 2, text: "Epic Fantasy" },
@@ -196,9 +199,9 @@ export class CreateprofileComponent implements OnInit {
   }
   onBlurValidateContact() {
     //  console.log(this.contact);
-    this.isError=false;
+    this.isError = false;
     let mobile = this.contact;
-    console.log(mobile)
+    console.log(mobile);
     try {
       console.log(this.contact);
       let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
@@ -241,7 +244,7 @@ export class CreateprofileComponent implements OnInit {
       username: this.username,
       fav_genre_list: this.favGenreList,
       avatar: this.avatarUrl,
-      contact:this.contact
+      contact: this.contact,
     };
     this.profileService.makeProfile(profileData).subscribe(
       (res) => {
@@ -250,7 +253,7 @@ export class CreateprofileComponent implements OnInit {
         this.message = "Congratulations Profile is created";
         setTimeout(() => {
           if (res.success == 1 && this.isDone) {
-            this.router.navigate(["profile"]);
+            this.router.navigate(['/login']);
           }
         }, 2000);
       },
