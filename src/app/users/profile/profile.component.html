@@ -14,7 +14,6 @@
           </div>
           <div class="header">Username: {{ username }}</div>
           <br />
-
           <br />
           <div class="description">
             <p>Favourite Genres:</p>
@@ -23,7 +22,6 @@
             {{ genre.name }}
           </div>
           <br />
-
           <ng-container *ngIf="isUnauth === 'false'; else elseTemplate">
             <div *ngIf="contactVisibility; else contactVisibilityTemp">
               <div class="description">

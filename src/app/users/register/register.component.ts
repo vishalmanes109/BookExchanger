@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ValidationService } from "src/app/service/validation.service";
 import { AuthService } from "../../service/auth.service";
+import { SpinnerVisibilityService } from "ng-http-loader";
 
 @Component({
   selector: "app-register",
@@ -19,14 +20,25 @@ export class RegisterComponent implements OnInit {
   public isError = false;
   public message;
   public isUnique = false;
-  public confirmpassword:string;
+  public confirmpassword: string;
 
   ngOnInit(): void {}
   constructor(
     private authService: AuthService,
     private router: Router,
-    private validationService: ValidationService
-  ) {}
+    private validationService: ValidationService,
+    private spinner: SpinnerVisibilityService
+  ) {
+    // show the spinner
+    //spinner.show();
+    //////////////
+    // HTTP requests performed between show && hide won't have any side effect on the spinner.
+    /////////////
+    // hide the spinner
+    //   spinner.hide();
+    // show the spinner
+    // hide the spinner
+  }
 
   isUniqueName() {
     this.authService.isUserAvailable(this.username).subscribe(
@@ -42,7 +54,19 @@ export class RegisterComponent implements OnInit {
     if (!this.validationService.isValidEmail(this.email)) {
       this.isError = true;
       this.message = "Invalid Email";
+      return;
     }
+    this.authService.isEmailExist(this.email).subscribe(
+      (res) => {
+        console.log("lol");
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+        this.isError = true;
+        this.message = "Profile is already created with this email id.";
+      }
+    );
   }
   isValidPassword() {
     if (
@@ -59,14 +83,20 @@ export class RegisterComponent implements OnInit {
   reset() {
     this.isError = false;
   }
-
+  isPasswordSame() {
+    if (this.password != this.confirmpassword) {
+      this.isError = true;
+      this.message = "Password and Confirmed password does not match";
+      return;
+    }
+  }
   registerUser() {
     if (!this.isAgree) {
       this.isError = true;
       this.message = "Please Agree to terms and condition";
       return;
     }
-    if(this.password!=this.confirmpassword){
+    if (this.password != this.confirmpassword) {
       this.isError = true;
       this.message = "Password and Confirmed password does not match";
       return;

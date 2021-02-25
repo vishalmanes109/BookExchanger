@@ -67,6 +67,7 @@
               (blur)="isValidEmail()"
               (click)="reset()"
             />
+
           </div>
         </div>
         <div class="field">
@@ -93,7 +94,7 @@
               name="confirmpassword"
               id="confirmpassword"
               [(ngModel)]="confirmpassword"
-              (blur)="isValidPassword()"
+              (blur)="isPasswordSame()"
               (click)="reset()"
             />
             <i class="lock icon"></i>
