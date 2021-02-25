@@ -43,7 +43,6 @@ export class CreateprofileComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = localStorage.getItem("username");
-    
 
     this.dropdownList = [
       { id: 1, text: "Adult Fiction" },
@@ -94,9 +93,9 @@ export class CreateprofileComponent implements OnInit {
       textField: "text",
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
-      itemsShowLimit: 3,
+      // itemsShowLimit: 3,
       allowSearchFilter: true,
-      limitSelection: 3,
+      // limitSelection: 3,
     };
   }
 
@@ -198,12 +197,9 @@ export class CreateprofileComponent implements OnInit {
     });
   }
   onBlurValidateContact() {
-    //  console.log(this.contact);
     this.isError = false;
     let mobile = this.contact;
-    console.log(mobile);
     try {
-      console.log(this.contact);
       let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
       if (!mobile.match(regex)) {
         this.isError = true;
@@ -226,9 +222,9 @@ export class CreateprofileComponent implements OnInit {
       this.message =
         "Please provide location. either write name of location or give location access";
     }
-    if (this.favGenreList.length != 3) {
+    if (this.favGenreList.length == 0) {
       this.isError = true;
-      this.message = "Please select exactly 3 genres";
+      this.message = "Please select atleast 3 genres";
       return;
     }
     if (!this.onBlurValidateContact()) {
@@ -253,7 +249,7 @@ export class CreateprofileComponent implements OnInit {
         this.message = "Congratulations Profile is created";
         setTimeout(() => {
           if (res.success == 1 && this.isDone) {
-            this.router.navigate(['/login']);
+            this.router.navigate(["/login"]);
           }
         }, 2000);
       },

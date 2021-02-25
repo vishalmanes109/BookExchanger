@@ -128,11 +128,11 @@ export class UpdateprofileComponent implements OnInit {
       singleSelection: false,
       idField: "id",
       textField: "text",
-      selectAllText: "Select All",
-      unSelectAllText: "UnSelect All",
-      itemsShowLimit: 3,
+      // selectAllText: "Select All",
+     // unSelectAllText: "UnSelect All",
+      // itemsShowLimit: 3,
       allowSearchFilter: true,
-      limitSelection: 3,
+      // limitSelection: 3,
     };
   }
 
@@ -140,7 +140,7 @@ export class UpdateprofileComponent implements OnInit {
     this.isError = false;
     this.favGenreList.push(item.id);
   }
-  onSelectAll(items: any) {}
+  // onSelectAll(items: any) {}
   onItemDeSelect(item: any) {
     this.isError = false;
 

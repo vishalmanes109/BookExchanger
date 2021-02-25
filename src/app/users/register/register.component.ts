@@ -26,19 +26,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private validationService: ValidationService,
-    private spinner: SpinnerVisibilityService
-  ) {
-    // show the spinner
-    //spinner.show();
-    //////////////
-    // HTTP requests performed between show && hide won't have any side effect on the spinner.
-    /////////////
-    // hide the spinner
-    //   spinner.hide();
-    // show the spinner
-    // hide the spinner
-  }
+    private validationService: ValidationService
+  ) {}
 
   isUniqueName() {
     this.authService.isUserAvailable(this.username).subscribe(
