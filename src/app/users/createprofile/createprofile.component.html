@@ -118,9 +118,14 @@
               />
             </div>
             <div class="field">
-              <sui-checkbox [(ngModel)]="isAgree" name="checkbox">
-                I agree to the Terms and Conditions
-              </sui-checkbox>
+              <div class="ui checkbox">
+                <input
+                  type="checkbox"
+                  name="privacy"
+                  [(ngModel)]="isAgree"
+                />
+                <label> I agree to the Terms and Conditions </label>
+              </div>
             </div>
             <div *ngIf="isDone" class="ui info message">
               {{ message }}

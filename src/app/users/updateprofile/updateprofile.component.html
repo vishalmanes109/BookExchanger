@@ -7,9 +7,13 @@
         <div class="six wide column">
           <p class="ui header red centered">Your Avatar</p>
           <div class="ui card container">
-            <div class="ui fluid centered image">
-              <img src="{{ oldAvatar }}" />
+            <div *ngIf="!isImageUploaded" class="ui fluid centered image">
+              <img src="{{ oldAvatar }}" alt="avatar"/>
             </div>
+            <div  *ngIf="isImageUploaded" class="ui fluid centered image">
+              <img src="{{ avatarUrl }}" alt="avatar"/>
+            </div>
+            
             <div class="content centered">
               <hr />
               <h3>{{ username[0].toUpperCase() + username.substring(1) }}</h3>
@@ -99,6 +103,18 @@
                 name="contact"
                 (blur)="onBlurValidateContact()"
               />
+            </div>
+            <div class="field">
+              <label>Manage Privacy Details</label>
+              <div class="ui checkbox">
+                <input
+                  type="checkbox"
+                  name="privacy"
+                  [(ngModel)]="hidePrivacy"
+                />
+                <label *ngIf="isHidden" > Unchek the box to Hide your mobile number, location on your profile </label>
+                 <label *ngIf="!isHidden" >Check the box to Make  your mobile number, location visible on  profile </label>
+              </div>
             </div>
             <div *ngIf="isError" class="ui message red">
               {{ message }}

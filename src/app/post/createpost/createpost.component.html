@@ -11,14 +11,13 @@
 
         <form class="ui form">
           <div class="field">
-            <input 
-            required 
-            type="text" 
-            name="title" 
-            placeholder="Title"
-            [(ngModel)]="title"
-            (blur)="onBlur()" 
-            
+            <input
+              required
+              type="text"
+              name="title"
+              placeholder="Title"
+              [(ngModel)]="title"
+              (blur)="onBlur()"
             />
           </div>
           <div class="field">
@@ -28,7 +27,7 @@
               placeholder="Short Discription (Maximum 140 characters allowed)"
               name="description"
               [(ngModel)]="description"
-              (blur)="onBlur()" 
+              (blur)="onBlur()"
             ></textarea>
           </div>
           <div class="ui field">
@@ -38,7 +37,7 @@
               name="have"
               placeholder="Title of book you have"
               [(ngModel)]="giveBookName"
-              (blur)="onBlur()" 
+              (blur)="onBlur()"
             />
           </div>
           <div class="field">
@@ -48,7 +47,7 @@
               name="haveauthor"
               placeholder="Author of book you have"
               [(ngModel)]="giveBookAuthor"
-              (blur)="onBlur()" 
+              (blur)="onBlur()"
             />
           </div>
           <div class="field">
@@ -70,24 +69,41 @@
             />
           </div>
           <div class="field">
+            <div *ngIf="isImageUploaded" class="ui fluid   small image">
+              <img src="{{ bookImage }}" alt="givebook" />
+            </div>
             <label> Upload the Photo of book you have </label>
-             <input type="file" name="avatar" id="avatar"  (change)="fileChangeEvent($event)" (blur)="onBlur()"/>
-              <button class="ui button primary inverted" (click)="upload()">Upload</button>
-              <div *ngIf="isImageUploaded " >
-                {{imageUploadNote}}
-              </div>
-              <div *ngIf="!isImageUploaded " >
-                {{imageUploadNote}}
-              </div>
+            <input
+              type="file"
+              name="avatar"
+              id="avatar"
+              (change)="fileChangeEvent($event)"
+              (blur)="onBlur()"
+            />
+            <button class="ui button primary inverted" (click)="upload()">
+              Upload
+            </button>
+            <div *ngIf="isImageUploaded">
+              {{ imageUploadNote }}
+            </div>
+            <div *ngIf="!isImageUploaded">
+              {{ imageUploadNote }}
+            </div>
           </div>
           <div *ngIf="isDone" class="ui info message">
-              {{ message }}
-            </div>
-            <div *ngIf="isError" class="ui red message">
-              {{ message }}
-            </div>
-          <div class="field"> 
-            <input class="ui primary button" name="addpost" type="submit" value="Post" (click)="addPost()" />
+            {{ message }}
+          </div>
+          <div *ngIf="isError" class="ui red message">
+            {{ message }}
+          </div>
+          <div class="field">
+            <input
+              class="ui primary button"
+              name="addpost"
+              type="submit"
+              value="Post"
+              (click)="addPost()"
+            />
             <input
               class="ui button right floated"
               type="button"
@@ -126,7 +142,9 @@
             </div>
             <div class="item">
               <div class="content">
-                <div class="header">5. Provide location in your profile section.</div>
+                <div class="header">
+                  5. Provide location in your profile section.
+                </div>
               </div>
             </div>
           </div>

@@ -267,7 +267,7 @@ export class CreateprofileComponent implements OnInit {
         }, 1000);
         setTimeout(() => {
           if (this.isError) {
-            this.router.navigate(["updateprofile"]);
+            this.router.navigate([`myfeed`]);
           }
         }, 2500);
       }

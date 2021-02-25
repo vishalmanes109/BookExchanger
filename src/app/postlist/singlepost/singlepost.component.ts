@@ -80,7 +80,7 @@ export class SinglepostComponent implements OnInit {
     this.router
       .navigateByUrl("/post", { skipLocationChange: true })
       .then(() => {
-        this.router.navigate([`post/${postId}/${title}`]);
+        this.router.navigate([`post/${postId}/${title.replace(/ /g, "_")}`]);
       });
   }
   editPost() {

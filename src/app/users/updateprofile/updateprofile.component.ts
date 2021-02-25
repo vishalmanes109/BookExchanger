@@ -42,6 +42,8 @@ export class UpdateprofileComponent implements OnInit {
   public avatarUrl;
   public oldAvatar;
   public contact;
+  public hidePrivacy;
+  public isHidden;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +67,8 @@ export class UpdateprofileComponent implements OnInit {
         this.location = this.profileData.location;
         this.newLocationName = this.location;
         this.oldAvatar = this.profileData.avatar;
+        this.isHidden = this.profileData.contact_visible;
+        this.hidePrivacy = this.isHidden;
         this.placeName =
           this.location +
           ", latitude: " +
@@ -72,12 +76,19 @@ export class UpdateprofileComponent implements OnInit {
           ", longitude: " +
           this.profileData.longitude;
         this.contact = this.profileData.contact;
+
         this.isDataFetch = true;
-        this.selectedItems = [
-          { id: this.genreList[0].id, text: this.genreList[0].name },
-          { id: this.genreList[1].id, text: this.genreList[1].name },
-          { id: this.genreList[2].id, text: this.genreList[2].name },
-        ];
+        for (let genre of this.genreList) {
+          this.selectedItems.push({
+            id: genre.id,
+            text: genre.name,
+          });
+        }
+        // this.selectedItems = [
+        //   { id: this.genreList[0].id, text: this.genreList[0].name },
+        //   { id: this.genreList[1].id, text: this.genreList[1].name },
+        //   { id: this.genreList[2].id, text: this.genreList[2].name },
+        // ];
         this.oldFavGenre = this.selectedItems;
       },
       (err) => {
@@ -129,7 +140,7 @@ export class UpdateprofileComponent implements OnInit {
       idField: "id",
       textField: "text",
       // selectAllText: "Select All",
-     // unSelectAllText: "UnSelect All",
+      // unSelectAllText: "UnSelect All",
       // itemsShowLimit: 3,
       allowSearchFilter: true,
       // limitSelection: 3,
@@ -231,12 +242,9 @@ export class UpdateprofileComponent implements OnInit {
     }
   }
   onBlurValidateContact() {
-    //  console.log(this.contact);
     this.isError = false;
     let mobile = this.contact;
-    console.log(mobile);
     try {
-      console.log(this.contact);
       let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
       if (!mobile.match(regex)) {
         this.isError = true;
@@ -261,18 +269,18 @@ export class UpdateprofileComponent implements OnInit {
     );
   }
   updateProfile() {
+    //console.log(this.hidePrivacy);
     if (this.avatarUrl && this.oldAvatar != this.avatarUrl) {
       let avatarData = {
         avatar: this.avatarUrl,
         id: this.profileId,
       };
-      console.log(avatarData);
       this.profileService.updateAvatar(avatarData).subscribe(
         (res) => {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate([[`profile/${this.username}`]]);
+          this.router.navigate([`profile/${this.username}`]);
         },
         (err) => {
           this.isError = true;
@@ -290,7 +298,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate([[`profile/${this.username}`]]);
+          this.router.navigate([`profile/${this.username}`]);
         },
         (err) => {
           this.isError = true;
@@ -308,7 +316,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate([[`profile/${this.username}`]]);
+          this.router.navigate([`profile/${this.username}`]);
         },
         (err) => {
           this.isError = true;
@@ -328,7 +336,7 @@ export class UpdateprofileComponent implements OnInit {
           this.isError = false;
           this.isDone = true;
           this.message = "Profile Updated";
-          this.router.navigate([[`profile/${this.username}`]]);
+          this.router.navigate([`profile/${this.username}`]);
         },
         (err) => {
           this.isError = true;
@@ -336,9 +344,29 @@ export class UpdateprofileComponent implements OnInit {
         }
       );
     }
+    console.log(this.hidePrivacy, this.profileData.contact_visible);
+    if (this.hidePrivacy != this.profileData.contact_visible) {
+      let privacyData = {
+        privacy_info: this.hidePrivacy,
+        profileId: this.profileId,
+      };
+
+      this.profileService.updatePrivacy(privacyData).subscribe(
+        (res) => {
+          this.isError = false;
+          this.isDone = true;
+          this.message = "Profile Updated";
+          this.router.navigate([`profile/${this.username}`]);
+        },
+        (err) => {
+          this.isError = true;
+          this.message = "Error! Try again";
+        }
+      );
+    }
     if (this.selectedItems.length < 3) {
       this.isError = true;
-      this.message = "Please select exactly 3 genres";
+      this.message = "Please select alteast 3 genres";
       return;
     }
 
@@ -348,7 +376,7 @@ export class UpdateprofileComponent implements OnInit {
         .subscribe(
           (res) => {
             this.message = "Profile Updated";
-            this.router.navigate([[`profile/${this.username}`]]);
+            this.router.navigate([`profile/${this.username}`]);
           },
           (err) => {
             this.message = "Profile Updation Failed, Try again";

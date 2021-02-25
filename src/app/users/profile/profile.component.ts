@@ -112,14 +112,16 @@ export class ProfileComponent implements OnInit {
     //   "post",
     //   { postid: postId, slug: this.title },
     // ]);
-    this.router.navigate([`post/${postId}/${this.title}`]);
+    this.router.navigate([`post/${postId}/${this.title.replace(/ /g, "_")}`]);
   }
 
   EditProfile() {
     this.router
       .navigateByUrl("updateProfile", { skipLocationChange: true })
       .then(() => {
-        this.router.navigate([`updateprofile/${this.profileId}`]);
+        this.router.navigate([
+          `updateprofile/${this.profileId}/${this.username.replace(/ /g, "_")}`,
+        ]);
       });
   }
 
@@ -127,7 +129,9 @@ export class ProfileComponent implements OnInit {
     this.router
       .navigateByUrl("deleteprofile", { skipLocationChange: true })
       .then(() => {
-        this.router.navigate([`deleteprofile/${this.userId}`]);
+        this.router.navigate([
+          `deleteprofile/${this.userId}/${this.username.replace(/ /g, "_")}`,
+        ]);
       });
   }
 }

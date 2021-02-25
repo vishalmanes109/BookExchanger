@@ -51,17 +51,17 @@ const routes: Routes = [
   },
   { path: "myfeed", component: MyfeedComponent },
   {
-    path: "updateprofile/:profileid",
+    path: "updateprofile/:profileid/:username",
     canActivate: [AuthGuard],
     component: UpdateprofileComponent,
   },
   {
-    path: "deleteprofile/:userid",
+    path: "deleteprofile/:userid/:username",
     canActivate: [AuthGuard],
     component: DeleteprofileComponent,
   },
   {
-    path: "post/:postid/:slug",
+    path: "post/:postid/:title",
     canActivate: [AuthGuard],
     component: SinglepostComponent,
   },

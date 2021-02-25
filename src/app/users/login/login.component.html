@@ -45,10 +45,15 @@
           </div>
         </div>
         <div class="field">
-          <sui-checkbox [(ngModel)]="isAgree" name="isAgree">
-            I agree to the <a href="">Terms and Conditions</a>
-          </sui-checkbox>
-        </div>
+              <div class="ui checkbox">
+                <input
+                  type="checkbox"
+                  name="privacy"
+                  [(ngModel)]="isAgree"
+                />
+                <label> I agree to the Terms and Conditions </label>
+              </div>
+            </div>
         <br />
         <button (click)="login()" class="ui button positive" type="submit">
           Submit

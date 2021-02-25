@@ -51,8 +51,16 @@ export class ProfileService {
       contact,
       profileId,
     };
-    console.log(updateContactData);
-    return this.http.patch<any>(this._profileUrl + "contact",updateContactData);
+    return this.http.patch<any>(
+      this._profileUrl + "contact",
+      updateContactData
+    );
+  }
+  updatePrivacy(privacyInfo){
+     return this.http.patch<any>(
+       this._profileUrl + "privacy",
+       privacyInfo
+     );
   }
   // run() {
   //   let newArr = Array();
