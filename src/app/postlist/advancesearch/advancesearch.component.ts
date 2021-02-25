@@ -34,8 +34,11 @@ export class AdvancesearchComponent implements OnInit {
   public loadingStart = false;
   //public sortBy = "location";
   public takeBookResult;
-  public page=1;
-  public pageSize=1;
+  public page = 1;
+  public pageSize = 1;
+  public shareLink;
+  public isCopy = false;
+  public isShare = false;
 
   constructor(private postService: PostService) {}
 
@@ -68,11 +71,34 @@ export class AdvancesearchComponent implements OnInit {
     if (this.byUser == true) this.counter++;
     else this.counter--;
   }
+  generateSharableLink(postId, title) {
+    this.isShare = true;
+    this.isCopy = false;
+
+    this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
+      / /g,
+      "_"
+    )}`;
+  }
+  copyShareableLink(link) {
+    let copyBox = document.createElement("textarea");
+    copyBox.style.position = "fixed";
+    copyBox.style.left = "0";
+    copyBox.style.top = "0";
+    copyBox.style.opacity = "0";
+    copyBox.value = link;
+    document.body.appendChild(copyBox);
+    copyBox.focus();
+    copyBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(copyBox);
+    this.isCopy = true;
+  }
 
   searchPost() {
     this.isError = false;
     this.postData = null;
-    this.isDataFetch=false;
+    this.isDataFetch = false;
 
     if (this.counter > 1) {
       this.note = "";
@@ -143,7 +169,7 @@ export class AdvancesearchComponent implements OnInit {
           (res) => {
             this.isDataFetch = true;
             this.postData = res.message;
-            console.log(this.postData)
+            console.log(this.postData);
             this.note = this.postData.length + " Post/s found";
 
             return;

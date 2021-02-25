@@ -112,9 +112,13 @@
 
           <div class="ten wide column container">
             <div class="details">
-              
-              <img class="ui avatar image" src="{{ post.avatar }}" />
-              Posted by: {{ post.name }}
+              <i
+                [routerLink]="['/profile/', post.name]"
+                routerLinkActive="router-link-active"
+              >
+                <img class="ui avatar image" src="{{ post.avatar }}" />
+                Posted by: {{ post.name }}
+              </i>
 
               <hr />
               <div class="details">
@@ -146,8 +150,22 @@
               <br />
             </div>
 
-            <div class="ui button blue inverted">Message</div>
-            <div class="ui button orange inverted">Recommend</div>
+            <div class="ui button blue inverted">Chat</div>
+            <div
+              class="ui button orange inverted"
+              (click)="generateSharableLink(post.postid, post.title)"
+            >
+              Share
+            </div>
+            <div *ngIf="!isCopy && isShare">
+              <p class="ui sharelink">{{ shareLink }}</p>
+              <button
+                class="ui button tiny primary"
+                (click)="copyShareableLink(shareLink)"
+              >
+                copy
+              </button>
+            </div>
           </div>
         </div>
       </div>

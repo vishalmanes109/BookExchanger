@@ -31,6 +31,7 @@ export class MyfeedComponent implements OnInit {
   public totalPages;
   public page = 1;
 
+
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {

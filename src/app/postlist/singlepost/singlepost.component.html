@@ -6,7 +6,12 @@
       <h3>Post</h3>
       <div class="ui raised segments container">
         <div *ngIf="isDataFetch" class="ui segment">
-          <img class="ui avatar image" src="{{ postData.avatar }}" />
+          <i
+            [routerLink]="['/profile/',username]"
+            routerLinkActive="router-link-active"
+            ><img class="ui avatar image" src="{{ postData.avatar }}"
+          /></i>
+
           <span>{{ postData.username }}</span>
           <h3>
             Title:
@@ -23,7 +28,7 @@
               <p>Book looking for : {{ postData.takebookname }}</p>
               <p>Author Name: {{ postData.takebookauthor }}</p>
               <p>Date: {{ postData.post_time.substring(0, 10) }}</p>
-             
+
               <div *ngIf="yourPost">
                 <input
                   type="button"
@@ -71,7 +76,7 @@
               class="ui middle aligned animated list"
             >
               <div *ngIf="postData.postid != post.postid">
-                <div (click)="openPost(post.postid,post.title)" class="item">
+                <div (click)="openPost(post.postid, post.title)" class="item">
                   <img class="ui avatar image" src="{{ post.avatar }}" />
                   <span class="">{{ post.name }}</span>
                   <div class="content">

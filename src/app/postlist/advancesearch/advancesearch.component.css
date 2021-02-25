@@ -6,6 +6,9 @@
 .button{
     display: inline-block;
 }
+.sharelink{
+    overflow:scroll;
+}
 
 @media screen and (max-width:700px){
     .search{

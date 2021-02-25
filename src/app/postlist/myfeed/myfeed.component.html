@@ -85,8 +85,14 @@
 
             <div class="ten wide column container">
               <div class="details">
-                <img class="ui avatar image" src="{{ post.avatar }}" />
-                Posted by: {{ post.name }}
+                <i
+                  [routerLink]="['/profile/', post.name]"
+                  routerLinkActive="router-link-active"
+                >
+                  <img class="ui avatar image" src="{{ post.avatar }}" />
+                  Posted by: {{ post.name }}
+                </i>
+
                 <hr />
                 <div class="details">
                   {{ post.description }}
@@ -119,8 +125,8 @@
                 <br />
                 <div *ngIf="isNearByPost" class="details">
                   {{ post.name }} is :
-                  {{ (post.distance * 1609/1000).toFixed(2) }} Km away from your
-                  location
+                  {{ ((post.distance * 1609) / 1000).toFixed(2) }} Km away from
+                  your location
                 </div>
               </div>
               <div *ngIf="yourPost">
