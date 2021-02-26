@@ -101,9 +101,12 @@ export class SinglepostComponent implements OnInit {
     };
     this.postService.deletePost(deletablePostData).subscribe(
       (res) => {
-        this.router.navigate(["/profile"]);
+        console.log(res);
+        this.router.navigate([`/profile/${this.username}`]);
       },
-      (err) => {}
+      (err) => {
+        console.log(err);
+      }
     );
   }
   generateSharableLink(postId, title) {

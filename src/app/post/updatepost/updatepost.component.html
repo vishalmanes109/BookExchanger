@@ -45,6 +45,19 @@
               placeholder="Enter Author of book you have"
             />
             <div class="field">
+            <label>Select genres of book you have</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Select atleast 2 genres of book'"
+              [settings]="dropdownSettings"
+              [data]="dropdownList"
+              [(ngModel)]="selectedItems"
+              name="selecteditems"
+              (onSelect)="onItemSelect($event)"
+              (onDeSelect)="onItemDeSelect($event)"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+            <div class="field">
               <label>Enter title of book you want(optional) </label>
               <input
                 type="text"

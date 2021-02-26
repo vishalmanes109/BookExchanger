@@ -51,6 +51,19 @@
             />
           </div>
           <div class="field">
+            <label>Select genres of book you have</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Select atleast 2 genres of book'"
+              [settings]="dropdownSettings"
+              [data]="dropdownList"
+              [(ngModel)]="selectedItems"
+              name="selecteditems"
+              (onSelect)="onItemSelect($event)"
+              (onDeSelect)="onItemDeSelect($event)"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="field">
             <input
               type="text"
               required
@@ -69,7 +82,7 @@
             />
           </div>
           <div class="field">
-            <div *ngIf="isImageUploaded" class="ui fluid   small image">
+            <div *ngIf="isImageUploaded" class="ui fluid small image">
               <img src="{{ bookImage }}" alt="givebook" />
             </div>
             <label> Upload the Photo of book you have </label>
@@ -90,6 +103,7 @@
               {{ imageUploadNote }}
             </div>
           </div>
+
           <div *ngIf="isDone" class="ui info message">
             {{ message }}
           </div>

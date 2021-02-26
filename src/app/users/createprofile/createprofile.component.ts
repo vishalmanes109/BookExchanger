@@ -83,10 +83,7 @@ export class CreateprofileComponent implements OnInit {
       { id: 36, text: "Travel" },
       { id: 37, text: "Young Adult" },
     ];
-    // this.selectedItems = [
-    //   { id: 1, text: "Adult Fiction" },
-    //   { id: 2, text: "Horror" },
-    // ];
+    
     this.dropdownSettings = {
       singleSelection: false,
       idField: "id",

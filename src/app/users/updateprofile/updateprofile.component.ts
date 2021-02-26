@@ -85,11 +85,6 @@ export class UpdateprofileComponent implements OnInit {
             text: genre.name,
           });
         }
-        // this.selectedItems = [
-        //   { id: this.genreList[0].id, text: this.genreList[0].name },
-        //   { id: this.genreList[1].id, text: this.genreList[1].name },
-        //   { id: this.genreList[2].id, text: this.genreList[2].name },
-        // ];
         this.oldFavGenre = this.selectedItems;
       },
       (err) => {

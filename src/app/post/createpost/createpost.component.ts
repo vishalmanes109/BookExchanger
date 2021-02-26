@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/service/post.service";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
 import * as _ from "lodash";
 import { Router } from "@angular/router";
 
@@ -9,6 +10,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./createpost.component.css"],
 })
 export class CreatepostComponent implements OnInit {
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings: IDropdownSettings = {};
   public title;
   public description;
   public giveBookName;
@@ -27,9 +31,72 @@ export class CreatepostComponent implements OnInit {
   public imageUploadNote;
   public isImageUploaded = false;
   public avatarUrl;
-  constructor(private postService: PostService, private router:Router) {}
+  public bookGenreList = new Array();
+  constructor(private postService: PostService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dropdownList = [
+      { id: 1, text: "Adult Fiction" },
+      { id: 2, text: "Epic Fantasy" },
+      { id: 3, text: "Horror" },
+      { id: 4, text: "Fiction" },
+      { id: 5, text: "Fantasy" },
+      { id: 6, text: "Historical Fiction" },
+      { id: 7, text: "Mystery" },
+      { id: 8, text: "Politics" },
+      { id: 9, text: "Science Fiction" },
+      { id: 10, text: "Thriller" },
+      { id: 11, text: "War" },
+      { id: 12, text: "Art" },
+      { id: 13, text: "Biography" },
+      { id: 14, text: "Business" },
+      { id: 15, text: "Classics" },
+      { id: 16, text: "Comics" },
+      { id: 17, text: "Contemporary" },
+      { id: 18, text: "Cookbooks" },
+      { id: 19, text: "Crime" },
+      { id: 20, text: "History" },
+      { id: 21, text: "Humor and Comedy" },
+      { id: 22, text: "Manga" },
+      { id: 23, text: "Memoir" },
+      { id: 24, text: "Nonfiction" },
+      { id: 25, text: "Paranormal" },
+      { id: 26, text: "Philosophy" },
+      { id: 27, text: "Poetry" },
+      { id: 28, text: "Psychology" },
+      { id: 29, text: "Religion" },
+      { id: 30, text: "Romance" },
+      { id: 31, text: "Science" },
+      { id: 32, text: "Self Help" },
+      { id: 33, text: "Suspense" },
+      { id: 34, text: "Spirituality" },
+      { id: 35, text: "Sports" },
+      { id: 36, text: "Travel" },
+      { id: 37, text: "Young Adult" },
+    ];
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: "id",
+      textField: "text",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      // itemsShowLimit: 3,
+      allowSearchFilter: true,
+      // limitSelection: 3,
+    };
+  }
+
+  onItemSelect(item: any) {
+    this.bookGenreList.push(item.id);
+  }
+  onSelectAll(items: any) {}
+  onItemDeSelect(item: any) {
+    const index: number = this.bookGenreList.indexOf(item.id);
+    if (index !== -1) {
+      this.bookGenreList.splice(index, 1);
+    }
+  }
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -55,7 +122,6 @@ export class CreatepostComponent implements OnInit {
         image.onload = (rs) => {
           const img_height = rs.currentTarget["height"];
           const img_width = rs.currentTarget["width"];
-
 
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
@@ -100,8 +166,9 @@ export class CreatepostComponent implements OnInit {
       take_book_name: this.takeBookName,
       take_book_author: this.takeBookAuthor,
       username: this.username,
-      
+      book_genre_list: this.bookGenreList,
     };
+    console.log(postData);
 
     if (
       !this.title ||
@@ -119,17 +186,22 @@ export class CreatepostComponent implements OnInit {
       this.message = "Maximun 140 characters allowed in description";
       return;
     }
+    if (this.bookGenreList.length < 2) {
+      this.isError = true;
+      this.message = "Please select atleast 2 genres";
+      return;
+    }
 
     this.postService.addPost(postData).subscribe(
       (res) => {
         this.isDone = true;
         this.isError = false;
         this.message = "Post added succesfully";
-        let postId=res.post_id
-       // this.router.navigate([`post/${postId}`]);
-        this.router.navigate([`post/${postId}/${this.title.replace(/ /g, "_")}`]);
-
-
+        let postId = res.post_id;
+        // this.router.navigate([`post/${postId}`]);
+        this.router.navigate([
+          `post/${postId}/${this.title.replace(/ /g, "_")}`,
+        ]);
       },
       (err) => {
         this.isError = true;
@@ -150,6 +222,8 @@ export class CreatepostComponent implements OnInit {
     this.bookImage = null;
     this.message = "";
     this.isError = false;
+    this.selectedItems = [];
+    this.bookGenreList.length = 0;
   }
   onBlur() {
     this.message = "";
