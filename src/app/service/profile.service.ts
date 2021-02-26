@@ -24,12 +24,7 @@ export class ProfileService {
   updateLocation(locationData) {
     return this.http.patch<any>(this._profileUrl + "location", locationData);
   }
-  updateFavGenre(oldGenreList, newGenreList, profileId) {
-    let favGenreData = {
-      new_fav_genre_list: newGenreList,
-      old_fav_genre_list: oldGenreList,
-      profileid: profileId,
-    };
+  updateFavGenre(favGenreData) {
     return this.http.patch<any>(this._profileUrl + "genres", favGenreData);
   }
   updateEmail(email, profileId) {
@@ -56,11 +51,8 @@ export class ProfileService {
       updateContactData
     );
   }
-  updatePrivacy(privacyInfo){
-     return this.http.patch<any>(
-       this._profileUrl + "privacy",
-       privacyInfo
-     );
+  updatePrivacy(privacyInfo) {
+    return this.http.patch<any>(this._profileUrl + "privacy", privacyInfo);
   }
   // run() {
   //   let newArr = Array();

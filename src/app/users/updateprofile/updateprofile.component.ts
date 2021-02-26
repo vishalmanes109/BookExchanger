@@ -12,8 +12,8 @@ import * as _ from "lodash";
   styleUrls: ["./updateprofile.component.css"],
 })
 export class UpdateprofileComponent implements OnInit {
-  dropdownList = [];
-  selectedItems = [];
+  public dropdownList;
+  public selectedItems=[];
   dropdownSettings: IDropdownSettings = {};
   public profileId;
   public email;
@@ -33,10 +33,10 @@ export class UpdateprofileComponent implements OnInit {
   public newLocationName;
   public oldFavGenre;
   public avatar;
-  selectedFile: File = null;
-  imageError: string;
-  isImageSaved: boolean;
-  cardImageBase64: string;
+  public selectedFile: File = null;
+  public imageError: string;
+  public isImageSaved: boolean;
+  public cardImageBase64: string;
   public imageUploadNote;
   public isImageUploaded = false;
   public avatarUrl;
@@ -61,6 +61,7 @@ export class UpdateprofileComponent implements OnInit {
 
     this.profileService.getProfileByProfileId(this.profileId).subscribe(
       (res) => {
+        console.log(res);
         this.profileData = res.message[0];
         this.genreList = res.genrelist;
         this.email = this.profileData.email;
@@ -149,7 +150,7 @@ export class UpdateprofileComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.isError = false;
-    this.favGenreList.push(item.id);
+    //this.favGenreList.push(item.id);
   }
   // onSelectAll(items: any) {}
   onItemDeSelect(item: any) {
@@ -344,7 +345,6 @@ export class UpdateprofileComponent implements OnInit {
         }
       );
     }
-    console.log(this.hidePrivacy, this.profileData.contact_visible);
     if (this.hidePrivacy != this.profileData.contact_visible) {
       let privacyData = {
         privacy_info: this.hidePrivacy,
@@ -371,17 +371,22 @@ export class UpdateprofileComponent implements OnInit {
     }
 
     if (this.oldFavGenre != this.selectedItems) {
-      this.profileService
-        .updateFavGenre(this.oldFavGenre, this.selectedItems, this.profileId)
-        .subscribe(
-          (res) => {
-            this.message = "Profile Updated";
-            this.router.navigate([`profile/${this.username}`]);
-          },
-          (err) => {
-            this.message = "Profile Updation Failed, Try again";
-          }
-        );
+      for (let i=0; i< this.selectedItems.length;i++) {
+        this.favGenreList.push(this.selectedItems[i].id);
+      }
+      let updateData = {
+        fav_genre_list: this.favGenreList,
+        profile_id: this.profileId,
+      };
+      this.profileService.updateFavGenre(updateData).subscribe(
+        (res) => {
+          this.message = "Profile Updated";
+          this.router.navigate([`profile/${this.username}`]);
+        },
+        (err) => {
+          this.message = "Profile Updation Failed, Try again";
+        }
+      );
     }
   }
 }

@@ -96,6 +96,7 @@ export class ProfileComponent implements OnInit {
         );
       },
       (err) => {
+
         if (err instanceof HttpErrorResponse)
           if (err.status === 401) {
             localStorage.setItem("isUnauth", "true");
@@ -108,10 +109,6 @@ export class ProfileComponent implements OnInit {
   }
   openPost(postId) {
     this.title = this.postData[0].title;
-    // this.router.navigate([
-    //   "post",
-    //   { postid: postId, slug: this.title },
-    // ]);
     this.router.navigate([`post/${postId}/${this.title.replace(/ /g, "_")}`]);
   }
 
