@@ -100,7 +100,6 @@
           </h2>
         </div>
         <br />
-
         <div class="ui grid container stackable">
           <div class="six wide column">
             <img
@@ -109,7 +108,6 @@
               alt=""
             />
           </div>
-
           <div class="ten wide column container">
             <div class="details">
               <i
@@ -152,11 +150,11 @@
 
             <div class="ui button blue inverted">Chat</div>
             <div
-              class="ui button orange inverted"
-              (click)="generateSharableLink(post.postid, post.title)"
-            >
-              Share
-            </div>
+                class="ui icon button orange inverted "
+                (click)="generateSharableLink(post.postid, post.title)"
+              >
+                <i class="share  icon"></i>
+              </div>
             <div *ngIf="!isCopy && isShare">
               <p class="ui sharelink">{{ shareLink }}</p>
               <button

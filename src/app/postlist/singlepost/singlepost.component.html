@@ -7,7 +7,7 @@
       <div class="ui raised segments container">
         <div *ngIf="isDataFetch" class="ui segment">
           <i
-            [routerLink]="['/profile/',username]"
+            [routerLink]="['/profile/', username]"
             routerLinkActive="router-link-active"
             ><img class="ui avatar image" src="{{ postData.avatar }}"
           /></i>
@@ -52,6 +52,21 @@
                   name="chat"
                   value="Chat"
                 />
+              </div>
+              <div
+                class="ui icon button orange inverted "
+                (click)="generateSharableLink(postData.postid, postData.title)"
+              >
+                <i class="share  icon"></i>
+              </div>
+              <div *ngIf="!isCopy && isShare">
+                <p class="ui sharelink">{{ shareLink }}</p>
+                <button
+                  class="ui button tiny primary"
+                  (click)="copyShareableLink(shareLink)"
+                >
+                  copy
+                </button>
               </div>
             </div>
             <div class="six wide column">

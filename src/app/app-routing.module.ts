@@ -62,7 +62,6 @@ const routes: Routes = [
   },
   {
     path: "post/:postid/:title",
-    canActivate: [AuthGuard],
     component: SinglepostComponent,
   },
   {

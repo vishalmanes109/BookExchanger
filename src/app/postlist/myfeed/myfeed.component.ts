@@ -30,7 +30,9 @@ export class MyfeedComponent implements OnInit {
   public bookPost;
   public totalPages;
   public page = 1;
-
+  public shareLink;
+  public isCopy = false;
+  public isShare = false;
 
   constructor(private postService: PostService, private router: Router) {}
 
@@ -77,6 +79,29 @@ export class MyfeedComponent implements OnInit {
         }
       );
     }
+  }
+  generateSharableLink(postId, title) {
+    this.isShare = true;
+    this.isCopy = false;
+
+    this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
+      / /g,
+      "_"
+    )}`;
+  }
+  copyShareableLink(link) {
+    let copyBox = document.createElement("textarea");
+    copyBox.style.position = "fixed";
+    copyBox.style.left = "0";
+    copyBox.style.top = "0";
+    copyBox.style.opacity = "0";
+    copyBox.value = link;
+    document.body.appendChild(copyBox);
+    copyBox.focus();
+    copyBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(copyBox);
+    this.isCopy = true;
   }
   myFeedByLocation() {
     this.isNearByPost = true;

@@ -137,13 +137,14 @@
                   value="Edit"
                   (click)="editPost(post.postid)"
                 />
-                <input
-                  type="button"
-                  class="ui right floated button red inverted"
-                  name="delete"
-                  value="Delete"
-                  (click)="deletePost(post.postid)"
-                />
+                <div
+                  class="ui icon button orange inverted"
+                  (click)="
+                    generateSharableLink(postData.postid, postData.title)
+                  "
+                >
+                  <i class="share icon"></i>
+                </div>
               </div>
               <div *ngIf="!yourPost">
                 <input
@@ -152,6 +153,24 @@
                   name="chat"
                   value="Chat"
                 />
+                <div
+                  class="ui icon button orange inverted"
+                  (click)="
+                    generateSharableLink(post.postid, post.title)
+                  "
+                >
+                  <i class="share icon"></i>
+                </div>
+              </div>
+
+              <div *ngIf="!isCopy && isShare">
+                <p class="ui sharelink">{{ shareLink }}</p>
+                <button
+                  class="ui button tiny primary"
+                  (click)="copyShareableLink(shareLink)"
+                >
+                  copy
+                </button>
               </div>
             </div>
           </div>

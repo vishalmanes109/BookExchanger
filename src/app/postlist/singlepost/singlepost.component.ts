@@ -29,6 +29,9 @@ export class SinglepostComponent implements OnInit {
   public isNearByPostExist;
   public isError;
   public message;
+  public shareLink;
+  public isCopy = false;
+  public isShare = false;
 
   constructor(
     private postService: PostService,
@@ -37,7 +40,7 @@ export class SinglepostComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit():  void {
+  ngOnInit(): void {
     this.isError = false;
     this.message = "";
     this.route.paramMap.subscribe((params) => {
@@ -75,7 +78,7 @@ export class SinglepostComponent implements OnInit {
       (err) => {}
     );
   }
-  openPost(postId,title) {
+  openPost(postId, title) {
     //this.SharedService.KeepPostId(postId);
     this.router
       .navigateByUrl("/post", { skipLocationChange: true })
@@ -102,5 +105,28 @@ export class SinglepostComponent implements OnInit {
       },
       (err) => {}
     );
+  }
+  generateSharableLink(postId, title) {
+    this.isShare = true;
+    this.isCopy = false;
+
+    this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
+      / /g,
+      "_"
+    )}`;
+  }
+  copyShareableLink(link) {
+    let copyBox = document.createElement("textarea");
+    copyBox.style.position = "fixed";
+    copyBox.style.left = "0";
+    copyBox.style.top = "0";
+    copyBox.style.opacity = "0";
+    copyBox.value = link;
+    document.body.appendChild(copyBox);
+    copyBox.focus();
+    copyBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(copyBox);
+    this.isCopy = true;
   }
 }
