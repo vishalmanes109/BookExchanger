@@ -33,6 +33,9 @@ export class MyfeedComponent implements OnInit {
   public shareLink;
   public isCopy = false;
   public isShare = false;
+  public isPostSaved = false;
+  public savePostId;
+  public sharePostId;
 
   constructor(private postService: PostService, private router: Router) {}
 
@@ -83,6 +86,7 @@ export class MyfeedComponent implements OnInit {
   generateSharableLink(postId, title) {
     this.isShare = true;
     this.isCopy = false;
+    this.sharePostId=postId;
 
     this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
       / /g,
@@ -219,6 +223,39 @@ export class MyfeedComponent implements OnInit {
         this.router.navigate(["/profile"]);
       },
       (err) => {}
+    );
+  }
+  savePost(postId, profileId) {
+    console.log(postId, profileId);
+    let savePostData = {
+      post_id: postId,
+      profile_id: profileId,
+    };
+    this.postService.savePost(savePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.savePostId = savePostData.post_id;
+        this.isPostSaved = true;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  unSavePost(postId, profileId) {
+    console.log(postId, profileId);
+    let unSavePostData = {
+      post_id: postId,
+      profile_id: profileId,
+    };
+    this.postService.unSavePost(unSavePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.isPostSaved = false;
+      },
+      (err) => {
+        console.log(err);
+      }
     );
   }
 }

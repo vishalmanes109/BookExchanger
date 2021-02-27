@@ -75,4 +75,10 @@ export class PostService {
     let data = { data: imageData };
     return this.http.post<any>(this._imageUrl, data);
   }
+  savePost(savePostdata) {
+    return this.http.post<any>(this._postUrl + "savepost", savePostdata);
+  }
+  unSavePost(unSavePostData) {
+    return this.http.delete<any>(this._postUrl + "savepost", unSavePostData);
+  }
 }

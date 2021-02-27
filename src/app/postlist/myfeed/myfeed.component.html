@@ -129,41 +129,51 @@
                   your location
                 </div>
               </div>
-              <div *ngIf="yourPost">
-                <input
-                  type="button"
-                  class="ui button primary inverted"
-                  name="edit"
-                  value="Edit"
-                  (click)="editPost(post.postid)"
-                />
-                <div
-                  class="ui icon button orange inverted"
-                  (click)="
-                    generateSharableLink(postData.postid, postData.title)
-                  "
-                >
-                  <i class="share icon"></i>
-                </div>
+              <input
+                *ngIf="yourPost"
+                type="button"
+                class="ui button primary inverted"
+                name="edit"
+                value="Edit"
+                (click)="editPost(post.postid)"
+              />
+
+              <input
+                *ngIf="!yourPost"
+                type="button"
+                class="ui button primary inverted"
+                name="chat"
+                value="Chat"
+              />
+              <div
+                class="ui icon button orange inverted"
+                (click)="generateSharableLink(post.postid, post.title)"
+              >
+                <i class="share icon"></i>
               </div>
-              <div *ngIf="!yourPost">
-                <input
-                  type="button"
-                  class="ui button primary inverted"
-                  name="chat"
-                  value="Chat"
-                />
-                <div
-                  class="ui icon button orange inverted"
-                  (click)="
-                    generateSharableLink(post.postid, post.title)
-                  "
-                >
-                  <i class="share icon"></i>
-                </div>
+              <div
+                *ngIf="!isPostSaved "
+                class="ui icon button"
+                (click)="savePost(post.postid, post.profileid)"
+              >
+                <i class="bookmark icon"></i>
+              </div>
+              <div
+                *ngIf="isPostSaved && savePostId != post.postid"
+                class="ui icon button"
+                (click)="savePost(post.postid, post.profileid)"
+              >
+                <i class="bookmark icon"></i>
+              </div>
+              <div
+                *ngIf="savePostId == post.postid"
+                class="ui icon button green inverted"
+                (click)="unSavePost(post.postid, post.profileid)"
+              >
+                <i class="bookmark icon"></i>
               </div>
 
-              <div *ngIf="!isCopy && isShare">
+              <div *ngIf="!isCopy && isShare && post.postid==sharePostId">
                 <p class="ui sharelink">{{ shareLink }}</p>
                 <button
                   class="ui button tiny primary"

@@ -20,7 +20,9 @@
   font-size: medium;
   font-weight: 700;
 }
-
+.sharelink{
+  overflow: hidden;
+}
 @media  screen and (max-width:900px) {
   .search {
       width: 100%;

@@ -268,8 +268,10 @@ export class UpdatepostComponent implements OnInit {
         this.router
           .navigateByUrl("/post", { skipLocationChange: true })
           .then(() => {
-            //this.router.navigate([`post/${this.postId}`]);
-            this.router.navigate([`post/${this.postId}/${this.title}`]);
+            //this.router.ynavigate([`post/${this.postId}`]);
+            this.router.navigate([
+              `post/${this.postId}/${this.title.replace(/ /g, "_")}`,
+            ]);
           });
       },
       (err) => {
