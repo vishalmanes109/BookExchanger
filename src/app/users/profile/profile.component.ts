@@ -37,7 +37,9 @@ export class ProfileComponent implements OnInit {
   public isYourProfile;
   public contactVisibility = false;
   public isProfileAvailable = true;
-
+  public savePostData;
+  public isSavePostExist = false;
+  public postMessage;
   constructor(
     private profileService: ProfileService,
     private postService: PostService,
@@ -85,18 +87,32 @@ export class ProfileComponent implements OnInit {
         this.postService.getPostByProfile(this.profileId).subscribe(
           (res) => {
             this.postData = res.message;
+            
             this.isPostExist = true;
           },
           (err) => {
             if (!err.error.isPostExist) {
               this.isPostExist = false;
-              this.message = "You have not submited any post. ";
+              this.postMessage = "You have not submited any post. ";
+            }
+          }
+        );
+        this.postService.getSavedPost(this.profileId).subscribe(
+          (res) => {
+            console.log(res);
+            this.savePostData = res.message;
+            this.isSavePostExist = true;
+          },
+          (err) => {
+            console.log(err);
+            if (!err.error.isPostExist) {
+              this.isSavePostExist = false;
+              this.message = "You have not saved any post. ";
             }
           }
         );
       },
       (err) => {
-
         if (err instanceof HttpErrorResponse)
           if (err.status === 401) {
             localStorage.setItem("isUnauth", "true");

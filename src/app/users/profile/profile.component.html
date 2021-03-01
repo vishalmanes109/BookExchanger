@@ -111,9 +111,9 @@
         </div>
         <div class="extra content">
           <div class="right floated author">
-              <img class="ui avatar image" src="{{ avatar }}" />
-              {{ username }}
-            </div>
+            <img class="ui avatar image" src="{{ avatar }}" />
+            {{ username }}
+          </div>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@
         <div *ngIf="!isPostExist">
           <ng-container *ngIf="isYourProfile; else elseTemplate">
             <div class="ui container red message">
-              {{ message }}
+              {{ postMessage }}
             </div>
             <i
               class="ui inverted green button"
@@ -155,6 +155,41 @@
           <ng-template #elseTemplate
             ><div class="ui container red message">
               {{ username }} does not have any activity on BookXchanger
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="ui raised segment">
+        <h3>Saved Post</h3>
+
+        <div *ngIf="isSavePostExist">
+          <div
+            *ngFor="let savePost of savePostData"
+            class="ui middle aligned animated list"
+          >
+            <div (click)="openPost(savePost.postid)" class="item">
+              <img
+                class="ui avatar image"
+                src="../../../assets/avatar/20.svg"
+              />
+              <div class="content">
+                <div class="header">{{ savePost.title }}</div>
+                <div>{{ savePost.description }}</div>
+                <div>{{ savePost.post_time.substring(0, 10) }}</div>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+        <div *ngIf="!isSavePostExist">
+          <ng-container *ngIf="isYourProfile; else elseTemplate">
+            <div class="ui container red message">
+              {{ message }}
+            </div>
+          </ng-container>
+          <ng-template #elseTemplate
+            ><div class="ui container red message">
+              {{ username }} does not saved any post on BookXchanger
             </div>
           </ng-template>
         </div>

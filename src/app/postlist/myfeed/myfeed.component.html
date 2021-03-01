@@ -154,21 +154,21 @@
               <div
                 *ngIf="!isPostSaved "
                 class="ui icon button"
-                (click)="savePost(post.postid, post.profileid)"
+                (click)="savePost(post.postid)"
               >
                 <i class="bookmark icon"></i>
               </div>
               <div
                 *ngIf="isPostSaved && savePostId != post.postid"
                 class="ui icon button"
-                (click)="savePost(post.postid, post.profileid)"
+                (click)="savePost(post.postid)"
               >
                 <i class="bookmark icon"></i>
               </div>
               <div
                 *ngIf="savePostId == post.postid"
                 class="ui icon button green inverted"
-                (click)="unSavePost(post.postid, post.profileid)"
+                (click)="unSavePost(post.postid)"
               >
                 <i class="bookmark icon"></i>
               </div>

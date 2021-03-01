@@ -225,11 +225,11 @@ export class MyfeedComponent implements OnInit {
       (err) => {}
     );
   }
-  savePost(postId, profileId) {
-    console.log(postId, profileId);
+  savePost(postId) {
+    console.log(postId, this.profileId);
     let savePostData = {
       post_id: postId,
-      profile_id: profileId,
+      profile_id: this.profileId,
     };
     this.postService.savePost(savePostData).subscribe(
       (res) => {
@@ -242,11 +242,11 @@ export class MyfeedComponent implements OnInit {
       }
     );
   }
-  unSavePost(postId, profileId) {
-    console.log(postId, profileId);
+  unSavePost(postId) {
+    console.log(postId, this.profileId);
     let unSavePostData = {
       post_id: postId,
-      profile_id: profileId,
+      profile_id: this.profileId,
     };
     this.postService.unSavePost(unSavePostData).subscribe(
       (res) => {

@@ -81,4 +81,8 @@ export class PostService {
   unSavePost(unSavePostData) {
     return this.http.delete<any>(this._postUrl + "savepost", unSavePostData);
   }
+  getSavedPost(profileId) {
+    console.log(profileId);
+    return this.http.get<any>(this._postUrl + "savepost/" + profileId);
+  }
 }
