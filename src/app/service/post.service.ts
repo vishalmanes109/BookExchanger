@@ -17,8 +17,11 @@ export class PostService {
   getPostByLocation(location) {
     return this.http.get<any>(this._postUrl + "location/" + location);
   }
-  getPostByProfile(profileId) {
-    return this.http.get<any>(this._postUrl + "profileid/" + profileId);
+  getPostByProfile(profileId,offset,limit) {
+    console.log("lol")
+    return this.http.get<any>(
+      this._postUrl + "profileid/" + profileId + "/" + offset + "/" + limit
+    );
   }
   getPostByPostId(postId) {
     return this.http.get<any>(this._postUrl + "id/" + postId);
@@ -26,15 +29,14 @@ export class PostService {
   getGiveBook(giveBookId) {
     return this.http.get<any>(this._bookUrl + "givebook/" + giveBookId);
   }
-
   getTakeBook(takeBookId): Observable<any> {
     return this.http.get<any>(this._bookUrl + "takebook/" + takeBookId);
   }
-  getNearByPost(profileId): Observable<any> {
-    return this.http.get<any>(this._postUrl + "nearby/" + profileId);
+  getNearByPost(profileId,offset,limit): Observable<any> {
+    return this.http.get<any>(this._postUrl + "nearby/" + profileId+"/"+offset+"/"+limit);
   }
-  getAllPost() {
-    return this.http.get<any>(this._postUrl + "all");
+  getAllPost(offset,limit) {
+    return this.http.get<any>(this._postUrl + "all/"+offset+"/"+limit);
   }
   updatePost(updatePostData) {
     return this.http.patch<any>(this._postUrl, updatePostData);

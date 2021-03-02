@@ -84,19 +84,19 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem("userid", this.userId);
         localStorage.setItem("profileid", this.profileId);
 
-        this.postService.getPostByProfile(this.profileId).subscribe(
-          (res) => {
-            this.postData = res.message;
+        // this.postService.getPostByProfile(this.profileId).subscribe(
+        //   (res) => {
+        //     this.postData = res.message;
 
-            this.isPostExist = true;
-          },
-          (err) => {
-            if (!err.error.isPostExist) {
-              this.isPostExist = false;
-              this.postMessage = "You have not submited any post. ";
-            }
-          }
-        );
+        //     this.isPostExist = true;
+        //   },
+        //   (err) => {
+        //     if (!err.error.isPostExist) {
+        //       this.isPostExist = false;
+        //       this.postMessage = "You have not submited any post. ";
+        //     }
+        //   }
+        // );
         this.postService.getSavedPost(this.profileId).subscribe(
           (res) => {
             this.savePostData = res.message;

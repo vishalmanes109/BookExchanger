@@ -30,6 +30,10 @@ export class MyfeedComponent implements OnInit {
   public bookPost;
   public totalPages;
   public page = 1;
+  public limit = 5;
+  public nearByPostOffset;
+  public myPostOffset;
+  public newPostOffset;
   public shareLink;
   public isCopy = false;
   public isShare = false;
@@ -66,21 +70,24 @@ export class MyfeedComponent implements OnInit {
       this.profileId = localStorage.getItem("profileid");
       this.yourPost = false;
       this.isUnauth = false;
+      
+      this.nearByPostOffset = (this.page - 1) * this.limit;
+      this.postService
+        .getNearByPost(this.profileId, this.nearByPostOffset, this.limit)
+        .subscribe(
+          async (res) => {
+            this.postData = res.message;
+            this.totalPages = this.postData.length;
+            this.isDataFetch = true;
+            this.message = this.postData.length + " Post/s found";
+          },
+          (err) => {
+            this.note =
+              "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
 
-      this.postService.getNearByPost(this.profileId).subscribe(
-        async (res) => {
-          this.postData = res.message;
-          this.totalPages = this.postData.length;
-          this.isDataFetch = true;
-          this.message = this.postData.length + " Post/s found";
-        },
-        (err) => {
-          this.note =
-            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-
-          console.log(err);
-        }
-      );
+            console.log(err);
+          }
+        );
     }
   }
   generateSharableLink(postId, title) {
@@ -107,11 +114,12 @@ export class MyfeedComponent implements OnInit {
     document.body.removeChild(copyBox);
     this.isCopy = true;
   }
-  myFeedByLocation() {
+  myFeedByLocation(page) {
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = false;
+    this.nearByPostOffset = (page - 1) * this.limit;
     if (
       localStorage.getItem("isUnauth") == "true" ||
       !localStorage.getItem("isUnauth")
@@ -120,26 +128,29 @@ export class MyfeedComponent implements OnInit {
         "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
     } else {
       this.profileId = localStorage.getItem("profileid");
-      this.postService.getNearByPost(this.profileId).subscribe(
-        (res) => {
-          this.postData = res.message;
-          this.isDataFetch = true;
-          this.totalPages = this.postData.length;
+      this.postService
+        .getNearByPost(this.profileId, this.nearByPostOffset, this.limit)
+        .subscribe(
+          (res) => {
+            this.postData = res.message;
+            this.isDataFetch = true;
+            this.totalPages = this.postData.length;
 
-          this.message = this.postData.length + " Post/s found";
-        },
-        (err) => {
-          this.note =
-            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-        }
-      );
+            this.message = this.postData.length + " Post/s found";
+          },
+          (err) => {
+            this.note =
+              "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+          }
+        );
     }
   }
-  myFeedByMyPost() {
+  myFeedByMyPost(page) {
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = true;
+    this.myPostOffset = (page - 1) * this.limit;
     if (
       localStorage.getItem("isUnauth") == "true" ||
       !localStorage.getItem("isUnauth")
@@ -147,29 +158,33 @@ export class MyfeedComponent implements OnInit {
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
     } else {
-      this.postService.getPostByProfile(this.profileId).subscribe(
-        (res) => {
-          this.postData = res.message;
-          this.isDataFetch = true;
-          this.totalPages = this.postData.length;
+      this.postService
+        .getPostByProfile(this.profileId, this.myPostOffset, this.limit)
+        .subscribe(
+          (res) => {
+            this.postData = res.message;
+            this.isDataFetch = true;
+            this.totalPages = this.postData.length;
 
-          this.message = this.postData.length + " Post/s found";
-        },
-        (err) => {
-          this.note =
-            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-        }
-      );
+            this.message = this.postData.length + " Post/s found";
+          },
+          (err) => {
+            this.note =
+              "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+          }
+        );
     }
   }
 
-  myFeedByNewPost() {
+  myFeedByNewPost(page) {
+    console.log(page);
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = false;
+    this.newPostOffset = (page - 1) * this.limit;
 
-    this.postService.getAllPost().subscribe(
+    this.postService.getAllPost(this.newPostOffset, this.limit).subscribe(
       (res) => {
         this.isDataFetch = true;
         this.postData = res.message;
@@ -276,5 +291,18 @@ export class MyfeedComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  getPage(page) {
+    this.page = page;
+    if (this.yourPost) {
+      this.myFeedByMyPost(this.page);
+      return;
+    }
+    if (this.isNearByPost) {
+      this.myFeedByLocation(this.page);
+
+      return;
+    }
+    this.myFeedByNewPost(this.page);
   }
 }

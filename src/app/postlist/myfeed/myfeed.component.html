@@ -37,15 +37,15 @@
 <br />
 <div class="ui container">
   <div class="ui menu container">
-    <a (click)="myFeedByLocation()" class="item wide">
+    <a (click)="myFeedByLocation(page)" class="item wide">
       <i class="map marker alternate icon"></i>
       Nearby
     </a>
-    <a (click)="myFeedByMyPost()" class="item">
+    <a (click)="myFeedByMyPost(page)" class="item">
       <i class="paperclip icon"></i>
       Your Post
     </a>
-    <a (click)="myFeedByNewPost()" class="item">
+    <a (click)="myFeedByNewPost(page)" class="item">
       <i class="paper plane icon"></i>
       New
     </a>
@@ -63,7 +63,7 @@
       <div
         *ngFor="
           let post of postData
-            | paginate: { itemsPerPage: 2, currentPage: page }
+            | paginate: { itemsPerPage: limit, currentPage: page,totalItems:20 }
         "
       >
         <div class="ui teal padded segment container">
@@ -189,7 +189,7 @@
         </div>
         <br />
       </div>
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
     </div>
 
     <div class="ui container" *ngIf="!isDataFetch">
