@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, OnInit } from "@angular/core";
+import {  Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
 import { SharedService } from "src/app/service/shared.service";
@@ -35,7 +35,6 @@ export class SinglepostComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private SharedService: SharedService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -45,38 +44,45 @@ export class SinglepostComponent implements OnInit {
     this.message = "";
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
-    });
-    this.postService.getPostByPostId(this.postId).subscribe(
-      (res) => {
-        this.postData = res.message[0];
-        this.isDataFetch = true;
+      console.log(this.postId);
+      this.postService.getPostByPostId(this.postId).subscribe(
+        (res) => {
+          console.log("res :", res.message[0]);
+          this.postData = res.message[0];
+          this.isDataFetch = true;
+          console.log("postData : "+this.postData.profileid)
 
-        if (!this.postData.take_book_id) {
-          this.isBookNotAvailable = true;
-          this.takeBook = "Book is not specified by user";
-          this.takeBookAuthor = "Book author is not specified by user";
-          this.note = "kindly reach out to user by clicking on chat button";
+          if (!this.postData.take_book_id) {
+            this.isBookNotAvailable = true;
+            this.takeBook = "Book is not specified by user";
+            this.takeBookAuthor = "Book author is not specified by user";
+            this.note = "kindly reach out to user by clicking on chat button";
+          }
+
+          this.username = res.message[0].username;
+          if (this.username == localStorage.getItem("username"))
+            this.yourPost = true;
+        },
+        (err) => {
+          console.log(err);
         }
-
-        this.username = res.message[0].username;
-        if (this.username == localStorage.getItem("username"))
-          this.yourPost = true;
-      },
-      (err) => {}
-    );
-
-    this.profileId = localStorage.getItem("profileid");
-    this.postService.getNearByPost(this.profileId).subscribe(
-      (res) => {
-        this.nearByPost = res.message;
-        // if (this.nearByPost.length == 0){
-        //   this.isError=true;
-        //   this.message=this.nearByPost.lenght+" post found"
-        // }
-        this.isNearByPostExist = true;
-      },
-      (err) => {}
-    );
+      );
+      this.profileId = localStorage.getItem("profileid");
+      this.postService.getNearByPost(this.profileId).subscribe(
+        (res) => {
+          this.nearByPost = res.message;
+         // console.log("neaby:", this.nearByPost)
+          // if (this.nearByPost.length == 0){
+          //   this.isError=true;
+          //   this.message=this.nearByPost.lenght+" post found"
+          // }
+          this.isNearByPostExist = true;
+        },
+        (err) => {
+          console.log(err)
+        }
+      );
+    });
   }
   openPost(postId, title) {
     //this.SharedService.KeepPostId(postId);

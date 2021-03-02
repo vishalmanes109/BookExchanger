@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
     if (!this.isUnauth) {
       this.isUnauth = "true";
     }
-    console.log(this.isUnauth);
+    // console.log(this.isUnauth);
 
     this.storesUsername = localStorage.getItem("username");
     this.route.paramMap.subscribe((params) => {
@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
         this.postService.getPostByProfile(this.profileId).subscribe(
           (res) => {
             this.postData = res.message;
-            
+
             this.isPostExist = true;
           },
           (err) => {
@@ -102,6 +102,7 @@ export class ProfileComponent implements OnInit {
             console.log(res);
             this.savePostData = res.message;
             this.isSavePostExist = true;
+            console.log(this.savePostData);
           },
           (err) => {
             console.log(err);
