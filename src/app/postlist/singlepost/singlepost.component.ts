@@ -68,20 +68,20 @@ export class SinglepostComponent implements OnInit {
         }
       );
       this.profileId = localStorage.getItem("profileid");
-      // this.postService.getNearByPost(this.profileId).subscribe(
-      //   (res) => {
-      //     this.nearByPost = res.message;
-      //    // console.log("neaby:", this.nearByPost)
-      //     // if (this.nearByPost.length == 0){
-      //     //   this.isError=true;
-      //     //   this.message=this.nearByPost.lenght+" post found"
-      //     // }
-      //     this.isNearByPostExist = true;
-      //   },
-      //   (err) => {
-      //     console.log(err)
-      //   }
-      // );
+      this.postService.getNearByPost(this.profileId,0,10).subscribe(
+        (res) => {
+          this.nearByPost = res.message;
+         // console.log("neaby:", this.nearByPost)
+          // if (this.nearByPost.length == 0){
+          //   this.isError=true;
+          //   this.message=this.nearByPost.lenght+" post found"
+          // }
+          this.isNearByPostExist = true;
+        },
+        (err) => {
+          console.log(err)
+        }
+      );
     });
   }
   openPost(postId, title) {

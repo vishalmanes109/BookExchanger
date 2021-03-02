@@ -63,7 +63,8 @@
       <div
         *ngFor="
           let post of postData
-            | paginate: { itemsPerPage: limit, currentPage: page,totalItems:20 }
+            | paginate
+              : { itemsPerPage: limit, currentPage: page, totalItems: 20 }
         "
       >
         <div class="ui teal padded segment container">
@@ -151,7 +152,7 @@
                 <i class="share icon"></i>
               </div>
               <div
-                *ngIf="!isPostSaved "
+                *ngIf="!isPostSaved"
                 class="ui icon button"
                 (click)="savePost(post.postid)"
               >
@@ -172,24 +173,30 @@
                 <i class="bookmark icon"></i>
               </div>
 
-              <div *ngIf="!isCopy && isShare && post.postid==sharePostId">
+              <div *ngIf="!isCopy && isShare && post.postid == sharePostId">
                 <p class="ui sharelink">{{ shareLink }}</p>
                 <button
                   class="ui button tiny primary"
                   (click)="copyShareableLink(shareLink)"
                 >
                   copy
-                </button> 
+                </button>
               </div>
-              <div class="ui message container" *ngIf="isPostSaved && sharePostId==post.postid">
-                {{savePostMessage}}
+              <div
+                class="ui message container"
+                *ngIf="isPostSaved && sharePostId == post.postid"
+              >
+                {{ savePostMessage }}
               </div>
             </div>
           </div>
         </div>
         <br />
       </div>
-      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+      <pagination-controls *ngIf="yourPost" (pageChange)="getPage($event)"></pagination-controls>
+      <pagination-controls *ngIf="isNearByPost" (pageChange)="getPage($event)"></pagination-controls>
+
+      <pagination-controls *ngIf="!isNearByPost && !yourPost" (pageChange)="getPage($event)"></pagination-controls>
     </div>
 
     <div class="ui container" *ngIf="!isDataFetch">
