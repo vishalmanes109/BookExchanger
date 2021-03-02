@@ -70,7 +70,7 @@ export class MyfeedComponent implements OnInit {
       this.profileId = localStorage.getItem("profileid");
       this.yourPost = false;
       this.isUnauth = false;
-      
+
       this.nearByPostOffset = (this.page - 1) * this.limit;
       this.postService
         .getNearByPost(this.profileId, this.nearByPostOffset, this.limit)
@@ -162,6 +162,7 @@ export class MyfeedComponent implements OnInit {
         .getPostByProfile(this.profileId, this.myPostOffset, this.limit)
         .subscribe(
           (res) => {
+            console.log(res);
             this.postData = res.message;
             this.isDataFetch = true;
             this.totalPages = this.postData.length;
@@ -169,6 +170,7 @@ export class MyfeedComponent implements OnInit {
             this.message = this.postData.length + " Post/s found";
           },
           (err) => {
+            console.log(err);
             this.note =
               "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
           }
@@ -186,6 +188,7 @@ export class MyfeedComponent implements OnInit {
 
     this.postService.getAllPost(this.newPostOffset, this.limit).subscribe(
       (res) => {
+        console.log(res);
         this.isDataFetch = true;
         this.postData = res.message;
         this.totalPages = this.postData.length;
@@ -194,6 +197,7 @@ export class MyfeedComponent implements OnInit {
         this.message = this.postData.length + " Post/s found";
       },
       (err) => {
+        console.log(err);
         this.note =
           "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
       }
@@ -294,8 +298,10 @@ export class MyfeedComponent implements OnInit {
   }
   getPage(page) {
     this.page = page;
+    console.log(page);
     if (this.yourPost) {
-      this.myFeedByMyPost(this.page);
+      
+       this.myFeedByMyPost(this.page);
       return;
     }
     if (this.isNearByPost) {
