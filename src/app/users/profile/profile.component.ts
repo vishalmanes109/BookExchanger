@@ -99,13 +99,11 @@ export class ProfileComponent implements OnInit {
         );
         this.postService.getSavedPost(this.profileId).subscribe(
           (res) => {
-            console.log(res);
             this.savePostData = res.message;
             this.isSavePostExist = true;
             console.log(this.savePostData);
           },
           (err) => {
-            console.log(err);
             if (!err.error.isPostExist) {
               this.isSavePostExist = false;
               this.message = "You have not saved any post. ";
@@ -147,5 +145,25 @@ export class ProfileComponent implements OnInit {
           `deleteprofile/${this.userId}/${this.username.replace(/ /g, "_")}`,
         ]);
       });
+  }
+  UnsavePost(postId) {
+    console.log(postId);
+    let unSavePostData = {
+      post_id: postId,
+      profile_id: this.profileId,
+    };
+    this.postService.unSavePost(unSavePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.router
+          .navigateByUrl("/profile", { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([`profile/${this.username}`]);
+          });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

@@ -103,7 +103,6 @@
                 <div class="details">
                   Author Name: {{ post.givebookauthor }}
                 </div>
-
                 <div
                   class="details"
                   *ngIf="
@@ -180,7 +179,10 @@
                   (click)="copyShareableLink(shareLink)"
                 >
                   copy
-                </button>
+                </button> 
+              </div>
+              <div class="ui message container" *ngIf="isPostSaved && sharePostId==post.postid">
+                {{savePostMessage}}
               </div>
             </div>
           </div>

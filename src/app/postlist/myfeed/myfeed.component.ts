@@ -36,7 +36,7 @@ export class MyfeedComponent implements OnInit {
   public isPostSaved = false;
   public savePostId;
   public sharePostId;
-
+  public savePostMessage;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -86,7 +86,7 @@ export class MyfeedComponent implements OnInit {
   generateSharableLink(postId, title) {
     this.isShare = true;
     this.isCopy = false;
-    this.sharePostId=postId;
+    this.sharePostId = postId;
 
     this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
       / /g,
@@ -227,18 +227,37 @@ export class MyfeedComponent implements OnInit {
   }
   savePost(postId) {
     console.log(postId, this.profileId);
+    this.sharePostId = postId;
+
     let savePostData = {
       post_id: postId,
       profile_id: this.profileId,
     };
+    this.isPostSaved = true;
     this.postService.savePost(savePostData).subscribe(
       (res) => {
         console.log(res);
         this.savePostId = savePostData.post_id;
         this.isPostSaved = true;
+        this.savePostMessage =
+          "Post Saved! you can manage saved post from your profile";
+
+        setTimeout(() => {
+          if (res.success == 1 && this.isPostSaved) {
+            this.savePostMessage = "";
+            this.isPostSaved = false;
+          }
+        }, 4000);
       },
       (err) => {
         console.log(err);
+        this.savePostMessage =
+          "This post is already saved! you can manage saved post from your profile";
+
+        setTimeout(() => {
+          this.savePostMessage = "";
+          this.isPostSaved = false;
+        }, 4000);
       }
     );
   }

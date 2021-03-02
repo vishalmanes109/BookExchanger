@@ -79,7 +79,19 @@ export class PostService {
     return this.http.post<any>(this._postUrl + "savepost", savePostdata);
   }
   unSavePost(unSavePostData) {
-    return this.http.delete<any>(this._postUrl + "savepost", unSavePostData);
+    let headers = new HttpHeaders();
+
+    headers.append("Content-Type", "application/json");
+
+    let params = new HttpParams();
+    params = params.append("post_id", unSavePostData.post_id);
+    params = params.append("profile_id", unSavePostData.profile_id);
+
+    const option = {
+      headers: headers,
+      params: params,
+    };
+    return this.http.delete<any>(this._postUrl + "savepost", option);
   }
   getSavedPost(profileId) {
     console.log(profileId);

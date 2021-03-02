@@ -159,6 +159,7 @@
           </ng-template>
         </div>
       </div>
+      <br />
       <div class="ui raised segment">
         <h3>Saved Post</h3>
 
@@ -167,18 +168,22 @@
             *ngFor="let savePost of savePostData"
             class="ui middle aligned animated list"
           >
-            <div (click)="openPost(savePost.postid)" class="item">
-              <img
-                class="ui avatar image"
-                src="../../../assets/avatar/20.svg"
-              />
-              <div class="content">
-                <div class="header">{{ savePost.title }}</div>
-                <div>{{ savePost.description }}</div>
-                <div>{{ savePost.post_time.substring(0, 10) }}</div>
+            <div class="ui container grid">
+              <div
+                (click)="openPost(savePost.postid)"
+                class="item fourteen wide column"
+              >
+                <div class="content">
+                  <div class="header">{{ savePost.title }}</div>
+                  <div>{{ savePost.description }}</div>
+                </div>
+
+                <!-- <hr /> -->
+              </div>
+              <div  (click)="UnsavePost(savePost.postid)" class="ui column one">
+                  <i class="trash alternate outline icon red"></i>
               </div>
             </div>
-            <br />
           </div>
         </div>
         <div *ngIf="!isSavePostExist">
