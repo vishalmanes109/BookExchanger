@@ -28,8 +28,11 @@ export class MyfeedComponent implements OnInit {
   public isUnauth;
   public message;
   public bookPost;
-  public totalPages;
+  public totalPages = 10;
   public page = 1;
+  public myPostPage = 1;
+  public nearbyPostPage = 1;
+  public newPostPage = 1;
   public limit = 5;
   public nearByPostOffset;
   public myPostOffset;
@@ -71,15 +74,15 @@ export class MyfeedComponent implements OnInit {
       this.yourPost = false;
       this.isUnauth = false;
 
-      this.nearByPostOffset = (this.page - 1) * this.limit;
+      this.nearByPostOffset = 0;
       this.postService
         .getNearByPost(this.profileId, this.nearByPostOffset, this.limit)
         .subscribe(
           async (res) => {
             this.postData = res.message;
-            this.totalPages = this.postData.length;
+            this.totalPages = res.total;
             this.isDataFetch = true;
-            this.message = this.postData.length + " Post/s found";
+            this.message = this.totalPages + " Post/s found";
           },
           (err) => {
             this.note =
@@ -115,10 +118,13 @@ export class MyfeedComponent implements OnInit {
     this.isCopy = true;
   }
   myFeedByLocation(page) {
+    console.log(page)
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = false;
+    this.page = page;
+
     this.nearByPostOffset = (page - 1) * this.limit;
     if (
       localStorage.getItem("isUnauth") == "true" ||
@@ -134,9 +140,9 @@ export class MyfeedComponent implements OnInit {
           (res) => {
             this.postData = res.message;
             this.isDataFetch = true;
-            this.totalPages = this.postData.length;
+            this.totalPages = res.total;
 
-            this.message = this.postData.length + " Post/s found";
+            this.message = this.totalPages + " Post/s found";
           },
           (err) => {
             this.note =
@@ -146,10 +152,13 @@ export class MyfeedComponent implements OnInit {
     }
   }
   myFeedByMyPost(page) {
+    console.log(page);
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
     this.yourPost = true;
+    this.totalPages = 10;
+    this.page = page;
     this.myPostOffset = (page - 1) * this.limit;
     if (
       localStorage.getItem("isUnauth") == "true" ||
@@ -185,16 +194,17 @@ export class MyfeedComponent implements OnInit {
     this.postData = null;
     this.yourPost = false;
     this.newPostOffset = (page - 1) * this.limit;
+    this.page = page;
 
     this.postService.getAllPost(this.newPostOffset, this.limit).subscribe(
       (res) => {
         console.log(res);
         this.isDataFetch = true;
         this.postData = res.message;
-        this.totalPages = this.postData.length;
+        this.totalPages = res.total;
 
-        //console.log(this.postData)
-        this.message = this.postData.length + " Post/s found";
+        console.log(this.totalPages);
+        this.message = this.totalPages + " Post/s found";
       },
       (err) => {
         console.log(err);
@@ -296,19 +306,38 @@ export class MyfeedComponent implements OnInit {
       }
     );
   }
-  getPage(page) {
-    this.page = page;
-    console.log(page);
-    if (this.yourPost) {
-      
-       this.myFeedByMyPost(this.page);
-      return;
-    }
-    if (this.isNearByPost) {
-      this.myFeedByLocation(this.page);
-
-      return;
-    }
-    this.myFeedByNewPost(this.page);
+  getPageforMyPost(myPostPage) {
+    console.log(myPostPage);
+    this.myPostPage = myPostPage;
+    this.myFeedByMyPost(this.myPostPage);
   }
+  getPageForNewPost(newPostPage) {
+    console.log(newPostPage);
+    this.newPostPage = newPostPage;
+    this.myFeedByNewPost(this.newPostPage);
+  }
+  getPageForNearbyPost(nearbyPostPage) {
+    console.log(this.nearbyPostPage)
+    this.nearbyPostPage = nearbyPostPage;
+    this.myFeedByLocation(this.nearbyPostPage);
+  }
+
+  // getPage(page) {
+  //   this.page = page;
+  //   console.log(page);
+  //   if (this.yourPost && !this.isNearByPost) {
+  //     console.log("your page");
+  //     this.myFeedByMyPost(this.page);
+  //     return;
+  //   }
+  //   if (this.isNearByPost && !this.yourPost) {
+  //     console.log("near page");
+
+  //     this.myFeedByLocation(this.page);
+
+  //     return;
+  //   }
+  //   console.log("new post");
+  //   this.myFeedByNewPost(this.page);
+  // }
 }

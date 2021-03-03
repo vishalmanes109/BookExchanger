@@ -37,15 +37,15 @@
 <br />
 <div class="ui container">
   <div class="ui menu container">
-    <a (click)="myFeedByLocation(page)" class="item wide">
+    <a (click)="myFeedByLocation(nearbyPostPage)" class="item wide">
       <i class="map marker alternate icon"></i>
       Nearby
     </a>
-    <a (click)="myFeedByMyPost(page)" class="item">
+    <a (click)="myFeedByMyPost(myPostPage)" class="item">
       <i class="paperclip icon"></i>
       Your Post
     </a>
-    <a (click)="myFeedByNewPost(page)" class="item">
+    <a (click)="myFeedByNewPost(newPostPage)" class="item">
       <i class="paper plane icon"></i>
       New
     </a>
@@ -64,7 +64,7 @@
         *ngFor="
           let post of postData
             | paginate
-              : { itemsPerPage: limit, currentPage: page, totalItems: 20 }
+              : { itemsPerPage: limit, currentPage: page, totalItems: totalPages }
         "
       >
         <div class="ui teal padded segment container">
@@ -193,10 +193,9 @@
         </div>
         <br />
       </div>
-      <pagination-controls *ngIf="yourPost" (pageChange)="getPage($event)"></pagination-controls>
-      <pagination-controls *ngIf="isNearByPost" (pageChange)="getPage($event)"></pagination-controls>
-
-      <pagination-controls *ngIf="!isNearByPost && !yourPost" (pageChange)="getPage($event)"></pagination-controls>
+      <pagination-controls *ngIf="yourPost" (pageChange)="getPageforMyPost($event)"></pagination-controls>
+      <pagination-controls *ngIf="isNearByPost" (pageChange)="getPageForNearbyPost($event)"></pagination-controls>
+      <pagination-controls *ngIf="!isNearByPost && !yourPost" (pageChange)="getPageForNewPost($event)"></pagination-controls>
     </div>
 
     <div class="ui container" *ngIf="!isDataFetch">
