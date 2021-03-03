@@ -62,7 +62,6 @@ export class MyfeedComponent implements OnInit {
       !localStorage.getItem("isUnauth")
     ) {
       this.isUnauth = true;
-
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search by book without login";
     } else {
@@ -219,7 +218,7 @@ export class MyfeedComponent implements OnInit {
     this.postData = null;
 
     if (this.bookname && this.bookname.length > 0) {
-      this.postService.getPostByBookName(this.bookname).subscribe(
+      this.postService.getPostByBookName(this.bookname,0,10).subscribe(
         (res) => {
           this.isDataFetch = true;
           this.postData = res.message;
@@ -307,37 +306,20 @@ export class MyfeedComponent implements OnInit {
     );
   }
   getPageforMyPost(myPostPage) {
-    console.log(myPostPage);
+   // console.log(myPostPage);
     this.myPostPage = myPostPage;
     this.myFeedByMyPost(this.myPostPage);
   }
   getPageForNewPost(newPostPage) {
-    console.log(newPostPage);
+    //console.log(newPostPage);
     this.newPostPage = newPostPage;
     this.myFeedByNewPost(this.newPostPage);
   }
   getPageForNearbyPost(nearbyPostPage) {
-    console.log(this.nearbyPostPage)
+    // console.log(this.nearbyPostPage)
     this.nearbyPostPage = nearbyPostPage;
     this.myFeedByLocation(this.nearbyPostPage);
   }
 
-  // getPage(page) {
-  //   this.page = page;
-  //   console.log(page);
-  //   if (this.yourPost && !this.isNearByPost) {
-  //     console.log("your page");
-  //     this.myFeedByMyPost(this.page);
-  //     return;
-  //   }
-  //   if (this.isNearByPost && !this.yourPost) {
-  //     console.log("near page");
-
-  //     this.myFeedByLocation(this.page);
-
-  //     return;
-  //   }
-  //   console.log("new post");
-  //   this.myFeedByNewPost(this.page);
-  // }
+  
 }

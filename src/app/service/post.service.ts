@@ -14,11 +14,9 @@ export class PostService {
   addPost(postData) {
     return this.http.post<any>(this._postUrl, postData);
   }
-  getPostByLocation(location) {
-    return this.http.get<any>(this._postUrl + "location/" + location);
-  }
-  getPostByProfile(profileId,offset,limit) {
-    console.log("lol")
+
+  getPostByProfile(profileId, offset, limit) {
+    console.log("lol");
     return this.http.get<any>(
       this._postUrl + "profileid/" + profileId + "/" + offset + "/" + limit
     );
@@ -32,11 +30,13 @@ export class PostService {
   getTakeBook(takeBookId): Observable<any> {
     return this.http.get<any>(this._bookUrl + "takebook/" + takeBookId);
   }
-  getNearByPost(profileId,offset,limit): Observable<any> {
-    return this.http.get<any>(this._postUrl + "nearby/" + profileId+"/"+offset+"/"+limit);
+  getNearByPost(profileId, offset, limit): Observable<any> {
+    return this.http.get<any>(
+      this._postUrl + "nearby/" + profileId + "/" + offset + "/" + limit
+    );
   }
-  getAllPost(offset,limit) {
-    return this.http.get<any>(this._postUrl + "all/"+offset+"/"+limit);
+  getAllPost(offset, limit) {
+    return this.http.get<any>(this._postUrl + "all/" + offset + "/" + limit);
   }
   updatePost(updatePostData) {
     return this.http.patch<any>(this._postUrl, updatePostData);
@@ -58,17 +58,30 @@ export class PostService {
 
     return this.http.delete<any>(this._postUrl, option);
   }
-  getPostByBookName(book) {
-    return this.http.get<any>(this._postUrl + "book/" + book);
+  getPostByBookName(book, offset, limit) {
+    return this.http.get<any>(
+      this._postUrl + "book/" + book + "/" + offset + "/" + limit
+    );
   }
-  getPostByAuthor(author) {
-    return this.http.get<any>(this._postUrl + "author/" + author);
+  getPostByAuthor(author, offset, limit) {
+    return this.http.get<any>(
+      this._postUrl + "author/" + author + "/" + offset + "/" + limit
+    );
   }
-  getPostByUser(username) {
-    return this.http.get<any>(this._postUrl + "user/" + username);
+  getPostByUser(username, offset, limit) {
+    return this.http.get<any>(
+      this._postUrl + "user/" + username + "/" + offset + "/" + limit
+    );
   }
-  getPostByTitle(title) {
-    return this.http.get<any>(this._postUrl + "title/" + title);
+  getPostByTitle(title, offset, limit) {
+    return this.http.get<any>(
+      this._postUrl + "title/" + title + "/" + offset + "/" + limit
+    );
+  }
+  getPostByLocation(location,offset,limit) {
+    return this.http.get<any>(
+      this._postUrl + "location/" + location + "/" + offset + "/" + limit
+    );
   }
   getPopularBook() {
     return this.http.get<any>(this._bookUrl + "popularbooks");

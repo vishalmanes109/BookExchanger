@@ -35,7 +35,9 @@ export class AdvancesearchComponent implements OnInit {
   //public sortBy = "location";
   public takeBookResult;
   public page = 1;
-  public pageSize = 1;
+  public limit = 5;
+  public offset = 1;
+  public totalPages;
   public shareLink;
   public isCopy = false;
   public isShare = false;
@@ -95,10 +97,17 @@ export class AdvancesearchComponent implements OnInit {
     this.isCopy = true;
   }
 
-  searchPost() {
+  getNextPage(page) {
+    this.page = page;
+    this.searchPost(this.page);
+  }
+
+  searchPost(page) {
     this.isError = false;
     this.postData = null;
     this.isDataFetch = false;
+    if (page) this.offset = (page - 1) * this.limit;
+    if (!page) this.offset = 0;
 
     if (this.counter > 1) {
       this.note = "";
@@ -117,84 +126,93 @@ export class AdvancesearchComponent implements OnInit {
     if (!this.isError) {
       if (this.byBook) {
         this.loadingStart = true;
-        this.postService.getPostByBookName(this.text).subscribe(
-          (res) => {
-            this.isDataFetch = true;
-            this.postData = res.message;
-            this.note = this.postData.length + " Post/s found";
-            this.loadingStart = false;
+        this.postService
+          .getPostByBookName(this.text, this.offset, this.limit)
+          .subscribe(
+            (res) => {
+              this.isDataFetch = true;
+              this.postData = res.message;
+              this.totalPages = res.total;
+              this.note = this.totalPages + " Post/s found";
+              this.loadingStart = false;
 
-            return;
-          },
-          (err) => {
-            this.isDataFetch = false;
-            this.loadingStart = false;
-
-            if (err.error.message != "Post does not exis") {
-              this.isError = true;
-              this.message =
-                "0 Post found for corrosponding search, Try different keywords, check for spellings";
               return;
+            },
+            (err) => {
+              this.isDataFetch = false;
+              this.loadingStart = false;
+
+              if (err.error.message != "Post does not exis") {
+                this.isError = true;
+                this.message =
+                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                return;
+              }
+              this.isError = true;
+              this.message = "Error while fetching data please try again ";
             }
-            this.isError = true;
-            this.message = "Error while fetching data please try again ";
-          }
-        );
+          );
       }
       if (this.byUser) {
-        this.postService.getPostByUser(this.text).subscribe(
-          (res) => {
-            this.isDataFetch = true;
-            this.postData = res.message;
-            this.note = this.postData.length + " Post/s found";
+        this.postService
+          .getPostByUser(this.text, this.offset, this.limit)
+          .subscribe(
+            (res) => {
+              this.isDataFetch = true;
+              this.postData = res.message;
+              this.totalPages = res.total;
+              this.note = this.totalPages + " Post/s found";
 
-            return;
-          },
-          (err) => {
-            this.isDataFetch = false;
-
-            if (err.error.message != "Post does not exis") {
-              this.isError = true;
-              this.message =
-                "0 Post found for corrosponding search, Try different keywords, check for spellings";
               return;
+            },
+            (err) => {
+              this.isDataFetch = false;
+
+              if (err.error.message != "Post does not exis") {
+                this.isError = true;
+                this.message =
+                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                return;
+              }
+              this.isError = true;
+              this.message = "Error while fetching data please try again ";
             }
-            this.isError = true;
-            this.message = "Error while fetching data please try again ";
-          }
-        );
+          );
       }
       if (this.byTitle) {
-        this.postService.getPostByTitle(this.text).subscribe(
-          (res) => {
-            this.isDataFetch = true;
-            this.postData = res.message;
-            console.log(this.postData);
-            this.note = this.postData.length + " Post/s found";
+        this.postService
+          .getPostByTitle(this.text, this.offset, this.limit)
+          .subscribe(
+            (res) => {
+              this.isDataFetch = true;
+              this.postData = res.message;
+              this.totalPages = res.total;
+              this.note = this.totalPages + " Post/s found";
 
-            return;
-          },
-          (err) => {
-            this.isDataFetch = false;
-
-            console.log(err);
-            if (err.error.message != "Post does not exis") {
-              this.isError = true;
-              this.message =
-                "0 Post found for corrosponding search, Try different keywords, check for spellings";
               return;
+            },
+            (err) => {
+              this.isDataFetch = false;
+
+              console.log(err);
+              if (err.error.message != "Post does not exis") {
+                this.isError = true;
+                this.message =
+                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                return;
+              }
+              this.isError = true;
+              this.message = "Error while fetching data please try again ";
             }
-            this.isError = true;
-            this.message = "Error while fetching data please try again ";
-          }
-        );
+          );
       }
       if (this.byLocation) {
-        this.postService.getPostByLocation(this.text).subscribe(
+        this.postService.getPostByLocation(this.text,this.offset,this.limit).subscribe(
           (res) => {
             this.isDataFetch = true;
             this.postData = res.message;
-            this.note = this.postData.length + " Post/s found";
+            this.totalPages = res.total;
+            this.note = this.totalPages + " Post/s found";
 
             return;
           },
@@ -213,28 +231,31 @@ export class AdvancesearchComponent implements OnInit {
         );
       }
       if (this.byAuthor) {
-        this.postService.getPostByAuthor(this.text).subscribe(
-          (res) => {
-            this.isDataFetch = true;
+        this.postService
+          .getPostByAuthor(this.text, this.offset, this.limit)
+          .subscribe(
+            (res) => {
+              this.isDataFetch = true;
 
-            this.postData = res.message;
-            this.note = this.postData.length + " Post/s found";
+              this.postData = res.message;
+              this.totalPages = res.total;
+              this.note = this.totalPages + " Post/s found";
 
-            return;
-          },
-          (err) => {
-            this.isDataFetch = false;
-
-            if (err.error.message != "Post does not exis") {
-              this.isError = true;
-              this.message =
-                "0 Post found for corrosponding search, Try different keywords, check for spellings";
               return;
+            },
+            (err) => {
+              this.isDataFetch = false;
+
+              if (err.error.message != "Post does not exis") {
+                this.isError = true;
+                this.message =
+                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                return;
+              }
+              this.isError = true;
+              this.message = "Error while fetching data please try again ";
             }
-            this.isError = true;
-            this.message = "Error while fetching data please try again ";
-          }
-        );
+          );
       }
     }
   }

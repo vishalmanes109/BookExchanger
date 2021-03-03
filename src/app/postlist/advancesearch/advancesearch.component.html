@@ -12,7 +12,7 @@
       </div>
 
       <div class="three wide field">
-        <button class="ui button inverted primary" (click)="searchPost()">
+        <button class="ui button inverted primary" (click)="searchPost(1)">
           Search
         </button>
       </div>
@@ -89,7 +89,7 @@
     <div
       *ngFor="
         let post of postData
-          | paginate: { itemsPerPage: pageSize, currentPage: page };
+          | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalPages };
         let i = index
       "
     >
@@ -171,7 +171,7 @@
     </div>
     <pagination-controls
       *ngIf="isDataFetch"
-      (pageChange)="page = $event"
+      (pageChange)="getNextPage($event)"
     ></pagination-controls>
   </div>
 </div>
