@@ -173,9 +173,9 @@ export class MyfeedComponent implements OnInit {
             console.log(res);
             this.postData = res.message;
             this.isDataFetch = true;
-            this.totalPages = this.postData.length;
+            this.totalPages = res.total;
 
-            this.message = this.postData.length + " Post/s found";
+            this.message = this.totalPages + " Post/s found";
           },
           (err) => {
             console.log(err);

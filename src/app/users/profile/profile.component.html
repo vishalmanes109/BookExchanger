@@ -123,7 +123,7 @@
 
         <div *ngIf="isPostExist">
           <div
-            *ngFor="let post of postData"
+            *ngFor="let post of postData | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalPost }"
             class="ui middle aligned animated list"
           >
             <div (click)="openPost(post.postid)" class="item">
@@ -139,6 +139,9 @@
             </div>
             <br />
           </div>
+          <pagination-controls
+            (pageChange)="getNextPage($event)"
+          ></pagination-controls>
         </div>
         <div *ngIf="!isPostExist">
           <ng-container *ngIf="isYourProfile; else elseTemplate">
@@ -180,8 +183,8 @@
 
                 <!-- <hr /> -->
               </div>
-              <div  (click)="UnsavePost(savePost.postid)" class="ui column one">
-                  <i class="trash alternate outline icon red"></i>
+              <div (click)="UnsavePost(savePost.postid)" class="ui column one">
+                <i class="trash alternate outline icon red"></i>
               </div>
             </div>
           </div>

@@ -107,7 +107,7 @@ export class AdvancesearchComponent implements OnInit {
     this.postData = null;
     this.isDataFetch = false;
     if (page) this.offset = (page - 1) * this.limit;
-    if (!page) this.offset = 0;
+    else this.offset = 0;
 
     if (this.counter > 1) {
       this.note = "";

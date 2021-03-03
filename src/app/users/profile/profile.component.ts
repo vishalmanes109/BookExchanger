@@ -40,6 +40,11 @@ export class ProfileComponent implements OnInit {
   public savePostData;
   public isSavePostExist = false;
   public postMessage;
+  public page = 1;
+  public limit = 5;
+  public offset = 1;
+  public totalPages;
+  public totalPost;
   constructor(
     private profileService: ProfileService,
     private postService: PostService,
@@ -84,19 +89,23 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem("userid", this.userId);
         localStorage.setItem("profileid", this.profileId);
 
-        // this.postService.getPostByProfile(this.profileId).subscribe(
-        //   (res) => {
-        //     this.postData = res.message;
-
-        //     this.isPostExist = true;
-        //   },
-        //   (err) => {
-        //     if (!err.error.isPostExist) {
-        //       this.isPostExist = false;
-        //       this.postMessage = "You have not submited any post. ";
-        //     }
-        //   }
-        // );
+        this.postService
+          .getPostByProfile(this.profileId, 1, this.limit)
+          .subscribe(
+            (res) => {
+              this.postData = res.message;
+              this.totalPost = res.total;
+              console.log(this.postData);
+              console.log(res.total);
+              this.isPostExist = true;
+            },
+            (err) => {
+              if (!err.error.isPostExist) {
+                this.isPostExist = false;
+                this.postMessage = "You have not submited any post. ";
+              }
+            }
+          );
         this.postService.getSavedPost(this.profileId).subscribe(
           (res) => {
             this.savePostData = res.message;
@@ -165,5 +174,28 @@ export class ProfileComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+  getPostByProfile(page) {
+    if (page) this.offset = (page - 1) * this.limit;
+    else this.offset = 1;
+    this.postService
+      .getPostByProfile(this.profileId, this.offset, this.limit)
+      .subscribe(
+        (res) => {
+          this.postData = res.message;
+          this.totalPost = res.total;
+          this.isPostExist = true;
+        },
+        (err) => {
+          if (!err.error.isPostExist) {
+            this.isPostExist = false;
+            this.postMessage = "You have not submited any post. ";
+          }
+        }
+      );
+  }
+  getNextPage(page) {
+    this.page = page;
+    this.getPostByProfile(this.page);
   }
 }
