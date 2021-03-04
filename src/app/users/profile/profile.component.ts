@@ -41,10 +41,13 @@ export class ProfileComponent implements OnInit {
   public isSavePostExist = false;
   public postMessage;
   public page = 1;
+  public savePostPage = 1;
+  public myPostPage = 1;
   public limit = 5;
   public offset = 1;
   public totalPages;
-  public totalPost;
+  public totalMyPost;
+  public totalSavePost;
   constructor(
     private profileService: ProfileService,
     private postService: PostService,
@@ -94,7 +97,7 @@ export class ProfileComponent implements OnInit {
           .subscribe(
             (res) => {
               this.postData = res.message;
-              this.totalPost = res.total;
+              this.totalMyPost = res.total;
               console.log(this.postData);
               console.log(res.total);
               this.isPostExist = true;
@@ -110,6 +113,7 @@ export class ProfileComponent implements OnInit {
           (res) => {
             this.savePostData = res.message;
             this.isSavePostExist = true;
+            this.totalSavePost = res.total;
             console.log(this.savePostData);
           },
           (err) => {
@@ -178,12 +182,14 @@ export class ProfileComponent implements OnInit {
   getPostByProfile(page) {
     if (page) this.offset = (page - 1) * this.limit;
     else this.offset = 1;
+    console.log(this.offset);
+
     this.postService
       .getPostByProfile(this.profileId, this.offset, this.limit)
       .subscribe(
         (res) => {
           this.postData = res.message;
-          this.totalPost = res.total;
+          this.totalMyPost = res.total;
           this.isPostExist = true;
         },
         (err) => {
@@ -194,8 +200,33 @@ export class ProfileComponent implements OnInit {
         }
       );
   }
-  getNextPage(page) {
-    this.page = page;
-    this.getPostByProfile(this.page);
+  getSavePost(page) {
+    if (page) this.offset = (page - 1) * this.limit;
+    else this.offset = 1;
+
+    this.postService.getSavedPost(this.profileId).subscribe(
+      (res) => {
+        this.savePostData = res.message;
+        this.totalSavePost = res.total;
+        this.isSavePostExist = true;
+        console.log(this.savePostData);
+      },
+      (err) => {
+        if (!err.error.isPostExist) {
+          this.isSavePostExist = false;
+          this.message = "You have not saved any post. ";
+        }
+      }
+    );
+  }
+  getPageForMyPost(page) {
+    this.myPostPage = page;
+    console.log(page);
+    this.getPostByProfile(this.myPostPage);
+  }
+  getPageforSavedPost(page) {
+    this.savePostPage = page;
+    console.log(page);
+    this.getSavePost(this.savePostPage);
   }
 }

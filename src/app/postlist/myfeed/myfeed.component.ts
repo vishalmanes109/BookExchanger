@@ -187,7 +187,6 @@ export class MyfeedComponent implements OnInit {
   }
 
   myFeedByNewPost(page) {
-    console.log(page);
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
@@ -320,6 +319,4 @@ export class MyfeedComponent implements OnInit {
     this.nearbyPostPage = nearbyPostPage;
     this.myFeedByLocation(this.nearbyPostPage);
   }
-
-  
 }

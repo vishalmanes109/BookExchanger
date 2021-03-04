@@ -123,14 +123,20 @@
 
         <div *ngIf="isPostExist">
           <div
-            *ngFor="let post of postData | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalPost }"
+            *ngFor="
+              let post of postData
+                | paginate
+                  : {
+                      id: 'myPostPagination',
+                      itemsPerPage: limit,
+                      currentPage: myPostPage,
+                      totalItems: totalMyPost
+                    }
+            "
             class="ui middle aligned animated list"
           >
             <div (click)="openPost(post.postid)" class="item">
-              <img
-                class="ui avatar image"
-                src="../../../assets/avatar/20.svg"
-              />
+              <img class="ui avatar image" src="{{ post.avatar }}" />
               <div class="content">
                 <div class="header">{{ post.title }}</div>
                 <div>{{ post.description }}</div>
@@ -140,7 +146,8 @@
             <br />
           </div>
           <pagination-controls
-            (pageChange)="getNextPage($event)"
+            id="myPostPagination"
+            (pageChange)="getPageForMyPost($event)"
           ></pagination-controls>
         </div>
         <div *ngIf="!isPostExist">
@@ -168,7 +175,16 @@
 
         <div *ngIf="isSavePostExist">
           <div
-            *ngFor="let savePost of savePostData"
+            *ngFor="
+              let savePost of savePostData
+                | paginate
+                  : {
+                      id: 'savePostPagination',
+                      itemsPerPage: limit,
+                      currentPage: savePostPage,
+                      totalItems: totalSavePost
+                    }
+            "
             class="ui middle aligned animated list"
           >
             <div class="ui container grid">
@@ -188,6 +204,10 @@
               </div>
             </div>
           </div>
+          <pagination-controls
+            id="savePostPagination"
+            (pageChange)="getPageforSavedPost($event)"
+          ></pagination-controls>
         </div>
         <div *ngIf="!isSavePostExist">
           <ng-container *ngIf="isYourProfile; else elseTemplate">
