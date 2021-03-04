@@ -108,8 +108,10 @@ export class PostService {
     };
     return this.http.delete<any>(this._postUrl + "savepost", option);
   }
-  getSavedPost(profileId) {
+  getSavedPost(profileId,offset,limit) {
     console.log(profileId);
-    return this.http.get<any>(this._postUrl + "savepost/" + profileId);
+    return this.http.get<any>(
+      this._postUrl + "savepost/" + profileId + "/" + offset + "/" + limit
+    );
   }
 }

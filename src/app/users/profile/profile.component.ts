@@ -40,10 +40,9 @@ export class ProfileComponent implements OnInit {
   public savePostData;
   public isSavePostExist = false;
   public postMessage;
-  public page = 1;
   public savePostPage = 1;
   public myPostPage = 1;
-  public limit = 5;
+  public limit = 3;
   public offset = 1;
   public totalPages;
   public totalMyPost;
@@ -109,20 +108,22 @@ export class ProfileComponent implements OnInit {
               }
             }
           );
-        this.postService.getSavedPost(this.profileId).subscribe(
-          (res) => {
-            this.savePostData = res.message;
-            this.isSavePostExist = true;
-            this.totalSavePost = res.total;
-            console.log(this.savePostData);
-          },
-          (err) => {
-            if (!err.error.isPostExist) {
-              this.isSavePostExist = false;
-              this.message = "You have not saved any post. ";
+        this.postService
+          .getSavedPost(this.profileId, 0, this.limit)
+          .subscribe(
+            (res) => {
+              this.savePostData = res.message;
+              this.isSavePostExist = true;
+              this.totalSavePost = res.total;
+              console.log(this.savePostData);
+            },
+            (err) => {
+              if (!err.error.isPostExist) {
+                this.isSavePostExist = false;
+                this.message = "You have not saved any post. ";
+              }
             }
-          }
-        );
+          );
       },
       (err) => {
         if (err instanceof HttpErrorResponse)
@@ -204,12 +205,13 @@ export class ProfileComponent implements OnInit {
     if (page) this.offset = (page - 1) * this.limit;
     else this.offset = 1;
 
-    this.postService.getSavedPost(this.profileId).subscribe(
+    this.postService.getSavedPost(this.profileId,this.offset,this.limit).subscribe(
       (res) => {
         this.savePostData = res.message;
         this.totalSavePost = res.total;
         this.isSavePostExist = true;
         console.log(this.savePostData);
+        console.log(this.totalSavePost)
       },
       (err) => {
         if (!err.error.isPostExist) {
