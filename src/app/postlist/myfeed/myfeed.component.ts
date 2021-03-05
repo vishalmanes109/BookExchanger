@@ -44,6 +44,7 @@ export class MyfeedComponent implements OnInit {
   public savePostId;
   public sharePostId;
   public savePostMessage;
+  public copyPostMessage;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -120,6 +121,11 @@ export class MyfeedComponent implements OnInit {
     document.execCommand("copy");
     document.body.removeChild(copyBox);
     this.isCopy = true;
+    this.copyPostMessage = "Copied!";
+    setTimeout(() => {
+      this.copyPostMessage = "";
+      this.isPostSaved = false;
+    }, 1000);
   }
   myFeedByLocation(page) {
     console.log(page);

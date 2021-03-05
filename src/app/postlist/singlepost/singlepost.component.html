@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-
+<br />
 <div class="ui container">
   <div class="ui stackable container grid">
     <div class="ten wide column">
@@ -12,7 +12,8 @@
               routerLinkActive="router-link-active"
             >
               <img class="ui avatar image" src="{{ postData.avatar }}" />
-              Posted by: {{ postData.username }} on {{ postData.post_time }}
+              Posted by: {{ postData.username }} on
+              {{ postData.post_time.substring(0, 10) }}
             </i>
           </div>
           <h3 class="posttitle">
@@ -49,35 +50,54 @@
                   postData.post_time.substring(0, 10)
                 }}</span>
               </p>
-              <div *ngIf="yourPost">
-                <input
+              
+                <input *ngIf="yourPost"
                   type="button"
                   class="ui button primary inverted"
                   name="edit"
                   value="Edit"
                   (click)="editPost()"
                 />
-                <input
+
+                <input *ngIf="yourPost"
                   type="button"
                   class="ui right floated button red inverted"
                   name="delete"
                   value="Delete"
                   (click)="deletePost()"
                 />
-              </div>
-              <div *ngIf="!yourPost">
-                <input
+                <input *ngIf="!yourPost"
                   type="button"
                   class="ui button primary inverted"
                   name="chat"
                   value="Chat"
                 />
-              </div>
               <div
                 class="ui icon button orange inverted"
                 (click)="generateSharableLink(postData.postid, postData.title)"
               >
                 <i class="share icon"></i>
+              </div>
+              <div
+                *ngIf="!isPostSaved"
+                class="ui icon button"
+                (click)="savePost(postData.postid)"
+              >
+                <i class="bookmark icon"></i>
+              </div>
+              <div
+                *ngIf="isPostSaved && savePostId != postData.postid"
+                class="ui icon button"
+                (click)="savePost(postData.postid)"
+              >
+                <i class="bookmark icon"></i>
+              </div>
+              <div
+                *ngIf="savePostId == postData.postid"
+                class="ui icon button green inverted"
+                (click)="unSavePost(postData.postid)"
+              >
+                <i class="bookmark icon"></i>
               </div>
               <div *ngIf="!isCopy && isShare">
                 <p class="ui sharelink">{{ shareLink }}</p>
@@ -88,6 +108,14 @@
                   copy
                 </button>
               </div>
+              <div
+                class="ui message  container"
+                *ngIf="isPostSaved && sharePostId == postData.postid"
+              >
+                {{ savePostMessage }}
+              </div>
+              
+              
             </div>
             <div class="six wide column">
               <img
@@ -102,7 +130,7 @@
     </div>
 
     <div class="six wide column">
-      <h3>Similar Posts from nearby users</h3>
+      <h3>Posts from nearby users</h3>
       <div class="ui raised segments">
         <div class="ui segment">
           <div *ngIf="isNearByPostExist">
@@ -112,14 +140,12 @@
             >
               <div *ngIf="postData.postid != post.postid">
                 <div (click)="openPost(post.postid, post.title)" class="item">
-                  <img class="ui avatar image" src="{{ post.avatar }}" />
-                  <span class="">{{ post.name }}</span>
-                  <div class="content">
-                    <div class="header">{{ post.title }}</div>
-                    <div>{{ post.post_time.substring(0, 10) }}</div>
+                  <div class="title">{{ post.title }}</div>
+                  <div class="description">
+                    {{ post.description.substring(0, 30) }}
                   </div>
+                  <div class="date">{{ post.post_time.substring(0, 10) }}</div>
                 </div>
-                <br />
               </div>
             </div>
           </div>

@@ -53,7 +53,7 @@
               routerLinkActive="router-link-active"
             >
               <img class="ui avatar image" src="{{ post.avatar }}" />
-              Posted by: {{ post.name }} on {{ post.post_time }}
+              Posted by: {{ post.name }} on {{ post.post_time.substring(0,10) }}
             </i>
           </div>
           <div class="ui">

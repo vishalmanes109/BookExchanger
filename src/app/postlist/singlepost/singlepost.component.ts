@@ -32,6 +32,10 @@ export class SinglepostComponent implements OnInit {
   public shareLink;
   public isCopy = false;
   public isShare = false;
+  public isPostSaved = false;
+  public savePostId;
+  public sharePostId;
+  public savePostMessage;
 
   constructor(
     private postService: PostService,
@@ -47,7 +51,7 @@ export class SinglepostComponent implements OnInit {
       console.log(this.postId);
       this.postService.getPostByPostId(this.postId).subscribe(
         (res) => {
-          this.yourPost=false;
+          this.yourPost = false;
           this.postData = res.message[0];
           this.isDataFetch = true;
 
@@ -67,10 +71,10 @@ export class SinglepostComponent implements OnInit {
         }
       );
       this.profileId = localStorage.getItem("profileid");
-      this.postService.getNearByPost(this.profileId,0,10).subscribe(
+      this.postService.getNearByPost(this.profileId, 0, 5).subscribe(
         (res) => {
           this.nearByPost = res.message;
-         // console.log("neaby:", this.nearByPost)
+          // console.log("neaby:", this.nearByPost)
           // if (this.nearByPost.length == 0){
           //   this.isError=true;
           //   this.message=this.nearByPost.lenght+" post found"
@@ -78,7 +82,7 @@ export class SinglepostComponent implements OnInit {
           this.isNearByPostExist = true;
         },
         (err) => {
-          console.log(err)
+          console.log(err);
         }
       );
     });
@@ -136,5 +140,58 @@ export class SinglepostComponent implements OnInit {
     document.execCommand("copy");
     document.body.removeChild(copyBox);
     this.isCopy = true;
+  }
+
+  savePost(postId) {
+    console.log(postId, this.profileId);
+    this.sharePostId = postId;
+
+    let savePostData = {
+      post_id: postId,
+      profile_id: this.profileId,
+    };
+    this.isPostSaved = true;
+    this.postService.savePost(savePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.savePostId = savePostData.post_id;
+        this.isPostSaved = true;
+        this.savePostMessage =
+          "Post Saved! you can manage saved post from your profile";
+
+        setTimeout(() => {
+          if (res.success == 1 && this.isPostSaved) {
+            this.savePostMessage = "";
+            this.isPostSaved = false;
+          }
+        }, 4000);
+      },
+      (err) => {
+        console.log(err);
+        this.savePostMessage =
+          "This post is already saved! you can manage saved post from your profile";
+
+        setTimeout(() => {
+          this.savePostMessage = "";
+          this.isPostSaved = false;
+        }, 4000);
+      }
+    );
+  }
+  unSavePost(postId) {
+    console.log(postId, this.profileId);
+    let unSavePostData = {
+      post_id: postId,
+      profile_id: this.profileId,
+    };
+    this.postService.unSavePost(unSavePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.isPostSaved = false;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
