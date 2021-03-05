@@ -62,7 +62,17 @@ export class UpdateprofileComponent implements OnInit {
     this.profileService.getProfileByProfileId(this.profileId).subscribe(
       (res) => {
         console.log(res);
+
         this.profileData = res.message[0];
+        // check whether profile id of profile fetch == profile id of login user
+        // or else it will allow any one to edit other persons profile
+        this.isDataFetch = false;
+         if (this.profileData.id != localStorage.getItem("profile")) {
+           this.isError = true;
+           this.isDataFetch = false;
+           this.message = "Yor are trying to edit profile which is not yours!";
+           return;
+         }
         this.genreList = res.genrelist;
         this.email = this.profileData.email;
         this.location = this.profileData.location;

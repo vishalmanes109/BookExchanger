@@ -2,12 +2,15 @@
 <br />
 <br />
 
-<div class="ui raised segment container">
+<div *ngIf="isError && !isDataFetch" class="ui segment message red ">
+  {{ message }}
+</div>
+<div *ngIf="isDataFetch" class="ui raised segment container">
   <div class="ui container stackable internally celled grid">
     <div class="row">
       <div class="twelve wide column">
         <p class="ui header teal centered">Update Post</p>
-        <div *ngIf="isDataFetch" class="ui form">
+        <div  class="ui form">
           <div class="field">
             <label>Enter title of post </label>
             <input
@@ -45,18 +48,18 @@
               placeholder="Enter Author of book you have"
             />
             <div class="field">
-            <label>Select genres of book you have</label>
-            <ng-multiselect-dropdown
-              [placeholder]="'Select atleast 2 genres of book'"
-              [settings]="dropdownSettings"
-              [data]="dropdownList"
-              [(ngModel)]="selectedItems"
-              name="selecteditems"
-              (onSelect)="onItemSelect($event)"
-              (onDeSelect)="onItemDeSelect($event)"
-            >
-            </ng-multiselect-dropdown>
-          </div>
+              <label>Select genres of book you have</label>
+              <ng-multiselect-dropdown
+                [placeholder]="'Select atleast 2 genres of book'"
+                [settings]="dropdownSettings"
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems"
+                name="selecteditems"
+                (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onItemDeSelect($event)"
+              >
+              </ng-multiselect-dropdown>
+            </div>
             <div class="field">
               <label>Enter title of book you want(optional) </label>
               <input

@@ -6,7 +6,10 @@
       alt="BookXchanger Logo"
     />
   </div>
-  <div *ngIf="!isDeleted" class="ui container segment">
+  <div *ngIf="isError && unauthorize" class="ui segment red message">
+    {{ message }}
+  </div>
+  <div *ngIf="!isDeleted && !unauthorize" class="ui container segment">
     <p>
       Deleting your profile is irreversible. After deleting your profile ,all of
       your posts, reward points will get deleted. Enter your profile name below
@@ -23,11 +26,11 @@
       />
       <br />
       <div *ngIf="isUsernameWrong" class="ui message">
-          {{message}}
+        {{ message }}
       </div>
       <br />
       <input
-        [routerLink]="['/profile/',userName]"
+        [routerLink]="['/profile/', userName]"
         routerLinkActive="router-link-active"
         class="ui button positive basic"
         type="button"
@@ -43,13 +46,13 @@
       />
     </form>
   </div>
-  <div *ngIf="isDeleted" class="ui segment container">
+  <div *ngIf="isDeleted && !unauthorize" class="ui segment container">
     <p>{{ message }}</p>
     <br />
     <a [routerLink]="['/register']" routerLinkActive="router-link-active">
       Click Here to create new account</a
     >
-    <br>
+    <br />
     <a [routerLink]="['/register']" routerLinkActive="router-link-active">
       Tell us why you leave</a
     >

@@ -6,15 +6,16 @@
       <h3>Post</h3>
       <div class="ui raised segments container">
         <div *ngIf="isDataFetch" class="ui segment">
-          <i
-            [routerLink]="['/profile/', username]"
-            routerLinkActive="router-link-active"
-            ><img class="ui avatar image" src="{{ postData.avatar }}"
-          /></i>
-
-          <span>{{ postData.username }}</span>
-          <h3>
-            Title:
+          <div class="postname">
+            <i
+              [routerLink]="['/profile/', username]"
+              routerLinkActive="router-link-active"
+            >
+              <img class="ui avatar image" src="{{ postData.avatar }}" />
+              Posted by: {{ postData.username }} on {{ postData.post_time }}
+            </i>
+          </div>
+          <h3 class="posttitle">
             {{
               postData.title.charAt(0).toUpperCase() +
                 postData.title.substring(1)
@@ -22,13 +23,32 @@
           </h3>
           <div class="ui stackable mobile reversed container grid">
             <div class="ten wide column inverted">
-              <p>{{ postData.description }}</p>
-              <p>Book Want to exchange: {{ postData.givebookname }}</p>
-              <p>Author name: {{ postData.givebookauthor }}</p>
-              <p>Book looking for : {{ postData.takebookname }}</p>
-              <p>Author Name: {{ postData.takebookauthor }}</p>
-              <p>Date: {{ postData.post_time.substring(0, 10) }}</p>
-
+              <p class="postparameter">
+                Description:
+                <span class="postdata">{{ postData.description }}</span>
+              </p>
+              <p class="postparameter">
+                Book to exchange:
+                <span class="postdata"> {{ postData.givebookname }} </span>
+              </p>
+              <p class="postparameter">
+                Author Name:
+                <span class="postdata"> {{ postData.givebookauthor }}</span>
+              </p>
+              <p class="postparameter">
+                Book want :
+                <span class="postdata"> {{ postData.takebookname }}</span>
+              </p>
+              <p class="postparameter">
+                Author Name:
+                <span class="postdata">{{ postData.takebookauthor }}</span>
+              </p>
+              <p class="postparameter">
+                Date:
+                <span class="postdata">{{
+                  postData.post_time.substring(0, 10)
+                }}</span>
+              </p>
               <div *ngIf="yourPost">
                 <input
                   type="button"
@@ -54,10 +74,10 @@
                 />
               </div>
               <div
-                class="ui icon button orange inverted "
+                class="ui icon button orange inverted"
                 (click)="generateSharableLink(postData.postid, postData.title)"
               >
-                <i class="share  icon"></i>
+                <i class="share icon"></i>
               </div>
               <div *ngIf="!isCopy && isShare">
                 <p class="ui sharelink">{{ shareLink }}</p>

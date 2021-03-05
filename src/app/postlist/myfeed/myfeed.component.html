@@ -58,7 +58,8 @@
           </div>
           <div class="ui">
             <h3 class="posttitle">
-              {{ post.title }}
+              {{ post.title.charAt(0).toUpperCase() +
+                post.title.substring(1) }}
             </h3>
           </div>
           <br />

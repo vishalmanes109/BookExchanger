@@ -1,19 +1,24 @@
 <div>
   <app-navbar> </app-navbar>
   <br />
-  <div class="ui raised segment container">
+
+  <div *ngIf="isError && !isDataFetch" class="ui segment message red ">
+    {{ message }}
+  </div>
+
+  <div *ngIf="!isError && isDataFetch" class="ui raised segment container">
     <div class="ui container stackable internally celled grid">
       <div class="row">
         <div class="six wide column">
           <p class="ui header red centered">Your Avatar</p>
           <div class="ui card container">
             <div *ngIf="!isImageUploaded" class="ui fluid centered image">
-              <img src="{{ oldAvatar }}" alt="avatar"/>
+              <img src="{{ oldAvatar }}" alt="avatar" />
             </div>
-            <div  *ngIf="isImageUploaded" class="ui fluid centered image">
-              <img src="{{ avatarUrl }}" alt="avatar"/>
+            <div *ngIf="isImageUploaded" class="ui fluid centered image">
+              <img src="{{ avatarUrl }}" alt="avatar" />
             </div>
-            
+
             <div class="content centered">
               <hr />
               <h3>{{ username[0].toUpperCase() + username.substring(1) }}</h3>
@@ -112,8 +117,14 @@
                   name="privacy"
                   [(ngModel)]="hidePrivacy"
                 />
-                <label *ngIf="isHidden" > Unchek the box to Hide your mobile number, location on your profile </label>
-                 <label *ngIf="!isHidden" >Check the box to Make  your mobile number, location visible on  profile </label>
+                <label *ngIf="isHidden">
+                  Unchek the box to Hide your mobile number, location on your
+                  profile
+                </label>
+                <label *ngIf="!isHidden"
+                  >Check the box to Make your mobile number, location visible on
+                  profile
+                </label>
               </div>
             </div>
             <div *ngIf="isError" class="ui message red">

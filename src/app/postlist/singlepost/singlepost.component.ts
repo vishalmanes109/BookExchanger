@@ -47,10 +47,9 @@ export class SinglepostComponent implements OnInit {
       console.log(this.postId);
       this.postService.getPostByPostId(this.postId).subscribe(
         (res) => {
-          console.log("res :", res.message[0]);
+          this.yourPost=false;
           this.postData = res.message[0];
           this.isDataFetch = true;
-          console.log("postData : "+this.postData.profileid)
 
           if (!this.postData.take_book_id) {
             this.isBookNotAvailable = true;

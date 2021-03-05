@@ -2,3 +2,19 @@
 .sharelink{
   overflow: hidden;
 }
+.postname {
+  color: #545556;
+}
+.postname:hover {
+  text-decoration: underline;
+}
+
+.postparameter {
+  color: #1d2731;
+}
+.postdata {
+  color: #0b3c5dc2;
+}
+.posttitle:hover {
+  color: #0b3c5d;
+}

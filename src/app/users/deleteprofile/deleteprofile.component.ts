@@ -14,6 +14,8 @@ export class DeleteprofileComponent implements OnInit {
   public message;
   public userName;
   public isUsernameWrong = false;
+  public isError;
+  public unauthorize=false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +30,14 @@ export class DeleteprofileComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.userId = params.get("userid");
     });
+    // check whether userid of profile to be deleted is == user id of login user
+    if (this.userId != localStorage.getItem("userid")) {
+      console.log("lol");
+      this.isError = true;
+      this.unauthorize = true;
+      this.message = "You are trying to delete profile which is not yours";
+      return;
+    }
     this.userName = localStorage.getItem("username");
   }
   deleteProfile() {
