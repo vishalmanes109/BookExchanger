@@ -84,9 +84,14 @@ export class MyfeedComponent implements OnInit {
             this.message = this.totalPages + " Post/s found";
           },
           (err) => {
+            if (err.status == 401) {
+              localStorage.clear();
+              this.note =
+                "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+              return;
+            }
             this.note =
               "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-
             console.log(err);
           }
         );
@@ -117,7 +122,7 @@ export class MyfeedComponent implements OnInit {
     this.isCopy = true;
   }
   myFeedByLocation(page) {
-    console.log(page)
+    console.log(page);
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
@@ -140,10 +145,15 @@ export class MyfeedComponent implements OnInit {
             this.postData = res.message;
             this.isDataFetch = true;
             this.totalPages = res.total;
-
             this.message = this.totalPages + " Post/s found";
           },
           (err) => {
+            if (err.status == 401) {
+              localStorage.clear();
+              this.note =
+                "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+              return;
+            }
             this.note =
               "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
           }
@@ -178,6 +188,12 @@ export class MyfeedComponent implements OnInit {
             this.message = this.totalPages + " Post/s found";
           },
           (err) => {
+            if (err.status == 401) {
+              localStorage.clear();
+              this.note =
+                "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+              return;
+            }
             console.log(err);
             this.note =
               "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
@@ -217,7 +233,7 @@ export class MyfeedComponent implements OnInit {
     this.postData = null;
 
     if (this.bookname && this.bookname.length > 0) {
-      this.postService.getPostByBookName(this.bookname,0,10).subscribe(
+      this.postService.getPostByBookName(this.bookname, 0, 10).subscribe(
         (res) => {
           this.isDataFetch = true;
           this.postData = res.message;
@@ -305,7 +321,7 @@ export class MyfeedComponent implements OnInit {
     );
   }
   getPageforMyPost(myPostPage) {
-   // console.log(myPostPage);
+    // console.log(myPostPage);
     this.myPostPage = myPostPage;
     this.myFeedByMyPost(this.myPostPage);
   }
