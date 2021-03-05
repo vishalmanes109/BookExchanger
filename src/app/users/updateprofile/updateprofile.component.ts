@@ -67,7 +67,7 @@ export class UpdateprofileComponent implements OnInit {
         // check whether profile id of profile fetch == profile id of login user
         // or else it will allow any one to edit other persons profile
         this.isDataFetch = false;
-         if (this.profileData.id != localStorage.getItem("profile")) {
+         if (this.profileData.id != localStorage.getItem("profileid")) {
            this.isError = true;
            this.isDataFetch = false;
            this.message = "Yor are trying to edit profile which is not yours!";

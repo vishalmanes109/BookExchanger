@@ -65,7 +65,7 @@ export class UpdatepostComponent implements OnInit {
         //check if profile id of post is same as login user 
         // this will prevent the user from editing data of someother user
 
-        if(this.postData.profileid!=localStorage.getItem('profile')){
+        if(this.postData.profileid!=localStorage.getItem('profileid')){
           this.isError=true;
           this.isDataFetch=false;
           this.message="Yor are trying to edit post which is not yours!"
