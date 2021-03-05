@@ -1,77 +1,65 @@
 <app-navbar></app-navbar>
 <br />
 
-<div class="ui container">
-  <div class="ui container">
-    <div class="ui stackable grid">
-      <div class="eight wide column">
-        <i [routerLink]="['/createpost']" routerLinkActive="router-link-active">
-          <div class="ui fluid category search">
-            <div class="ui icon input post">
-              <input class="" type="text" placeholder="Create Post" />
-              <i class="edit outline icon"></i>
-            </div>
-          </div>
-        </i>
-      </div>
-
-      <div class="eight wide column">
-        <div class="ui right aligned category search">
-          <div class="ui icon input post">
-            <input
-              class="prompt"
-              type="text"
-              placeholder="Advance search"
-              name="advancesearch"
-              [routerLink]="['/advancesearch']"
-              routerLinkActive="router-link-active"
-            />
-            <i class="search icon"></i>
-          </div>
-          <div class="results"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <br />
-<div class="ui container">
-  <div class="ui menu container">
-    <a (click)="myFeedByLocation(nearbyPostPage)" class="item wide">
-      <i class="map marker alternate icon"></i>
-      Nearby
-    </a>
-    <a (click)="myFeedByMyPost(myPostPage)" class="item">
-      <i class="paperclip icon"></i>
-      Your Post
-    </a>
-    <a (click)="myFeedByNewPost(newPostPage)" class="item">
-      <i class="paper plane icon"></i>
-      New
-    </a>
-  </div>
-</div>
+
 <br />
 <div class="ui stackable grid container">
   <div class="twelve wide column">
+    <div class="ui grid container custommenu ">
+      <div  class="six wide column menuborder">
+        <a  (click)="myFeedByLocation(nearbyPostPage)" class="item wide">
+          <i class="map marker alternate icon"></i>
+          Nearby
+        </a>
+      </div>
+      <div class="six wide column menuborder">
+        <a (click)="myFeedByMyPost(myPostPage)" class="item">
+          <i class="paperclip icon"></i>
+          Your Post
+        </a>
+      </div>
+      <div class="four wide column ">
+        <a (click)="myFeedByNewPost(newPostPage)" class="item">
+          <i class="paper plane icon"></i>
+          New
+        </a>
+      </div>
+    </div>
+    <br>
+    <br>
     <div class="ui container">
       <h5 *ngIf="isDataFetch" class="ui">
         {{ message }}
       </h5>
     </div>
+    <br>
     <div *ngIf="isDataFetch">
       <div
         *ngFor="
           let post of postData
             | paginate
-              : { itemsPerPage: limit, currentPage: page, totalItems: totalPages }
+              : {
+                  itemsPerPage: limit,
+                  currentPage: page,
+                  totalItems: totalPages
+                }
         "
       >
         <div class="ui teal padded segment container">
+          <div class="postname">
+            <i
+              [routerLink]="['/profile/', post.name]"
+              routerLinkActive="router-link-active"
+            >
+              <img class="ui avatar image" src="{{ post.avatar }}" />
+              Posted by: {{ post.name }} on {{ post.post_time }}
+            </i>
+          </div>
           <div class="ui">
-            <h2>
+            <h3 class="posttitle">
               {{ post.title }}
-            </h2>
+            </h3>
           </div>
           <br />
 
@@ -86,23 +74,23 @@
 
             <div class="ten wide column container">
               <div class="details">
-                <i
-                  [routerLink]="['/profile/', post.name]"
-                  routerLinkActive="router-link-active"
-                >
-                  <img class="ui avatar image" src="{{ post.avatar }}" />
-                  Posted by: {{ post.name }}
-                </i>
-
-                <hr />
                 <div class="details">
-                  {{ post.description }}
+                  <p class="postparameter">
+                    Description:
+                    <span class="postdata">{{ post.description }}</span>
+                  </p>
                 </div>
                 <div class="details">
-                  Book to exchange: {{ post.givebookname }}
+                  <p class="postparameter">
+                    Book to exchange:
+                    <span class="postdata"> {{ post.givebookname }} </span>
+                  </p>
                 </div>
                 <div class="details">
-                  Author Name: {{ post.givebookauthor }}
+                  <p class="postparameter">
+                    Author Name:
+                    <span class="postdata"> {{ post.givebookauthor }}</span>
+                  </p>
                 </div>
                 <div
                   class="details"
@@ -111,24 +99,43 @@
                     else takebooknotpresent
                   "
                 >
-                  Book want : {{ post.takebookname }}
+                  <p class="postparameter">
+                    Book want :
+                    <span class="postdata"> {{ post.takebookname }}</span>
+                  </p>
                 </div>
-                <ng-template #takebooknotpresent
-                  >Book want : {{ takeBook }}</ng-template
-                >
+                <ng-template #takebooknotpresent>
+                  <p class="postparameter">
+                    Book want : <span class="postdata">{{ takeBook }}</span>
+                  </p>
+                </ng-template>
 
-                <div class="details">Author Name:{{ post.takebookauthor }}</div>
                 <div class="details">
-                  Date: {{ post.post_time.substring(0, 10) }}
+                  <p class="postparameter">
+                    Author Name:
+                    <span class="postdata">{{ post.takebookauthor }}</span>
+                  </p>
                 </div>
+                <div class="details">
+                  <p class="postparameter">
+                    Date:
+                    <span class="postdata">{{
+                      post.post_time.substring(0, 10)
+                    }}</span>
+                  </p>
+                </div>
+
                 <!-- <div class="details">Location: {{ post.location }}</div> -->
                 <br />
                 <div *ngIf="isNearByPost" class="details">
-                  {{ post.name }} is :
-                  {{ ((post.distance * 1609) / 1000).toFixed(2) }} Km away from
-                  your location
+                  <span style="color: #0b3c5d"
+                    >{{ post.name }} is
+                    {{ ((post.distance * 1609) / 1000).toFixed(2) }} Km away
+                    from your location</span
+                  >
                 </div>
               </div>
+              <br>
               <input
                 *ngIf="yourPost"
                 type="button"
@@ -193,9 +200,18 @@
         </div>
         <br />
       </div>
-      <pagination-controls *ngIf="yourPost" (pageChange)="getPageforMyPost($event)"></pagination-controls>
-      <pagination-controls *ngIf="isNearByPost" (pageChange)="getPageForNearbyPost($event)"></pagination-controls>
-      <pagination-controls *ngIf="!isNearByPost && !yourPost" (pageChange)="getPageForNewPost($event)"></pagination-controls>
+      <pagination-controls
+        *ngIf="yourPost"
+        (pageChange)="getPageforMyPost($event)"
+      ></pagination-controls>
+      <pagination-controls
+        *ngIf="isNearByPost"
+        (pageChange)="getPageForNearbyPost($event)"
+      ></pagination-controls>
+      <pagination-controls
+        *ngIf="!isNearByPost && !yourPost"
+        (pageChange)="getPageForNewPost($event)"
+      ></pagination-controls>
     </div>
 
     <div class="ui container" *ngIf="!isDataFetch">
@@ -218,24 +234,24 @@
     </div>
   </div>
   <div class="four wide column">
-    <p class="ui container">Search posts by book name</p>
-    <div class="ui category search">
-      <div class="ui icon input">
-        <input
-          class="prompt"
-          type="text"
-          placeholder="Search by book name..."
-          name="searchbybook"
-          [(ngModel)]="bookname"
-          (keyup.enter)="getPostByBookName()"
-        />
-        <i class="search icon"></i>
-      </div>
-    </div>
+     <div class=" ">
+          <div class=" advancesearch  ">
+            <button
+            class="ui    button fluid "
+              placeholder="Advance search"
+              name="advancesearch"
+              [routerLink]="['/advancesearch']"
+              routerLinkActive="router-link-active"
+            >
+            Advance Search 
+            <i class="search icon">  </i>
+            </button>
+          </div>
+        </div>
     <br />
     <div>
       <ng-container class="ui container" *ngIf="isDataFetch; else elseTemplate">
-        <h3>Most Popular books Available</h3>
+        <h3>Most Popular Books Available</h3>
 
         <div class="ui grid">
           <div
@@ -272,7 +288,6 @@
 
       <div class="ui segment teal container">
         <h3>Why BookXchanger?</h3>
-        <h3>Well, let see</h3>
         <div class="ui ordered list">
           <li class="item">Read quality books for free</li>
           <li class="item">Chat with user for seamless book swapping</li>

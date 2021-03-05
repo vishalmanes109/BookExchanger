@@ -20,12 +20,54 @@
   font-size: medium;
   font-weight: 700;
 }
-.sharelink{
+.sharelink {
   overflow: hidden;
 }
-@media  screen and (max-width:900px) {
+.postname {
+  color: #545556;
+}
+.postname:hover {
+  text-decoration: underline;
+}
+
+.postparameter {
+  color: #1d2731;
+}
+.postdata {
+  color: #0b3c5dc2;
+}
+.posttitle:hover {
+  color: #0b3c5d;
+}
+.custommenu {
+  -webkit-box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+  background-color: whitesmoke;
+  color: #0e0b16;
+  border-radius: 5px;
+}
+.menuborder {
+  border-right: 0.07px solid #4183c4;
+  color: #0e0b16;
+}
+.button {
+  margin-top: -14.5px;
+  margin-bottom: 20px;
+  padding: 16.5px 20px;
+  -webkit-box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  color: #4183c4;
+  background-color: whitesmoke;
+}
+
+@media screen and (max-width: 900px) {
   .search {
-      width: 100%;
-      margin: auto;
+    width: 100%;
+    margin: auto;
   }
 }
