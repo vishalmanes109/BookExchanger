@@ -42,8 +42,8 @@ export class ProfileComponent implements OnInit {
   public postMessage;
   public savePostPage = 1;
   public myPostPage = 1;
-  public limit = 3;
-  public offset = 1;
+  public limit = 5;
+  public offset = 0;
   public totalPages;
   public totalMyPost;
   public totalSavePost;
@@ -92,7 +92,7 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem("profileid", this.profileId);
 
         this.postService
-          .getPostByProfile(this.profileId, 1, this.limit)
+          .getPostByProfile(this.profileId, 0, this.limit)
           .subscribe(
             (res) => {
               this.postData = res.message;

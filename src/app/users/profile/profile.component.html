@@ -8,58 +8,70 @@
   <div class="ui stackable grid">
     <div class="ui five wide column container">
       <div class="ui raised centered link card">
-        <div class="content">
-          <div class="ui fluid centered image">
-            <img src="{{ avatar }}" alt="avatar" />
-          </div>
-          <div class="header">Username: {{ username }}</div>
+        <div>
           <br />
-          <br />
-          <div class="description">
-            <p>Favourite Genres:</p>
-          </div>
-          <div *ngFor="let genre of genreList">
-            {{ genre.name }}
+          <div class="profileimage">
+            <img
+              class="ui fluid centered bordered circular image"
+              src="{{ avatar }}"
+              alt="avatar"
+            />
           </div>
           <br />
-          <ng-container *ngIf="isUnauth === 'false'; else elseTemplate">
-            <div *ngIf="contactVisibility; else contactVisibilityTemp">
-              <div class="description">
-                <p>Location: {{ location }}</p>
-              </div>
-              <div class="content">
-                <span class="category"> Email: {{ email }}</span>
-              </div>
-              <div class="description">
-                <p>Mobile No.: {{ contact }}</p>
-              </div>
+          <div class="ui container segment">
+            <div class="profileparameter">
+              Username: <span class="profiledata">{{ username }}</span>
             </div>
-            <ng-template #contactVisibilityTemp>
-              <div class="description">
-                <p>Location: Hidden</p>
+            <br />
+            <br />
+            <div class="profileparameter">
+              <p>Favourite Genres:</p>
+            </div>
+            <div *ngFor="let genre of genreList">
+              <span class="profiledata"> {{ genre.name }}</span>
+            </div>
+            <br />
+            <ng-container *ngIf="isUnauth === 'false'; else elseTemplate">
+              <div *ngIf="contactVisibility; else contactVisibilityTemp">
+                <div class="profileparameter">
+                  Location:
+                  <span class="profiledata">
+                    {{ location }}
+                  </span>
+                </div>
+                <div class="profileparameter">
+                  Email: <span class="profiledata">{{ email }}</span>
+                </div>
+                <div class="profileparameter">
+                  Mobile No.: <span class="profiledata">{{ contact }}</span>
+                </div>
               </div>
-              <div class="content">
-                <span class="category"> Email: Hidden</span>
+              <ng-template #contactVisibilityTemp>
+                <div class="profileparameter">
+                  Location: Hidden
+                </div>
+                <div class="profileparameter">
+                   Email: Hidden
+                </div>
+                <div class="profileparameter">
+                  Mobile No.: Hidden
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div class="profileparameter">
+                Location: Hidden
               </div>
-              <div class="description">
-                <p>Mobile No.: Hidden</p>
+              <div class="profileparameter">Email: Hidden</div>
+              <div class="profileparameter">
+                Mobile No.: Hidden
               </div>
             </ng-template>
-          </ng-container>
-          <ng-template #elseTemplate>
-            <div class="description">
-              <p>Location: Hidden</p>
-            </div>
-            <div class="content">
-              <span class="category"> Email: Hidden</span>
-            </div>
-            <div class="description">
-              <p>Mobile No.: Hidden</p>
-            </div>
-          </ng-template>
 
-          <div class="description">
-            <p>Exchanging Since : {{ createdOn }}</p>
+            <div class="profileparameter">
+                Exchanging Since :<span class="profiledata"> {{ createdOn }}</span>
+              
+            </div>
           </div>
         </div>
         <ng-container *ngIf="isYourProfile; else elsTemplate">
@@ -138,9 +150,12 @@
             <div (click)="openPost(post.postid)" class="item">
               <img class="ui avatar image" src="{{ post.avatar }}" />
               <div class="content">
-                <div class="header">{{ post.title }}</div>
-                <div>{{ post.description }}</div>
-                <div>{{ post.post_time.substring(0, 10) }}</div>
+                <div class="title">{{ post.title }}</div>
+
+                <div class="description">
+                  {{ post.description.substring(0, 30) }}
+                </div>
+                <div class="date">{{ post.post_time.substring(0, 10) }}</div>
               </div>
             </div>
             <br />
@@ -173,7 +188,7 @@
       <div *ngIf="isYourProfile" class="ui raised segment">
         <h3>Saved Post</h3>
 
-        <div *ngIf="isSavePostExist ">
+        <div *ngIf="isSavePostExist">
           <div
             *ngFor="
               let savePost of savePostData
@@ -185,16 +200,16 @@
                       totalItems: totalSavePost
                     }
             "
-            class="ui middle aligned animated list"
+            
           >
             <div class="ui container grid">
               <div
                 (click)="openPost(savePost.postid)"
                 class="item fourteen wide column"
               >
-                <div class="content">
-                  <div class="header">{{ savePost.title }}</div>
-                  <div>{{ savePost.description }}</div>
+                <div >
+                  <div class="title">{{ savePost.title }}</div>
+                  <div class="description">{{ savePost.description }}</div>
                 </div>
 
                 <!-- <hr /> -->
