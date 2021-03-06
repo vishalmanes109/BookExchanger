@@ -1,5 +1,6 @@
 import { getInterpolationArgsLength } from "@angular/compiler/src/render3/view/util";
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
 
 @Component({
@@ -41,11 +42,18 @@ export class AdvancesearchComponent implements OnInit {
   public shareLink;
   public isCopy = false;
   public isShare = false;
+  public yourPost = true;
+  public sharePostId;
+  public isPostSaved = false;
+  public savePostId;
+  public savePostMessage;
+  public copyPostMessage;
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     this.note = "";
+    this.profileId = localStorage.getItem("profileid");
   }
 
   changeByBook() {
@@ -207,28 +215,30 @@ export class AdvancesearchComponent implements OnInit {
           );
       }
       if (this.byLocation) {
-        this.postService.getPostByLocation(this.text,this.offset,this.limit).subscribe(
-          (res) => {
-            this.isDataFetch = true;
-            this.postData = res.message;
-            this.totalPages = res.total;
-            this.note = this.totalPages + " Post/s found";
+        this.postService
+          .getPostByLocation(this.text, this.offset, this.limit)
+          .subscribe(
+            (res) => {
+              this.isDataFetch = true;
+              this.postData = res.message;
+              this.totalPages = res.total;
+              this.note = this.totalPages + " Post/s found";
 
-            return;
-          },
-          (err) => {
-            this.isDataFetch = false;
-
-            if (err.error.message != "Post does not exis") {
-              this.isError = true;
-              this.message =
-                "0 Post found for corrosponding search, Try different keywords, check for spellings";
               return;
+            },
+            (err) => {
+              this.isDataFetch = false;
+
+              if (err.error.message != "Post does not exis") {
+                this.isError = true;
+                this.message =
+                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                return;
+              }
+              this.isError = true;
+              this.message = "Error while fetching data please try again ";
             }
-            this.isError = true;
-            this.message = "Error while fetching data please try again ";
-          }
-        );
+          );
       }
       if (this.byAuthor) {
         this.postService
@@ -258,5 +268,64 @@ export class AdvancesearchComponent implements OnInit {
           );
       }
     }
+  }
+
+  editPost(postId) {
+    this.router
+      .navigateByUrl("/updatepost", { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([`updatepost/${postId}`]);
+      });
+  }
+  savePost(postId) {
+    console.log(postId, this.profileId);
+    this.sharePostId = postId;
+
+    let savePostData = {
+      post_id: postId,
+      profile_id: this.profileId,
+    };
+    this.isPostSaved = true;
+    this.postService.savePost(savePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.savePostId = savePostData.post_id;
+        this.isPostSaved = true;
+        this.savePostMessage =
+          "Post Saved! you can manage saved post from your profile";
+
+        setTimeout(() => {
+          if (res.success == 1 && this.isPostSaved) {
+            this.savePostMessage = "";
+          }
+        }, 4000);
+      },
+      (err) => {
+        console.log(err);
+        this.savePostMessage =
+          "This post is already saved! you can manage saved post from your profile";
+
+        setTimeout(() => {
+          this.isPostSaved = false;
+          this.savePostMessage = "";
+        }, 4000);
+      }
+    );
+  }
+  unSavePost(postId) {
+    console.log(postId, this.profileId);
+    let unSavePostData = {
+      post_id: postId,
+      profile_id: this.profileId,
+    };
+    this.postService.unSavePost(unSavePostData).subscribe(
+      (res) => {
+        console.log(res);
+        this.isPostSaved = false;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

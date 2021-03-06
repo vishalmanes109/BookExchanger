@@ -89,15 +89,29 @@
     <div
       *ngFor="
         let post of postData
-          | paginate: { itemsPerPage: limit, currentPage: page, totalItems: totalPages };
+          | paginate
+            : {
+                itemsPerPage: limit,
+                currentPage: page,
+                totalItems: totalPages
+              };
         let i = index
       "
     >
       <div class="ui teal padded segment container">
+        <div class="postname">
+          <i
+            [routerLink]="['/profile/', post.name]"
+            routerLinkActive="router-link-active"
+          >
+            <img class="ui avatar image" src="{{ post.avatar }}" />
+            Posted by: {{ post.name }} on {{ post.post_time.substring(0, 10) }}
+          </i>
+        </div>
         <div class="ui">
-          <h2>
-            {{ post.title }}
-          </h2>
+          <h3 class="posttitle">
+            {{ post.title.charAt(0).toUpperCase() + post.title.substring(1) }}
+          </h3>
         </div>
         <br />
         <div class="ui grid container stackable">
@@ -110,22 +124,24 @@
           </div>
           <div class="ten wide column container">
             <div class="details">
-              <i
-                [routerLink]="['/profile/', post.name]"
-                routerLinkActive="router-link-active"
-              >
-                <img class="ui avatar image" src="{{ post.avatar }}" />
-                Posted by: {{ post.name }}
-              </i>
-
-              <hr />
               <div class="details">
-                {{ post.description }}
+                <p class="postparameter">
+                  Description:
+                  <span class="postdata">{{ post.description }}</span>
+                </p>
               </div>
               <div class="details">
-                Book to exchange: {{ post.givebookname }}
+                <p class="postparameter">
+                  Book to exchange:
+                  <span class="postdata"> {{ post.givebookname }} </span>
+                </p>
               </div>
-              <div class="details">Author Name: {{ post.givebookauthor }}</div>
+              <div class="details">
+                <p class="postparameter">
+                  Author Name:
+                  <span class="postdata"> {{ post.givebookauthor }}</span>
+                </p>
+              </div>
 
               <div
                 class="details"
@@ -134,36 +150,92 @@
                   else takebooknotpresent
                 "
               >
-                Book want : {{ post.takebookname }}
+                <p class="postparameter">
+                  Book want :
+                  <span class="postdata"> {{ post.takebookname }}</span>
+                </p>
               </div>
-              <ng-template #takebooknotpresent
-                >Book want : {{ takeBook }}</ng-template
-              >
+              <ng-template #takebooknotpresent>
+                <p class="postparameter">
+                  Book want : <span class="postdata">{{ takeBook }}</span>
+                </p>
+              </ng-template>
 
-              <div class="details">Author Name:{{ post.takebookauthor }}</div>
               <div class="details">
-                Date: {{ post.post_time.substring(0, 10) }}
+                <p class="postparameter">
+                  Author Name:
+                  <span class="postdata">{{ post.takebookauthor }}</span>
+                </p>
               </div>
-              <div class="details">Location: {{ post.location }}</div>
+              <div class="details">
+                <p class="postparameter">
+                  Date:
+                  <span class="postdata">{{
+                    post.post_time.substring(0, 10)
+                  }}</span>
+                </p>
+              </div>
               <br />
             </div>
+            <input
+                *ngIf="post.profileid==profileId"
+                type="button"
+                class="ui button primary inverted"
+                name="edit"
+                value="Edit"
+                (click)="editPost(post.postid)"
+              />
 
-            <div class="ui button blue inverted">Chat</div>
-            <div
-                class="ui icon button orange inverted "
+              <input
+                *ngIf="post.profileid!=profileId"
+                type="button"
+                class="ui button primary inverted"
+                name="chat"
+                value="Chat"
+              />
+              <div
+                class="ui icon button orange inverted"
                 (click)="generateSharableLink(post.postid, post.title)"
               >
-                <i class="share  icon"></i>
+                <i class="share icon"></i>
               </div>
-            <div *ngIf="!isCopy && isShare">
-              <p class="ui sharelink">{{ shareLink }}</p>
-              <button
-                class="ui button tiny primary"
-                (click)="copyShareableLink(shareLink)"
+              <div
+                *ngIf="!isPostSaved"
+                class="ui icon   button"
+                (click)="savePost(post.postid)"
               >
-                copy
-              </button>
-            </div>
+                <i class="bookmark icon"></i>
+              </div>
+              <div
+                *ngIf="isPostSaved && savePostId != post.postid"
+                class="ui icon    button"
+                (click)="savePost(post.postid)"
+              >
+                <i class="bookmark icon"></i>
+              </div>
+              <div
+                *ngIf="isPostSaved && savePostId == post.postid"
+                class="ui icon button green inverted"
+                (click)="savePost(post.postid)"
+              >
+                <i class="bookmark icon"></i>
+              </div>
+
+              <div *ngIf="!isCopy && isShare && post.postid == sharePostId">
+                <p class="ui sharelink">{{ shareLink }}</p>
+                <button
+                  class="ui button tiny primary"
+                  (click)="copyShareableLink(shareLink)"
+                >
+                  copy
+                </button>
+              </div>
+              <div
+                class="ui message container"
+                *ngIf="isPostSaved && sharePostId == post.postid"
+              >
+                {{ savePostMessage }}
+              </div>
           </div>
         </div>
       </div>

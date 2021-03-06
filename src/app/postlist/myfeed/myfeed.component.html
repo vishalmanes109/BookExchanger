@@ -174,7 +174,7 @@
                 <i class="bookmark icon"></i>
               </div>
               <div
-                *ngIf="savePostId == post.postid"
+                *ngIf="isPostSaved && savePostId == post.postid"
                 class="ui icon button green inverted"
                 (click)="unSavePost(post.postid)"
               >

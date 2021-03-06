@@ -92,13 +92,7 @@
               >
                 <i class="bookmark icon"></i>
               </div>
-              <div
-                *ngIf="savePostId == postData.postid"
-                class="ui icon button green inverted"
-                (click)="unSavePost(postData.postid)"
-              >
-                <i class="bookmark icon"></i>
-              </div>
+              
               <div *ngIf="!isCopy && isShare">
                 <p class="ui sharelink">{{ shareLink }}</p>
                 <button
