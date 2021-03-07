@@ -60,7 +60,7 @@ export class UpdatepostComponent implements OnInit {
     this.postService.getPostByPostId(this.postId).subscribe(
       (res) => {
         this.postData = res.message[0];
-        console.log(this.postData);
+       
 
         //check if profile id of post is same as login user 
         // this will prevent the user from editing data of someother user
@@ -144,11 +144,11 @@ export class UpdatepostComponent implements OnInit {
       singleSelection: false,
       idField: "id",
       textField: "text",
-      // selectAllText: "Select All",
-      // unSelectAllText: "UnSelect All",
-      // itemsShowLimit: 3,
+      itemsShowLimit: 5,
       allowSearchFilter: true,
-      // limitSelection: 3,
+      limitSelection: 5,
+      enableCheckAll: false,
+      noDataAvailablePlaceholderText: "No data available",
     };
   }
 
@@ -238,7 +238,7 @@ export class UpdatepostComponent implements OnInit {
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.bookGenreList.push(this.selectedItems[i].id);
     }
-    console.log(this.bookGenreList);
+   
     let updatePostData = {
       postid: this.postId,
       title: this.title,
@@ -253,7 +253,7 @@ export class UpdatepostComponent implements OnInit {
       username: this.username,
       book_genre_list: this.bookGenreList,
     };
-    console.log(updatePostData)
+   
     if (
       !this.title ||
       !this.description ||
@@ -287,7 +287,7 @@ export class UpdatepostComponent implements OnInit {
           });
       },
       (err) => {
-       console.log(err);
+      
       }
     );
   }

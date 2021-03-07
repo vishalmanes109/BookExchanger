@@ -79,14 +79,13 @@ export class CreatepostComponent implements OnInit {
       singleSelection: false,
       idField: "id",
       textField: "text",
-      selectAllText: "Select All",
-      unSelectAllText: "UnSelect All",
-      // itemsShowLimit: 3,
+      itemsShowLimit: 5,
       allowSearchFilter: true,
-      // limitSelection: 3,
+      limitSelection: 5,
+      enableCheckAll: false,
+      noDataAvailablePlaceholderText: "No data available",
     };
   }
-
   onItemSelect(item: any) {
     this.bookGenreList.push(item.id);
   }
@@ -168,7 +167,6 @@ export class CreatepostComponent implements OnInit {
       username: this.username,
       book_genre_list: this.bookGenreList,
     };
-    console.log(postData);
 
     if (
       !this.title ||
@@ -189,6 +187,11 @@ export class CreatepostComponent implements OnInit {
     if (this.bookGenreList.length < 2) {
       this.isError = true;
       this.message = "Please select atleast 2 genres";
+      return;
+    }
+    if (this.bookGenreList.length > 5) {
+      this.isError = true;
+      this.message = "Please select maximun of 5 genres";
       return;
     }
 
