@@ -335,4 +335,12 @@ export class AdvancesearchComponent implements OnInit {
       this.chatMessage = "";
     }, 10000);
   }
+  openPost(postId, title) {
+    //this.SharedService.KeepPostId(postId);
+    this.router
+      .navigateByUrl("/post", { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([`post/${postId}/${title.replace(/ /g, "_")}`]);
+      });
+  }
 }

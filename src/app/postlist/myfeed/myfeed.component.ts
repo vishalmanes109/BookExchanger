@@ -45,7 +45,7 @@ export class MyfeedComponent implements OnInit {
   public sharePostId;
   public savePostMessage;
   public copyPostMessage;
-  public isChatError =false;
+  public isChatError = false;
   public chatMessage;
   public chatPostId;
   constructor(private postService: PostService, private router: Router) {}
@@ -203,7 +203,6 @@ export class MyfeedComponent implements OnInit {
         );
     }
   }
-
   myFeedByNewPost(page) {
     this.isNearByPost = false;
     this.isDataFetch = false;
@@ -316,16 +315,31 @@ export class MyfeedComponent implements OnInit {
     //
     this.myPostPage = myPostPage;
     this.myFeedByMyPost(this.myPostPage);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
   getPageForNewPost(newPostPage) {
     //console.log(newPostPage);
     this.newPostPage = newPostPage;
     this.myFeedByNewPost(this.newPostPage);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
   getPageForNearbyPost(nearbyPostPage) {
     //
     this.nearbyPostPage = nearbyPostPage;
     this.myFeedByLocation(this.nearbyPostPage);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
   chat(postid) {
     this.chatPostId = postid;
@@ -337,6 +351,13 @@ export class MyfeedComponent implements OnInit {
     setTimeout(() => {
       this.isChatError = false;
       this.chatMessage = "";
-    }, 10000);  
+    }, 10000);
+  }
+  openPost(postId, title) {
+    this.router
+      .navigateByUrl("/post", { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([`post/${postId}/${title.replace(/ /g, "_")}`]);
+      });
   }
 }
