@@ -61,7 +61,7 @@ export class UpdateprofileComponent implements OnInit {
 
     this.profileService.getProfileByProfileId(this.profileId).subscribe(
       (res) => {
-        console.log(res);
+       
 
         this.profileData = res.message[0];
         // check whether profile id of profile fetch == profile id of login user

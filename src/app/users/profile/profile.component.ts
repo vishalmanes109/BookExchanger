@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
     if (!this.isUnauth) {
       this.isUnauth = "true";
     }
-    // console.log(this.isUnauth);
+    //
 
     this.storesUsername = localStorage.getItem("username");
     this.route.paramMap.subscribe((params) => {
@@ -97,8 +97,8 @@ export class ProfileComponent implements OnInit {
             (res) => {
               this.postData = res.message;
               this.totalMyPost = res.total;
-              console.log(this.postData);
-              console.log(res.total);
+             
+             
               this.isPostExist = true;
             },
             (err) => {
@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
               this.savePostData = res.message;
               this.isSavePostExist = true;
               this.totalSavePost = res.total;
-              console.log(this.savePostData);
+             
             },
             (err) => {
               if (!err.error.isPostExist) {
@@ -161,14 +161,14 @@ export class ProfileComponent implements OnInit {
       });
   }
   UnsavePost(postId) {
-    console.log(postId);
+   
     let unSavePostData = {
       post_id: postId,
       profile_id: this.profileId,
     };
     this.postService.unSavePost(unSavePostData).subscribe(
       (res) => {
-        console.log(res);
+       
         this.router
           .navigateByUrl("/profile", { skipLocationChange: true })
           .then(() => {
@@ -176,14 +176,14 @@ export class ProfileComponent implements OnInit {
           });
       },
       (err) => {
-        console.log(err);
+       
       }
     );
   }
   getPostByProfile(page) {
     if (page) this.offset = (page - 1) * this.limit;
     else this.offset = 1;
-    console.log(this.offset);
+   
 
     this.postService
       .getPostByProfile(this.profileId, this.offset, this.limit)
@@ -210,8 +210,8 @@ export class ProfileComponent implements OnInit {
         this.savePostData = res.message;
         this.totalSavePost = res.total;
         this.isSavePostExist = true;
-        console.log(this.savePostData);
-        console.log(this.totalSavePost)
+       
+       
       },
       (err) => {
         if (!err.error.isPostExist) {
@@ -223,12 +223,12 @@ export class ProfileComponent implements OnInit {
   }
   getPageForMyPost(page) {
     this.myPostPage = page;
-    console.log(page);
+   
     this.getPostByProfile(this.myPostPage);
   }
   getPageforSavedPost(page) {
     this.savePostPage = page;
-    console.log(page);
+   
     this.getSavePost(this.savePostPage);
   }
 }

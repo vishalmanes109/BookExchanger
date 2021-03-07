@@ -228,7 +228,8 @@ export class UpdatepostComponent implements OnInit {
         this.bookImage = this.avatarUrl;
       },
       (err) => {
-        this.imageUploadNote = "Failed Try Again ";
+        this.imageUploadNote =
+          "Failed Try Again Failed Try Again (png and jpeg are supported format) ";
       }
     );
   }
@@ -270,9 +271,45 @@ export class UpdatepostComponent implements OnInit {
       this.message = "Maximun 140 characters allowed in description";
       return;
     }
+     if (this.title.length > 100) {
+       this.isError = true;
+       this.message = "Maximun 100 characters allowed in title";
+       return;
+     }
+     if (this.giveBookName.length > 100) {
+       this.isError = true;
+       this.message =
+         "Name of book entered is too long. Please enter valid book name ";
+       return;
+     }
+     if (this.giveBookAuthor.length > 100) {
+       this.isError = true;
+       this.message =
+         "Name of author entered is too long. Please enter valid author name ";
+       return;
+     }
+     if (this.takeBookName) {
+       if (this.takeBookName.length > 100) {
+         this.isError = true;
+         this.message =
+           "Name of book entered is too long. Please enter valid book name ";
+         return;
+       }
+       if (this.takeBookAuthor.length > 100) {
+         this.isError = true;
+         this.message =
+           "Name of author entered is too long. Please enter valid author name ";
+         return;
+       }
+     }
     if (this.selectedItems.length < 2) {
       this.isError = true;
       this.message = "Please select alteast 2 genres";
+      return;
+    }
+    if (this.selectedItems.length > 5) {
+      this.isError = true;
+      this.message = "Please select maximum of 5 genres";
       return;
     }
     this.postService.updatePost(updatePostData).subscribe(

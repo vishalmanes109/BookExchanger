@@ -34,43 +34,35 @@
             <ng-container *ngIf="isUnauth === 'false'; else elseTemplate">
               <div *ngIf="contactVisibility; else contactVisibilityTemp">
                 <div class="profileparameter">
-                  Location:
-                  <span class="profiledata">
-                    {{ location }}
-                  </span>
-                </div>
-                <div class="profileparameter">
                   Email: <span class="profiledata">{{ email }}</span>
                 </div>
                 <div class="profileparameter">
                   Mobile No.: <span class="profiledata">{{ contact }}</span>
                 </div>
+                <div class="profileparameter">
+                  Location:
+                  <span class="profiledata">
+                    {{ location }}
+                  </span>
+                </div>
               </div>
               <ng-template #contactVisibilityTemp>
                 <div class="profileparameter">
-                  Location: Hidden
+                  Email: <span class="profiledata">{{ email }}</span>
                 </div>
-                <div class="profileparameter">
-                   Email: Hidden
-                </div>
-                <div class="profileparameter">
-                  Mobile No.: Hidden
-                </div>
+                <div class="profileparameter">Mobile No.: Hidden</div>
+                <div class="profileparameter">Location: Hidden</div>
               </ng-template>
             </ng-container>
             <ng-template #elseTemplate>
-              <div class="profileparameter">
-                Location: Hidden
-              </div>
               <div class="profileparameter">Email: Hidden</div>
-              <div class="profileparameter">
-                Mobile No.: Hidden
-              </div>
+              <div class="profileparameter">Mobile No.: Hidden</div>
+              <div class="profileparameter">Location: Hidden</div>
             </ng-template>
-
             <div class="profileparameter">
-                Exchanging Since :<span class="profiledata"> {{ createdOn }}</span>
-              
+              Exchanging Since :<span class="profiledata">
+                {{ createdOn }}</span
+              >
             </div>
           </div>
         </div>
@@ -206,7 +198,7 @@
                 (click)="openPost(savePost.postid)"
                 class="item fourteen wide column"
               >
-                <div >
+                <div>
                   <div class="title">{{ savePost.title }}</div>
                   <div class="description">{{ savePost.description }}</div>
                 </div>

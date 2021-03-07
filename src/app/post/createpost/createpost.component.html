@@ -15,7 +15,7 @@
               required
               type="text"
               name="title"
-              placeholder="Title"
+              placeholder="Title (Max 100 characters allowed)"
               [(ngModel)]="title"
               (blur)="onBlur()"
             />
@@ -94,8 +94,8 @@
               (blur)="onBlur()"
             />
             <button class="ui button primary inverted" (click)="upload()">
-              Upload
-            </button>
+              Upload 
+            </button> <span > Supported format: PNG and JPEG ONLY</span>
             <div *ngIf="isImageUploaded">
               {{ imageUploadNote }}
             </div>

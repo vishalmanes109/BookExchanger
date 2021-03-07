@@ -83,16 +83,16 @@ export class CreateprofileComponent implements OnInit {
       { id: 36, text: "Travel" },
       { id: 37, text: "Young Adult" },
     ];
-    
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: "id",
       textField: "text",
-      selectAllText: "Select All",
-      unSelectAllText: "UnSelect All",
-      // itemsShowLimit: 3,
+      itemsShowLimit: 10,
       allowSearchFilter: true,
-      // limitSelection: 3,
+      limitSelection: 10,
+      enableCheckAll: false,
+      noDataAvailablePlaceholderText: "No data available",
     };
   }
 
@@ -219,11 +219,17 @@ export class CreateprofileComponent implements OnInit {
       this.message =
         "Please provide location. either write name of location or give location access";
     }
-    if (this.favGenreList.length == 0) {
+    if (this.favGenreList.length < 3) {
       this.isError = true;
       this.message = "Please select atleast 3 genres";
       return;
     }
+    if (this.favGenreList.length > 10) {
+      this.isError = true;
+      this.message = "Please select maximun of 10 genres";
+      return;
+    }
+
     if (!this.onBlurValidateContact()) {
       this.isError = true;
       this.message = "Please enter valid mobile number";
@@ -241,9 +247,11 @@ export class CreateprofileComponent implements OnInit {
     };
     this.profileService.makeProfile(profileData).subscribe(
       (res) => {
+        console.log(res);
         this.isDone = true;
         this.isError = false;
         this.message = "Congratulations Profile is created";
+
         setTimeout(() => {
           if (res.success == 1 && this.isDone) {
             this.router.navigate(["/login"]);
@@ -251,6 +259,7 @@ export class CreateprofileComponent implements OnInit {
         }, 2000);
       },
       (err) => {
+        console.log(err);
         this.isError = true;
         if (err.error.error.code == 23502) {
           this.message = "Profile creation failed. please try again! ";
@@ -259,12 +268,12 @@ export class CreateprofileComponent implements OnInit {
         this.message = "profile is already created. ";
         setTimeout(() => {
           if (this.isError) {
-            this.message = "redirecting towards update profile page";
+            this.message = "redirecting towards login profile page";
           }
-        }, 1000);
+        }, 3000);
         setTimeout(() => {
           if (this.isError) {
-            this.router.navigate([`myfeed`]);
+            this.router.navigate([`login`]);
           }
         }, 2500);
       }

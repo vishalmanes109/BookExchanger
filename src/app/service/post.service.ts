@@ -16,7 +16,7 @@ export class PostService {
   }
 
   getPostByProfile(profileId, offset, limit) {
-    console.log("lol");
+   
     return this.http.get<any>(
       this._postUrl + "profileid/" + profileId + "/" + offset + "/" + limit
     );
@@ -109,7 +109,7 @@ export class PostService {
     return this.http.delete<any>(this._postUrl + "savepost", option);
   }
   getSavedPost(profileId,offset,limit) {
-    console.log(profileId);
+   
     return this.http.get<any>(
       this._postUrl + "savepost/" + profileId + "/" + offset + "/" + limit
     );

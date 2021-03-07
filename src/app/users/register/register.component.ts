@@ -47,11 +47,11 @@ export class RegisterComponent implements OnInit {
     }
     this.authService.isEmailExist(this.email).subscribe(
       (res) => {
-        console.log("lol");
-        console.log(res);
+       
+       
       },
       (err) => {
-        console.log(err);
+       
         this.isError = true;
         this.message = "Profile is already created with this email id.";
       }

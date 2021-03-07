@@ -150,7 +150,7 @@ export class CreatepostComponent implements OnInit {
         this.bookImage = res.message.secure_url;
       },
       (err) => {
-        this.imageUploadNote = "Failed Try Again ";
+        this.imageUploadNote = "Failed Try Again (png and jpeg are supported format) ";
       }
     );
   }
@@ -184,6 +184,38 @@ export class CreatepostComponent implements OnInit {
       this.message = "Maximun 140 characters allowed in description";
       return;
     }
+    if (this.title.length > 100) {
+      this.isError = true;
+      this.message = "Maximun 100 characters allowed in title";
+      return;
+    }
+    if (this.giveBookName.length > 100) {
+      this.isError = true;
+      this.message =
+        "Name of book entered is too long. Please enter valid book name ";
+      return;
+    }
+    if (this.giveBookAuthor.length > 100) {
+      this.isError = true;
+      this.message =
+        "Name of author entered is too long. Please enter valid author name ";
+      return;
+    }
+    if (this.takeBookName) {
+      if (this.takeBookName.length > 100) {
+        this.isError = true;
+        this.message =
+          "Name of book entered is too long. Please enter valid book name ";
+        return;
+      }
+      if (this.takeBookAuthor.length > 100) {
+        this.isError = true;
+        this.message =
+          "Name of author entered is too long. Please enter valid author name ";
+        return;
+      }
+    }
+
     if (this.bookGenreList.length < 2) {
       this.isError = true;
       this.message = "Please select atleast 2 genres";
@@ -201,7 +233,6 @@ export class CreatepostComponent implements OnInit {
         this.isError = false;
         this.message = "Post added succesfully";
         let postId = res.post_id;
-        // this.router.navigate([`post/${postId}`]);
         this.router.navigate([
           `post/${postId}/${this.title.replace(/ /g, "_")}`,
         ]);

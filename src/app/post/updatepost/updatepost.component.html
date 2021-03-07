@@ -12,12 +12,12 @@
         <p class="ui header teal centered">Update Post</p>
         <div  class="ui form">
           <div class="field">
-            <label>Enter title of post </label>
+            <label>Enter title of post (Max 100 characters allowed) </label>
             <input
               required
               type="text"
               name="title"
-              placeholder="Enter Title of book swap request"
+              placeholder="Enter Title of book swap request "
               [(ngModel)]="title"
             />
           </div>
@@ -96,7 +96,7 @@
               />
               <button class="ui button primary inverted" (click)="upload()">
                 Upload
-              </button>
+              </button><span > Supported format: PNG and JPEG ONLY</span>
               <div *ngIf="isImageUploaded">
                 {{ imageUploadNote }}
               </div>
