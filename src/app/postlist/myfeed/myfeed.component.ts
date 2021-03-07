@@ -45,6 +45,9 @@ export class MyfeedComponent implements OnInit {
   public sharePostId;
   public savePostMessage;
   public copyPostMessage;
+  public isChatError =false;
+  public chatMessage;
+  public chatPostId;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -52,11 +55,8 @@ export class MyfeedComponent implements OnInit {
     this.postService.getPopularBook().subscribe(
       (res) => {
         this.bookPost = res.message;
-        console.log(res);
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
     if (
       localStorage.getItem("isUnauth") == "true" ||
@@ -93,7 +93,6 @@ export class MyfeedComponent implements OnInit {
             }
             this.note =
               "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-            console.log(err);
           }
         );
     }
@@ -128,7 +127,6 @@ export class MyfeedComponent implements OnInit {
     }, 1000);
   }
   myFeedByLocation(page) {
-    console.log(page);
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
@@ -167,7 +165,6 @@ export class MyfeedComponent implements OnInit {
     }
   }
   myFeedByMyPost(page) {
-    console.log(page);
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
@@ -186,7 +183,6 @@ export class MyfeedComponent implements OnInit {
         .getPostByProfile(this.profileId, this.myPostOffset, this.limit)
         .subscribe(
           (res) => {
-            console.log(res);
             this.postData = res.message;
             this.isDataFetch = true;
             this.totalPages = res.total;
@@ -200,7 +196,7 @@ export class MyfeedComponent implements OnInit {
                 "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
               return;
             }
-            console.log(err);
+
             this.note =
               "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
           }
@@ -218,16 +214,13 @@ export class MyfeedComponent implements OnInit {
 
     this.postService.getAllPost(this.newPostOffset, this.limit).subscribe(
       (res) => {
-        console.log(res);
         this.isDataFetch = true;
         this.postData = res.message;
         this.totalPages = res.total;
 
-        console.log(this.totalPages);
         this.message = this.totalPages + " Post/s found";
       },
       (err) => {
-        console.log(err);
         this.note =
           "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
       }
@@ -275,7 +268,6 @@ export class MyfeedComponent implements OnInit {
     );
   }
   savePost(postId) {
-    console.log(postId, this.profileId);
     this.sharePostId = postId;
 
     let savePostData = {
@@ -285,7 +277,6 @@ export class MyfeedComponent implements OnInit {
     this.isPostSaved = true;
     this.postService.savePost(savePostData).subscribe(
       (res) => {
-        console.log(res);
         this.savePostId = savePostData.post_id;
         this.isPostSaved = true;
         this.savePostMessage =
@@ -299,7 +290,6 @@ export class MyfeedComponent implements OnInit {
         }, 4000);
       },
       (err) => {
-        console.log(err);
         this.savePostMessage =
           "This post is already saved! you can manage saved post from your profile";
 
@@ -311,23 +301,19 @@ export class MyfeedComponent implements OnInit {
     );
   }
   unSavePost(postId) {
-    console.log(postId, this.profileId);
     let unSavePostData = {
       post_id: postId,
       profile_id: this.profileId,
     };
     this.postService.unSavePost(unSavePostData).subscribe(
       (res) => {
-        console.log(res);
         this.isPostSaved = false;
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
   getPageforMyPost(myPostPage) {
-    // console.log(myPostPage);
+    //
     this.myPostPage = myPostPage;
     this.myFeedByMyPost(this.myPostPage);
   }
@@ -337,8 +323,20 @@ export class MyfeedComponent implements OnInit {
     this.myFeedByNewPost(this.newPostPage);
   }
   getPageForNearbyPost(nearbyPostPage) {
-    // console.log(this.nearbyPostPage)
+    //
     this.nearbyPostPage = nearbyPostPage;
     this.myFeedByLocation(this.nearbyPostPage);
+  }
+  chat(postid) {
+    this.chatPostId = postid;
+    console.log(this.chatPostId);
+    this.isChatError = true;
+    this.chatMessage =
+      "This feature is currently under production. You can communicate with user via email and mobile number mentioned in profile page. click on the username mention in the post. Sorry for the inconvenience";
+
+    setTimeout(() => {
+      this.isChatError = false;
+      this.chatMessage = "";
+    }, 10000);  
   }
 }

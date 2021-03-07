@@ -192,6 +192,7 @@
                 class="ui button primary inverted"
                 name="chat"
                 value="Chat"
+                (click)="chat(post.postid)"
               />
               <div
                 class="ui icon button orange inverted"
@@ -235,6 +236,12 @@
                 *ngIf="isPostSaved && sharePostId == post.postid"
               >
                 {{ savePostMessage }}
+              </div>
+              <div
+                class="ui message  container"
+                *ngIf="isChatError && chatPostId==post.postid"
+              >
+                {{ chatMessage }}
               </div>
           </div>
         </div>

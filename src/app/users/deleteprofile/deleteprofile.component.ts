@@ -32,7 +32,7 @@ export class DeleteprofileComponent implements OnInit {
     });
     // check whether userid of profile to be deleted is == user id of login user
     if (this.userId != localStorage.getItem("userid")) {
-      console.log("lol");
+     
       this.isError = true;
       this.unauthorize = true;
       this.message = "You are trying to delete profile which is not yours";
@@ -45,9 +45,7 @@ export class DeleteprofileComponent implements OnInit {
       this.profileService.deleteProfile(this.userId).subscribe(
         (res) => {
           this.isDeleted = true;
-          localStorage.removeItem("username");
-          localStorage.removeItem("userid");
-          localStorage.removeItem("profileid");
+          localStorage.clear();
           this.message =
             "Profile is deleted. Thanks for your valuable time. We appriciate your decision. feel free to open new account anytime.";
         },

@@ -50,28 +50,32 @@
                   postData.post_time.substring(0, 10)
                 }}</span>
               </p>
-              
-                <input *ngIf="yourPost"
-                  type="button"
-                  class="ui button primary inverted"
-                  name="edit"
-                  value="Edit"
-                  (click)="editPost()"
-                />
 
-                <input *ngIf="yourPost"
-                  type="button"
-                  class="ui right floated button red inverted"
-                  name="delete"
-                  value="Delete"
-                  (click)="deletePost()"
-                />
-                <input *ngIf="!yourPost"
-                  type="button"
-                  class="ui button primary inverted"
-                  name="chat"
-                  value="Chat"
-                />
+              <input
+                *ngIf="yourPost"
+                type="button"
+                class="ui button primary inverted"
+                name="edit"
+                value="Edit"
+                (click)="editPost()"
+              />
+
+              <input
+                *ngIf="yourPost"
+                type="button"
+                class="ui right floated button red inverted"
+                name="delete"
+                value="Delete"
+                (click)="deletePost()"
+              />
+              <input
+                *ngIf="!yourPost"
+                type="button"
+                class="ui button primary inverted"
+                name="chat"
+                value="Chat"
+                (click)="chat(postData.postid)"
+              />
               <div
                 class="ui icon button orange inverted"
                 (click)="generateSharableLink(postData.postid, postData.title)"
@@ -92,7 +96,7 @@
               >
                 <i class="bookmark icon"></i>
               </div>
-              
+
               <div *ngIf="!isCopy && isShare">
                 <p class="ui sharelink">{{ shareLink }}</p>
                 <button
@@ -103,13 +107,17 @@
                 </button>
               </div>
               <div
-                class="ui message  container"
+                class="ui message container"
                 *ngIf="isPostSaved && sharePostId == postData.postid"
               >
                 {{ savePostMessage }}
               </div>
-              
-              
+              <div
+                class="ui message container"
+                *ngIf="isChatError && chatPostId == postData.postid"
+              >
+                {{ chatMessage }}
+              </div>
             </div>
             <div class="six wide column">
               <img

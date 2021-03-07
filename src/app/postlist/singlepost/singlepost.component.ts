@@ -1,4 +1,4 @@
-import {  Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
 import { SharedService } from "src/app/service/shared.service";
@@ -36,7 +36,9 @@ export class SinglepostComponent implements OnInit {
   public savePostId;
   public sharePostId;
   public savePostMessage;
-
+  public isChatError = false;
+  public chatMessage;
+  public chatPostId;
   constructor(
     private postService: PostService,
     private route: ActivatedRoute,
@@ -48,7 +50,7 @@ export class SinglepostComponent implements OnInit {
     this.message = "";
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
-      console.log(this.postId);
+
       this.postService.getPostByPostId(this.postId).subscribe(
         (res) => {
           this.yourPost = false;
@@ -66,24 +68,20 @@ export class SinglepostComponent implements OnInit {
           if (this.username == localStorage.getItem("username"))
             this.yourPost = true;
         },
-        (err) => {
-          console.log(err);
-        }
+        (err) => {}
       );
       this.profileId = localStorage.getItem("profileid");
       this.postService.getNearByPost(this.profileId, 0, 5).subscribe(
         (res) => {
           this.nearByPost = res.message;
-          // console.log("neaby:", this.nearByPost)
+          //
           // if (this.nearByPost.length == 0){
           //   this.isError=true;
           //   this.message=this.nearByPost.lenght+" post found"
           // }
           this.isNearByPostExist = true;
         },
-        (err) => {
-          console.log(err);
-        }
+        (err) => {}
       );
     });
   }
@@ -110,12 +108,9 @@ export class SinglepostComponent implements OnInit {
     };
     this.postService.deletePost(deletablePostData).subscribe(
       (res) => {
-        console.log(res);
         this.router.navigate([`/profile/${this.username}`]);
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
   generateSharableLink(postId, title) {
@@ -143,7 +138,6 @@ export class SinglepostComponent implements OnInit {
   }
 
   savePost(postId) {
-    console.log(postId, this.profileId);
     this.sharePostId = postId;
 
     let savePostData = {
@@ -153,7 +147,6 @@ export class SinglepostComponent implements OnInit {
     this.isPostSaved = true;
     this.postService.savePost(savePostData).subscribe(
       (res) => {
-        console.log(res);
         this.savePostId = savePostData.post_id;
         this.isPostSaved = true;
         this.savePostMessage =
@@ -167,7 +160,6 @@ export class SinglepostComponent implements OnInit {
         }, 4000);
       },
       (err) => {
-        console.log(err);
         this.savePostMessage =
           "This post is already saved! you can manage saved post from your profile";
 
@@ -179,19 +171,27 @@ export class SinglepostComponent implements OnInit {
     );
   }
   unSavePost(postId) {
-    console.log(postId, this.profileId);
     let unSavePostData = {
       post_id: postId,
       profile_id: this.profileId,
     };
     this.postService.unSavePost(unSavePostData).subscribe(
       (res) => {
-        console.log(res);
         this.isPostSaved = false;
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
+  }
+  chat(postid) {
+    this.chatPostId = postid;
+    console.log(this.chatPostId);
+    this.isChatError = true;
+    this.chatMessage =
+      "This feature is currently under production. You can communicate with user via email and mobile number mentioned in profile page. click on the username mention in the post. Sorry for the inconvenience";
+
+    setTimeout(() => {
+      this.isChatError = false;
+      this.chatMessage = "";
+    }, 10000);
   }
 }

@@ -48,6 +48,9 @@ export class AdvancesearchComponent implements OnInit {
   public savePostId;
   public savePostMessage;
   public copyPostMessage;
+  public isChatError = false;
+  public chatMessage;
+  public chatPostId;
 
   constructor(private postService: PostService, private router: Router) {}
 
@@ -202,7 +205,6 @@ export class AdvancesearchComponent implements OnInit {
             (err) => {
               this.isDataFetch = false;
 
-              console.log(err);
               if (err.error.message != "Post does not exis") {
                 this.isError = true;
                 this.message =
@@ -278,7 +280,6 @@ export class AdvancesearchComponent implements OnInit {
       });
   }
   savePost(postId) {
-    console.log(postId, this.profileId);
     this.sharePostId = postId;
 
     let savePostData = {
@@ -288,7 +289,6 @@ export class AdvancesearchComponent implements OnInit {
     this.isPostSaved = true;
     this.postService.savePost(savePostData).subscribe(
       (res) => {
-        console.log(res);
         this.savePostId = savePostData.post_id;
         this.isPostSaved = true;
         this.savePostMessage =
@@ -301,7 +301,6 @@ export class AdvancesearchComponent implements OnInit {
         }, 4000);
       },
       (err) => {
-        console.log(err);
         this.savePostMessage =
           "This post is already saved! you can manage saved post from your profile";
 
@@ -313,19 +312,27 @@ export class AdvancesearchComponent implements OnInit {
     );
   }
   unSavePost(postId) {
-    console.log(postId, this.profileId);
     let unSavePostData = {
       post_id: postId,
       profile_id: this.profileId,
     };
     this.postService.unSavePost(unSavePostData).subscribe(
       (res) => {
-        console.log(res);
         this.isPostSaved = false;
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
+  }
+  chat(postid) {
+    this.chatPostId = postid;
+    console.log(this.chatPostId);
+    this.isChatError = true;
+    this.chatMessage =
+      "This feature is currently under production. You can communicate with user via email and mobile number mentioned in profile page. click on the username mention in the post. Sorry for the inconvenience";
+
+    setTimeout(() => {
+      this.isChatError = false;
+      this.chatMessage = "";
+    }, 10000);
   }
 }
