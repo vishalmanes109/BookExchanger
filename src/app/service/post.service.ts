@@ -6,9 +6,9 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class PostService {
-  private _postUrl = "http://localhost:3000/api/post/";
-  private _bookUrl = "http://localhost:3000/api/book/";
-  private _imageUrl = "http://localhost:3000/api/upload/";
+  private _postUrl = "https://bookxchanger-server.herokuapp.com/api/post/";
+  private _bookUrl = "https://bookxchanger-server.herokuapp.com/api/book/";
+  private _imageUrl = "https://bookxchanger-server.herokuapp.com/api/upload/";
 
   constructor(private http: HttpClient) {}
   addPost(postData) {
@@ -16,7 +16,6 @@ export class PostService {
   }
 
   getPostByProfile(profileId, offset, limit) {
-   
     return this.http.get<any>(
       this._postUrl + "profileid/" + profileId + "/" + offset + "/" + limit
     );
@@ -78,7 +77,7 @@ export class PostService {
       this._postUrl + "title/" + title + "/" + offset + "/" + limit
     );
   }
-  getPostByLocation(location,offset,limit) {
+  getPostByLocation(location, offset, limit) {
     return this.http.get<any>(
       this._postUrl + "location/" + location + "/" + offset + "/" + limit
     );
@@ -108,8 +107,7 @@ export class PostService {
     };
     return this.http.delete<any>(this._postUrl + "savepost", option);
   }
-  getSavedPost(profileId,offset,limit) {
-   
+  getSavedPost(profileId, offset, limit) {
     return this.http.get<any>(
       this._postUrl + "savepost/" + profileId + "/" + offset + "/" + limit
     );
