@@ -54,6 +54,7 @@ import { NgxPaginationModule } from "ngx-pagination";
     DeletepostComponent,
     DeleteprofileComponent,
     AdvancesearchComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
