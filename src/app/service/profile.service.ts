@@ -1,14 +1,13 @@
-https://bookxchanger-server.herokuapp.com/import { HttpClient } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProfileService {
-  private _profileUrl =
-    "https://bookxchanger-server.herokuapp.com/api/profile/";
-  private _imageUrl = "https://bookxchanger-server.herokuapp.com/api/upload/";
-  //private _favouriteGenreUrl="https://bookxchanger-server.herokuapp.com/api/"
+  private _profileUrl = "http://localhost:3000/api/profile/";
+  private _imageUrl = "http://localhost:3000/api/upload/";
+  //private _favouriteGenreUrl="http://localhost:3000/api//"
   constructor(private http: HttpClient) {}
   makeProfile(profileData) {
     return this.http.post<any>(this._profileUrl, profileData);
