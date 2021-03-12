@@ -4,7 +4,11 @@
   "scripts": {
     "heroku-postbuild": "ng build --prod",
     "ng": "ng",
+<<<<<<< HEAD
     "start": "node server.js",
+=======
+    "start": "node server.js ",
+>>>>>>> fb1753d5b384bd2d5380b89a1710ec4ada3f976d
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -38,8 +42,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1100.6",
-    "@angular/cli": "~9.0.6",
-    "@angular/compiler-cli": "~9.0.6",
+    "@angular/cli": "^9.1.15",
+    "@angular/compiler-cli": "^9.1.13",
     "@angular/language-service": "~9.0.6",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",

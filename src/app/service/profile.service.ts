@@ -5,8 +5,8 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class ProfileService {
-  private _profileUrl = "http://localhost:3000/api/profile/";
-  private _imageUrl = "http://localhost:3000/api/upload/";
+  private _profileUrl = "https://bookxchanger-server.herokuapp.com/api/profile/";
+  private _imageUrl = "https://bookxchanger-server.herokuapp.com/api/upload/";
   //private _favouriteGenreUrl="http://localhost:3000/api//"
   constructor(private http: HttpClient) {}
   makeProfile(profileData) {
