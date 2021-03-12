@@ -6,9 +6,9 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class PostService {
-  private _postUrl = "http://localhost:3000/api/post/";
-  private _bookUrl = "http://localhost:3000/api/book/";
-  private _imageUrl = "http://localhost:3000/api/upload/";
+  private _postUrl = "https://bookxchanger-server.herokuapp.com/api/post/";
+  private _bookUrl = "https://bookxchanger-server.herokuapp.com/api/book/";
+  private _imageUrl = "https://bookxchanger-server.herokuapp.com/api/upload/";
 
   constructor(private http: HttpClient) {}
   addPost(postData) {

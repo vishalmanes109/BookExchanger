@@ -5,9 +5,9 @@ import { Router } from "@angular/router";
   providedIn: "root",
 })
 export class AuthService {
-  private _registerUrl = "http://localhost:3000/api/user/";
-  private _loginUrl = "http://localhost:3000/api/user/login";
-  private _uniqueUserUrl = "http://localhost:3000/api/user/";
+  private _registerUrl = "https://bookxchanger-server.herokuapp.com/api/user/";
+  private _loginUrl = "https://bookxchanger-server.herokuapp.com/api/user/login";
+  private _uniqueUserUrl = "https://bookxchanger-server.herokuapp.com/api/user/";
 
   private httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
