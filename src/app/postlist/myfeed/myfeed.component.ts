@@ -43,11 +43,14 @@ export class MyfeedComponent implements OnInit {
   public isPostSaved = false;
   public savePostId;
   public sharePostId;
+  public editPostId;
   public savePostMessage;
   public copyPostMessage;
   public isChatError = false;
   public chatMessage;
   public chatPostId;
+  public loginMessage;
+  public isShowLoginMessage = false;
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
@@ -83,6 +86,10 @@ export class MyfeedComponent implements OnInit {
             this.totalPages = res.total;
             this.isDataFetch = true;
             this.message = this.totalPages + " Post/s found";
+            if (!this.postData.take_book_id) {
+              this.takeBook = "Book is not specified by user";
+              this.takeBookAuthor = "Book author is not specified by user";
+            }
           },
           (err) => {
             if (err.status == 401) {
@@ -102,7 +109,7 @@ export class MyfeedComponent implements OnInit {
     this.isCopy = false;
     this.sharePostId = postId;
 
-    this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
+    this.shareLink = `https://bookxchanger-server.herokuapp.com/post/${postId}/${title.replace(
       / /g,
       "_"
     )}`;
@@ -150,6 +157,10 @@ export class MyfeedComponent implements OnInit {
             this.isDataFetch = true;
             this.totalPages = res.total;
             this.message = this.totalPages + " Post/s found";
+            if (!this.postData.take_book_id) {
+              this.takeBook = "Book is not specified by user";
+              this.takeBookAuthor = "Book author is not specified by user";
+            }
           },
           (err) => {
             if (err.status == 401) {
@@ -188,6 +199,10 @@ export class MyfeedComponent implements OnInit {
             this.totalPages = res.total;
 
             this.message = this.totalPages + " Post/s found";
+            if (!this.postData.take_book_id) {
+              this.takeBook = "Book is not specified by user";
+              this.takeBookAuthor = "Book author is not specified by user";
+            }
           },
           (err) => {
             if (err.status == 401) {
@@ -218,6 +233,10 @@ export class MyfeedComponent implements OnInit {
         this.totalPages = res.total;
 
         this.message = this.totalPages + " Post/s found";
+        if (!this.postData.take_book_id) {
+          this.takeBook = "Book is not specified by user";
+          this.takeBookAuthor = "Book author is not specified by user";
+        }
       },
       (err) => {
         this.note =
@@ -247,6 +266,17 @@ export class MyfeedComponent implements OnInit {
     }
   }
   editPost(postId) {
+    this.editPostId = postId;
+     if (this.isUnauth) {
+       this.loginMessage = "please login ";
+       this.isShowLoginMessage = true;
+       setTimeout(() => {
+         this.loginMessage = "";
+         this.isShowLoginMessage = false;
+         this.editPostId = null;
+       }, 1000);
+       return;
+     }
     this.router
       .navigateByUrl("/updatepost", { skipLocationChange: true })
       .then(() => {
@@ -254,6 +284,16 @@ export class MyfeedComponent implements OnInit {
       });
   }
   deletePost(postId) {
+    if (this.isUnauth) {
+      console.log("lol");
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = true;
+      }, 2000);
+      return;
+    }
     let deletablePostData = {
       postId: postId,
       giveBookId: this.postData.give_book_id,
@@ -267,8 +307,17 @@ export class MyfeedComponent implements OnInit {
     );
   }
   savePost(postId) {
-    this.sharePostId = postId;
-
+    this.savePostId = postId;
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.savePostId = null;
+      }, 1000);
+      return;
+    }
     let savePostData = {
       post_id: postId,
       profile_id: this.profileId,
@@ -300,6 +349,16 @@ export class MyfeedComponent implements OnInit {
     );
   }
   unSavePost(postId) {
+    if (this.isUnauth) {
+      console.log("lol");
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = true;
+      }, 2000);
+      return;
+    }
     let unSavePostData = {
       post_id: postId,
       profile_id: this.profileId,
@@ -312,7 +371,6 @@ export class MyfeedComponent implements OnInit {
     );
   }
   getPageforMyPost(myPostPage) {
-    //
     this.myPostPage = myPostPage;
     this.myFeedByMyPost(this.myPostPage);
     window.scroll({
@@ -343,11 +401,19 @@ export class MyfeedComponent implements OnInit {
   }
   chat(postid) {
     this.chatPostId = postid;
-    console.log(this.chatPostId);
+     if (this.isUnauth) {
+       this.loginMessage = "please login ";
+       this.isShowLoginMessage = true;
+       setTimeout(() => {
+         this.loginMessage = "";
+         this.isShowLoginMessage = false;
+         this.chatPostId = null;
+       }, 1000);
+       return;
+     }
     this.isChatError = true;
     this.chatMessage =
       "This feature is currently under production. You can communicate with user via email and mobile number mentioned in profile page. click on the username mention in the post. Sorry for the inconvenience";
-
     setTimeout(() => {
       this.isChatError = false;
       this.chatMessage = "";

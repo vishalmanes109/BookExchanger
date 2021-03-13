@@ -1,18 +1,19 @@
 <div>
   <div>
     <br />
-    <img
-      class="ui centered small image"
-      src="../../../assets/logo/logo3.3.png"
-      alt="logo"
-    />
+    <a [routerLink]="['/myfeed']" routerLinkActive="router-link-active">
+      <img
+        class="ui centered small image"
+        src="../../../assets/logo/logo3.3.png"
+        alt="logo"
+      />
+    </a>
     <br />
   </div>
   <div class="container custom-step">
     <div class="ui steps">
       <div class="active step">
         <i class="envelope outline icon"></i>
-
         <div class="content">
           <div class="title">Register</div>
           <div class="description">Register With Us</div>
@@ -121,6 +122,7 @@
           >Already Have An Account</a
         >
       </div>
+      <br>
     </div>
   </div>
 </div>

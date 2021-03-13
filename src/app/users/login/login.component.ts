@@ -10,7 +10,6 @@ import { ValidationService } from "src/app/service/validation.service";
 export class LoginComponent implements OnInit {
   public username;
   public password;
-  public isAgree = false;
   private userData = {};
   public isDone = false;
   public defaulter;
@@ -48,11 +47,7 @@ export class LoginComponent implements OnInit {
       name: this.username,
       password: this.password,
     };
-    if (!this.isAgree) {
-      this.isError = true;
-      this.message = "Please Agree to terms and condition";
-      return;
-    }
+  
     this.authService.loginUser(this.userData).subscribe(
       (res) => {
         this.isError = false;
@@ -60,9 +55,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("username", this.username);
         localStorage.setItem("profileid", res.result[0].id);
         localStorage.setItem("userid", res.result[0].user_id);
-
         localStorage.setItem("isUnauth", "false");
-
         this.router.navigate(["/myfeed"]);
       },
       (err) => {

@@ -1,12 +1,13 @@
-
 <div>
   <div>
     <br />
-    <img
-      class="ui centered small image"
-      src="../../../assets/logo/logo3.3.png"
-      alt="gif"
-    />
+    <a [routerLink]="['/myfeed']" routerLinkActive="router-link-active">
+      <img
+        class="ui centered small image"
+        src="../../../assets/logo/logo3.3.png"
+        alt="logo"
+      />
+    </a>
   </div>
   <br />
   <div class="main">
@@ -44,16 +45,7 @@
             <i class="lock icon"></i>
           </div>
         </div>
-        <div class="field">
-              <div class="ui checkbox">
-                <input
-                  type="checkbox"
-                  name="privacy"
-                  [(ngModel)]="isAgree"
-                />
-                <label> I agree to the Terms and Conditions </label>
-              </div>
-            </div>
+        
         <br />
         <button (click)="login()" class="ui button positive" type="submit">
           Submit
@@ -63,6 +55,7 @@
       <div class="ui message">
         <a href="">Don't Have An Account</a>
       </div>
+      <br />
     </div>
   </div>
 </div>

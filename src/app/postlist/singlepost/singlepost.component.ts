@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PostService } from "src/app/service/post.service";
-import { SharedService } from "src/app/service/shared.service";
 
 @Component({
   selector: "app-singlepost",
@@ -28,6 +27,7 @@ export class SinglepostComponent implements OnInit {
   public nearByPost;
   public isNearByPostExist;
   public isError;
+  public isUnauth = false;
   public message;
   public shareLink;
   public isCopy = false;
@@ -39,6 +39,9 @@ export class SinglepostComponent implements OnInit {
   public isChatError = false;
   public chatMessage;
   public chatPostId;
+  public editPostId;
+  public loginMessage;
+  public isShowLoginMessage = false;
   constructor(
     private postService: PostService,
     private route: ActivatedRoute,
@@ -48,6 +51,13 @@ export class SinglepostComponent implements OnInit {
   ngOnInit(): void {
     this.isError = false;
     this.message = "";
+    if (
+      localStorage.getItem("isUnauth") == "true" ||
+      !localStorage.getItem("isUnauth")
+    ) {
+      this.isUnauth = true;
+      this.note = "please login !";
+    }
     this.route.paramMap.subscribe((params) => {
       this.postId = params.get("postid");
 
@@ -94,6 +104,17 @@ export class SinglepostComponent implements OnInit {
       });
   }
   editPost() {
+    this.editPostId=this.postId;
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.editPostId = null;
+      }, 1000);
+      return;
+    }
     this.router
       .navigateByUrl("/updatepost", { skipLocationChange: true })
       .then(() => {
@@ -117,7 +138,7 @@ export class SinglepostComponent implements OnInit {
     this.isShare = true;
     this.isCopy = false;
 
-    this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
+    this.shareLink = `https://bookxchanger-server.herokuapp.com/post/${postId}/${title.replace(
       / /g,
       "_"
     )}`;
@@ -138,7 +159,17 @@ export class SinglepostComponent implements OnInit {
   }
 
   savePost(postId) {
-    this.sharePostId = postId;
+    this.savePostId = postId;
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.savePostId = null;
+      }, 1000);
+      return;
+    }
 
     let savePostData = {
       post_id: postId,
@@ -184,6 +215,16 @@ export class SinglepostComponent implements OnInit {
   }
   chat(postid) {
     this.chatPostId = postid;
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.chatPostId = null;
+      }, 1000);
+      return;
+    }
     console.log(this.chatPostId);
     this.isChatError = true;
     this.chatMessage =

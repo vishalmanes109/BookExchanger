@@ -146,27 +146,35 @@
               <div
                 class="details"
                 *ngIf="
-                  post.takebook !== undefined || post.takebook !== null;
+                  post.takebookname == undefined || post.takebookname == null;
                   else takebooknotpresent
                 "
               >
                 <p class="postparameter">
                   Book want :
-                  <span class="postdata"> {{ post.takebookname }}</span>
+                  <span class="postdata"> {{ takeBook }}</span>
                 </p>
               </div>
               <ng-template #takebooknotpresent>
                 <p class="postparameter">
-                  Book want : <span class="postdata">{{ takeBook }}</span>
+                  Book want : <span class="postdata">{{ post.takebookname }}</span>
                 </p>
               </ng-template>
 
               <div class="details">
-                <p class="postparameter">
+                <p class="postparameter" *ngIf="
+                  post.takebookname == undefined || post.takebookname == null;
+                  else takebookauthornotpresent
+                ">
                   Author Name:
-                  <span class="postdata">{{ post.takebookauthor }}</span>
+                  <span class="postdata">{{ takeBookAuthor }}</span>
                 </p>
               </div>
+               <ng-template #takebookauthornotpresent>
+                <p class="postparameter">
+                  Book want : <span class="postdata">{{ post.takebookauthor }}</span>
+                </p>
+              </ng-template>
               <div class="details">
                 <p class="postparameter">
                   Date:
@@ -233,7 +241,7 @@
             </div>
             <div
               class="ui message container"
-              *ngIf="isPostSaved && sharePostId == post.postid"
+              *ngIf="isPostSaved && savePostId == post.postid"
             >
               {{ savePostMessage }}
             </div>
@@ -243,6 +251,12 @@
             >
               {{ chatMessage }}
             </div>
+            <div
+                class="ui message red container"
+                *ngIf="isShowLoginMessage && (chatPostId==post.postid || savePostId == post.postid || editPostId==post.postid )"
+              >
+                {{ loginMessage }}
+              </div>
           </div>
         </div>
       </div>

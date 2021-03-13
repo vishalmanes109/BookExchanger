@@ -15,6 +15,7 @@ export class AdvancesearchComponent implements OnInit {
   public byLocation = false;
   public byUser = false;
   public isError = false;
+  public isUnauth = false;
   private counter = 0;
   public message;
   public text;
@@ -51,12 +52,22 @@ export class AdvancesearchComponent implements OnInit {
   public isChatError = false;
   public chatMessage;
   public chatPostId;
+  public editPostId;
+  public loginMessage;
+  public isShowLoginMessage = false;
 
   constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     this.note = "";
     this.profileId = localStorage.getItem("profileid");
+    if (
+      localStorage.getItem("isUnauth") == "true" ||
+      !localStorage.getItem("isUnauth")
+    ) {
+      this.isUnauth = true;
+      this.note = "please login";
+    }
   }
 
   changeByBook() {
@@ -88,7 +99,7 @@ export class AdvancesearchComponent implements OnInit {
     this.isShare = true;
     this.isCopy = false;
 
-    this.shareLink = `http://localhost:4200/post/${postId}/${title.replace(
+    this.shareLink = `https://bookxchanger-server.herokuapp.com/post/${postId}/${title.replace(
       / /g,
       "_"
     )}`;
@@ -147,6 +158,12 @@ export class AdvancesearchComponent implements OnInit {
               this.note = this.totalPages + " Post/s found";
               this.loadingStart = false;
 
+              if (!this.postData.take_book_id) {
+                this.isBookNotAvailable = true;
+                this.takeBook = "Book is not specified by user";
+                this.takeBookAuthor = "Book author is not specified by user";
+              }
+
               return;
             },
             (err) => {
@@ -173,7 +190,11 @@ export class AdvancesearchComponent implements OnInit {
               this.postData = res.message;
               this.totalPages = res.total;
               this.note = this.totalPages + " Post/s found";
-
+              if (!this.postData.take_book_id) {
+                this.isBookNotAvailable = true;
+                this.takeBook = "Book is not specified by user";
+                this.takeBookAuthor = "Book author is not specified by user";
+              }
               return;
             },
             (err) => {
@@ -199,7 +220,11 @@ export class AdvancesearchComponent implements OnInit {
               this.postData = res.message;
               this.totalPages = res.total;
               this.note = this.totalPages + " Post/s found";
-
+              if (!this.postData.take_book_id) {
+                this.isBookNotAvailable = true;
+                this.takeBook = "Book is not specified by user";
+                this.takeBookAuthor = "Book author is not specified by user";
+              }
               return;
             },
             (err) => {
@@ -225,7 +250,11 @@ export class AdvancesearchComponent implements OnInit {
               this.postData = res.message;
               this.totalPages = res.total;
               this.note = this.totalPages + " Post/s found";
-
+              if (!this.postData.take_book_id) {
+                this.isBookNotAvailable = true;
+                this.takeBook = "Book is not specified by user";
+                this.takeBookAuthor = "Book author is not specified by user";
+              }
               return;
             },
             (err) => {
@@ -252,7 +281,11 @@ export class AdvancesearchComponent implements OnInit {
               this.postData = res.message;
               this.totalPages = res.total;
               this.note = this.totalPages + " Post/s found";
-
+              if (!this.postData.take_book_id) {
+                this.isBookNotAvailable = true;
+                this.takeBook = "Book is not specified by user";
+                this.takeBookAuthor = "Book author is not specified by user";
+              }
               return;
             },
             (err) => {
@@ -273,6 +306,17 @@ export class AdvancesearchComponent implements OnInit {
   }
 
   editPost(postId) {
+    this.editPostId = postId;
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.editPostId = null;
+      }, 1000);
+      return;
+    }
     this.router
       .navigateByUrl("/updatepost", { skipLocationChange: true })
       .then(() => {
@@ -280,8 +324,17 @@ export class AdvancesearchComponent implements OnInit {
       });
   }
   savePost(postId) {
-    this.sharePostId = postId;
-
+    this.savePostId = postId;
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.savePostId = null;
+      }, 1000);
+      return;
+    }
     let savePostData = {
       post_id: postId,
       profile_id: this.profileId,
@@ -297,6 +350,7 @@ export class AdvancesearchComponent implements OnInit {
         setTimeout(() => {
           if (res.success == 1 && this.isPostSaved) {
             this.savePostMessage = "";
+            this.isPostSaved = false;
           }
         }, 4000);
       },
@@ -325,7 +379,16 @@ export class AdvancesearchComponent implements OnInit {
   }
   chat(postid) {
     this.chatPostId = postid;
-    console.log(this.chatPostId);
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.chatPostId = null;
+      }, 1000);
+      return;
+    }
     this.isChatError = true;
     this.chatMessage =
       "This feature is currently under production. You can communicate with user via email and mobile number mentioned in profile page. click on the username mention in the post. Sorry for the inconvenience";

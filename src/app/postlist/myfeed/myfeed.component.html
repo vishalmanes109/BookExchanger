@@ -94,29 +94,37 @@
                   </p>
                 </div>
                 <div
-                  class="details"
-                  *ngIf="
-                    post.takebook !== undefined || post.takebook !== null;
-                    else takebooknotpresent
-                  "
-                >
-                  <p class="postparameter">
-                    Book want :
-                    <span class="postdata"> {{ post.takebookname }}</span>
-                  </p>
-                </div>
-                <ng-template #takebooknotpresent>
-                  <p class="postparameter">
-                    Book want : <span class="postdata">{{ takeBook }}</span>
-                  </p>
-                </ng-template>
+                class="details"
+                *ngIf="
+                  post.takebookname == undefined || post.takebookname == null;
+                  else takebooknotpresent
+                "
+              >
+                <p class="postparameter">
+                  Book want :
+                  <span class="postdata"> {{ takeBook }}</span>
+                </p>
+              </div>
+              <ng-template #takebooknotpresent>
+                <p class="postparameter">
+                  Book want : <span class="postdata">{{ post.takebookname }}</span>
+                </p>
+              </ng-template>
 
-                <div class="details">
-                  <p class="postparameter">
-                    Author Name:
-                    <span class="postdata">{{ post.takebookauthor }}</span>
-                  </p>
-                </div>
+              <div class="details">
+                <p class="postparameter" *ngIf="
+                  post.takebookname == undefined || post.takebookname == null;
+                  else takebookauthornotpresent
+                ">
+                  Author Name:
+                  <span class="postdata">{{ takeBookAuthor }}</span>
+                </p>
+              </div>
+               <ng-template #takebookauthornotpresent>
+                <p class="postparameter">
+                  Book want : <span class="postdata">{{ post.takebookauthor }}</span>
+                </p>
+              </ng-template>
                 <div class="details">
                   <p class="postparameter">
                     Date:
@@ -138,7 +146,7 @@
               </div>
               <br>
               <input
-                *ngIf="yourPost"
+                *ngIf="yourPost "
                 type="button"
                 class="ui button primary inverted"
                 name="edit"
@@ -193,7 +201,7 @@
               </div>
               <div
                 class="ui message container"
-                *ngIf="isPostSaved && sharePostId == post.postid"
+                *ngIf="isPostSaved && savePostId == post.postid"
               >
                 {{ savePostMessage }}
               </div>
@@ -202,6 +210,12 @@
                 *ngIf="isChatError && chatPostId==post.postid"
               >
                 {{ chatMessage }}
+              </div>
+              <div
+                class="ui message red container"
+                *ngIf="isShowLoginMessage && (chatPostId==post.postid || savePostId == post.postid || editPostId==post.postid )"
+              >
+                {{ loginMessage }}
               </div>
             </div>
           </div>

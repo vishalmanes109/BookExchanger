@@ -36,11 +36,21 @@
                 Author Name:
                 <span class="postdata"> {{ postData.givebookauthor }}</span>
               </p>
-              <p class="postparameter">
+
+              <p class="postparameter " *ngIf="isBookNotAvailable">
+                Book want :
+                <span class="postdata"> {{ takeBook }}</span>
+              </p>
+              <p class="postparameter" *ngIf="isBookNotAvailable">
+                Author Name:
+                <span class="postdata">{{ takeBookAuthor }}</span>
+              </p>
+
+              <p class="postparameter" *ngIf="!isBookNotAvailable">
                 Book want :
                 <span class="postdata"> {{ postData.takebookname }}</span>
               </p>
-              <p class="postparameter">
+              <p class="postparameter" *ngIf="!isBookNotAvailable">
                 Author Name:
                 <span class="postdata">{{ postData.takebookauthor }}</span>
               </p>
@@ -59,7 +69,6 @@
                 value="Edit"
                 (click)="editPost()"
               />
-
               <input
                 *ngIf="yourPost"
                 type="button"
@@ -108,7 +117,7 @@
               </div>
               <div
                 class="ui message container"
-                *ngIf="isPostSaved && sharePostId == postData.postid"
+                *ngIf="isPostSaved && savePostId == postData.postid"
               >
                 {{ savePostMessage }}
               </div>
@@ -117,6 +126,12 @@
                 *ngIf="isChatError && chatPostId == postData.postid"
               >
                 {{ chatMessage }}
+              </div>
+              <div
+                class="ui message red container"
+                *ngIf="isShowLoginMessage && (chatPostId==postData.postid || savePostId == postData.postid || editPostId==postData.postid )"
+              >
+                {{ loginMessage }}
               </div>
             </div>
             <div class="six wide column">
