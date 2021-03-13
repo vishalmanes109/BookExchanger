@@ -172,7 +172,7 @@ export class AdvancesearchComponent implements OnInit {
               if (err.error.message != "Post does not exis") {
                 this.isError = true;
                 this.message =
-                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                  "0 Post found for corresponding search, Try different keywords, check for spellings";
                 return;
               }
               this.isError = true;
@@ -202,7 +202,7 @@ export class AdvancesearchComponent implements OnInit {
               if (err.error.message != "Post does not exis") {
                 this.isError = true;
                 this.message =
-                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                  "0 Post found for corresponding search, Try different keywords, check for spellings";
                 return;
               }
               this.isError = true;
@@ -232,7 +232,7 @@ export class AdvancesearchComponent implements OnInit {
               if (err.error.message != "Post does not exis") {
                 this.isError = true;
                 this.message =
-                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                  "0 Post found for corresponding search, Try different keywords, check for spellings";
                 return;
               }
               this.isError = true;
@@ -262,7 +262,7 @@ export class AdvancesearchComponent implements OnInit {
               if (err.error.message != "Post does not exis") {
                 this.isError = true;
                 this.message =
-                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                  "0 Post found for corresponding search, Try different keywords, check for spellings";
                 return;
               }
               this.isError = true;
@@ -293,7 +293,7 @@ export class AdvancesearchComponent implements OnInit {
               if (err.error.message != "Post does not exis") {
                 this.isError = true;
                 this.message =
-                  "0 Post found for corrosponding search, Try different keywords, check for spellings";
+                  "0 Post found for corresponding search, Try different keywords, check for spellings";
                 return;
               }
               this.isError = true;

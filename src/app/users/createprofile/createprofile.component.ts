@@ -198,18 +198,30 @@ export class CreateprofileComponent implements OnInit {
     if (!this.location) {
       this.invalidLocation = true;
       this.message = "please Enter valid Location";
+      this.foundLocation = false;
+
       return;
     }
     this.locationService.getPlaceName(this.location).subscribe((res) => {
       this.foundLocation = true;
+      if (!res.features[0]) {
+        this.invalidLocation = true;
+        this.message = "please Enter valid Location";
+        this.foundLocation = false;
+        this.location = "";
+        this.placeName = "";
+        return;
+      }
       this.longitude = res.features[0].center[0];
 
       this.latitude = res.features[0].center[1];
       this.placeName = res.features[0].place_name;
-      this.locationMessage = "If the location in not yours, please provide permission to access GPS by clicking on provide location button";
+      this.locationMessage =
+        "If the location in not yours, please provide permission to access GPS by clicking on provide location button";
       (err) => {
         this.invalidLocation = true;
         this.message = "please Enter valid Location";
+        this.foundLocation = false;
       };
     });
   }

@@ -13,7 +13,7 @@ import * as _ from "lodash";
 })
 export class UpdateprofileComponent implements OnInit {
   public dropdownList;
-  public selectedItems=[];
+  public selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
   public profileId;
   public email;
@@ -29,6 +29,8 @@ export class UpdateprofileComponent implements OnInit {
   public username;
   public message;
   public isError = false;
+  public invalidLocation = false;
+  public isGPSProvided = false;
   public isDone = false;
   public newLocationName;
   public oldFavGenre;
@@ -61,18 +63,16 @@ export class UpdateprofileComponent implements OnInit {
 
     this.profileService.getProfileByProfileId(this.profileId).subscribe(
       (res) => {
-       
-
         this.profileData = res.message[0];
         // check whether profile id of profile fetch == profile id of login user
         // or else it will allow any one to edit other persons profile
         this.isDataFetch = false;
-         if (this.profileData.id != localStorage.getItem("profileid")) {
-           this.isError = true;
-           this.isDataFetch = false;
-           this.message = "Yor are trying to edit profile which is not yours!";
-           return;
-         }
+        if (this.profileData.id != localStorage.getItem("profileid")) {
+          this.isError = true;
+          this.isDataFetch = false;
+          this.message = "Yor are trying to edit profile which is not yours!";
+          return;
+        }
         this.genreList = res.genrelist;
         this.email = this.profileData.email;
         this.location = this.profileData.location;
@@ -80,12 +80,7 @@ export class UpdateprofileComponent implements OnInit {
         this.oldAvatar = this.profileData.avatar;
         this.isHidden = this.profileData.contact_visible;
         this.hidePrivacy = this.isHidden;
-        this.placeName =
-          this.location +
-          ", latitude: " +
-          this.profileData.latitude +
-          ", longitude: " +
-          this.profileData.longitude;
+        this.placeName = this.location;
         this.contact = this.profileData.contact;
 
         this.isDataFetch = true;
@@ -192,15 +187,60 @@ export class UpdateprofileComponent implements OnInit {
 
   onEnterGetLocation() {
     this.isError = false;
+    this.invalidLocation = false;
+    this.isGPSProvided = false;
+    if (!this.placeName) {
+      this.invalidLocation = true;
+      this.message = "please Enter valid Location";
+      this.foundLocation = false;
 
+      return;
+    }
     this.locationService.getPlaceName(this.placeName).subscribe((res) => {
       this.foundLocation = true;
+      if (!res.features[0]) {
+        this.invalidLocation = true;
+        this.message = "please Enter valid Location";
+        this.foundLocation = false;
+
+        return;
+      }
+      this.longitude = res.features[0].center[0];
+      this.latitude = res.features[0].center[1];
+      this.placeName = res.features[0].place_name;
+      this.newLocationName = this.placeName;
+      (err) => {
+        this.invalidLocation = true;
+        this.message = "please Enter valid Location";
+        this.foundLocation = false;
+      };
+    });
+  }
+  onBlurGetLocation() {
+    this.isError = false;
+    this.invalidLocation = false;
+    this.isGPSProvided = false;
+    if (!this.placeName) {
+      this.invalidLocation = true;
+      this.message = "please Enter valid Location";
+      return;
+    }
+    this.locationService.getPlaceName(this.placeName).subscribe((res) => {
+      this.foundLocation = true;
+      if (!res.features[0]) {
+        this.invalidLocation = true;
+        this.message = "please Enter valid Location";
+        return;
+      }
       this.longitude = res.features[0].center[0];
 
       this.latitude = res.features[0].center[1];
       this.placeName = res.features[0].place_name;
       this.newLocationName = this.placeName;
-      (err) => {};
+      (err) => {
+        this.invalidLocation = true;
+        this.message = "please Enter valid Location";
+      };
     });
   }
   fileChangeEvent(fileInput: any) {
@@ -376,7 +416,7 @@ export class UpdateprofileComponent implements OnInit {
     }
 
     if (this.oldFavGenre != this.selectedItems) {
-      for (let i=0; i< this.selectedItems.length;i++) {
+      for (let i = 0; i < this.selectedItems.length; i++) {
         this.favGenreList.push(this.selectedItems[i].id);
       }
       let updateData = {

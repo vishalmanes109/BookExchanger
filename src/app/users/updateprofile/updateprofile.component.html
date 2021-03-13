@@ -2,7 +2,7 @@
   <app-navbar> </app-navbar>
   <br />
 
-  <div *ngIf="isError && !isDataFetch" class="ui segment message red ">
+  <div *ngIf="isError && !isDataFetch" class="ui segment message red">
     {{ message }}
   </div>
 
@@ -77,6 +77,7 @@
                   name="location"
                   [(ngModel)]="placeName"
                   (keyup.enter)="onEnterGetLocation()"
+                  (blur)="onBlurGetLocation()"
                 />
               </div>
               <h3>OR</h3>
@@ -84,6 +85,9 @@
                 Provide Location
               </button>
               <p *ngIf="foundLocation">{{ placeName }}</p>
+            </div>
+            <div *ngIf="invalidLocation" class="ui red message">
+              {{ message }}
             </div>
             <div class="ui header red centered">Account Info</div>
             <hr />
