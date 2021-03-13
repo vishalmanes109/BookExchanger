@@ -6,9 +6,9 @@
 <br />
 <div class="ui stackable grid container">
   <div class="twelve wide column">
-    <div class="ui grid container custommenu ">
-      <div  class="six wide column menuborder">
-        <a  (click)="myFeedByLocation(nearbyPostPage)" class="item wide">
+    <div class="ui grid container custommenu">
+      <div class="six wide column menuborder">
+        <a (click)="myFeedByLocation(nearbyPostPage)" class="item wide">
           <i class="map marker alternate icon"></i>
           Nearby
         </a>
@@ -19,21 +19,21 @@
           Your Post
         </a>
       </div>
-      <div class="four wide column ">
+      <div class="four wide column">
         <a (click)="myFeedByNewPost(newPostPage)" class="item">
           <i class="paper plane icon"></i>
           New
         </a>
       </div>
     </div>
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="ui container">
       <h5 *ngIf="isDataFetch" class="ui">
         {{ message }}
       </h5>
     </div>
-    <br>
+    <br />
     <div *ngIf="isDataFetch">
       <div
         *ngFor="
@@ -53,13 +53,13 @@
               routerLinkActive="router-link-active"
             >
               <img class="ui avatar image" src="{{ post.avatar }}" />
-              Posted by: {{ post.name }} on {{ post.post_time.substring(0,10) }}
+              Posted by: {{ post.name }} on
+              {{ post.post_time.substring(0, 10) }}
             </i>
           </div>
-          <div (click)="openPost(post.postid,post.title)">
+          <div (click)="openPost(post.postid, post.title)">
             <h3 class="posttitle">
-              {{ post.title.charAt(0).toUpperCase() +
-                post.title.substring(1) }}
+              {{ post.title.charAt(0).toUpperCase() + post.title.substring(1) }}
             </h3>
           </div>
           <br />
@@ -94,37 +94,43 @@
                   </p>
                 </div>
                 <div
-                class="details"
-                *ngIf="
-                  post.takebookname == undefined || post.takebookname == null;
-                  else takebooknotpresent
-                "
-              >
-                <p class="postparameter">
-                  Book want :
-                  <span class="postdata"> {{ takeBook }}</span>
-                </p>
-              </div>
-              <ng-template #takebooknotpresent>
-                <p class="postparameter">
-                  Book want : <span class="postdata">{{ post.takebookname }}</span>
-                </p>
-              </ng-template>
+                  class="details"
+                  *ngIf="
+                    post.takebookname == undefined || post.takebookname == null;
+                    else takebooknotpresent
+                  "
+                >
+                  <p class="postparameter">
+                    Book want :
+                    <span class="postdata"> {{ takeBook }}</span>
+                  </p>
+                </div>
+                <ng-template #takebooknotpresent>
+                  <p class="postparameter">
+                    Book want :
+                    <span class="postdata">{{ post.takebookname }}</span>
+                  </p>
+                </ng-template>
 
-              <div class="details">
-                <p class="postparameter" *ngIf="
-                  post.takebookname == undefined || post.takebookname == null;
-                  else takebookauthornotpresent
-                ">
-                  Author Name:
-                  <span class="postdata">{{ takeBookAuthor }}</span>
-                </p>
-              </div>
-               <ng-template #takebookauthornotpresent>
-                <p class="postparameter">
-                  Book want : <span class="postdata">{{ post.takebookauthor }}</span>
-                </p>
-              </ng-template>
+                <div class="details">
+                  <p
+                    class="postparameter"
+                    *ngIf="
+                      post.takebookname == undefined ||
+                        post.takebookname == null;
+                      else takebookauthornotpresent
+                    "
+                  >
+                    Author Name:
+                    <span class="postdata">{{ takeBookAuthor }}</span>
+                  </p>
+                </div>
+                <ng-template #takebookauthornotpresent>
+                  <p class="postparameter">
+                    Book want :
+                    <span class="postdata">{{ post.takebookauthor }}</span>
+                  </p>
+                </ng-template>
                 <div class="details">
                   <p class="postparameter">
                     Date:
@@ -144,9 +150,9 @@
                   >
                 </div>
               </div>
-              <br>
+              <br />
               <input
-                *ngIf="yourPost "
+                *ngIf="yourPost"
                 type="button"
                 class="ui button primary inverted"
                 name="edit"
@@ -206,14 +212,19 @@
                 {{ savePostMessage }}
               </div>
               <div
-                class="ui message  container"
-                *ngIf="isChatError && chatPostId==post.postid"
+                class="ui message container"
+                *ngIf="isChatError && chatPostId == post.postid"
               >
                 {{ chatMessage }}
               </div>
               <div
                 class="ui message red container"
-                *ngIf="isShowLoginMessage && (chatPostId==post.postid || savePostId == post.postid || editPostId==post.postid )"
+                *ngIf="
+                  isShowLoginMessage &&
+                  (chatPostId == post.postid ||
+                    savePostId == post.postid ||
+                    editPostId == post.postid)
+                "
               >
                 {{ loginMessage }}
               </div>
@@ -256,20 +267,20 @@
     </div>
   </div>
   <div class="four wide column">
-     <div class=" ">
-          <div class=" advancesearch  ">
-            <button
-            class="ui    button fluid "
-              placeholder="Advance search"
-              name="advancesearch"
-              [routerLink]="['/advancesearch']"
-              routerLinkActive="router-link-active"
-            >
-            Advance Search 
-            <i class="search icon">  </i>
-            </button>
-          </div>
-        </div>
+    <div class=" ">
+      <div class="advancesearch">
+        <button
+          class="ui button fluid"
+          placeholder="Advance search"
+          name="advancesearch"
+          [routerLink]="['/advancesearch']"
+          routerLinkActive="router-link-active"
+        >
+          Advance Search
+          <i class="search icon"> </i>
+        </button>
+      </div>
+    </div>
     <br />
     <div>
       <ng-container class="ui container" *ngIf="isDataFetch; else elseTemplate">
@@ -320,7 +331,19 @@
       </div>
       <div class="ui segment purple container">
         <h3>Have a question?</h3>
-        <a href="mailto:crcevishal@gmail.com">Ask Us</a>
+        <a href="mailto:help.bookxchanger@gmail.com">Ask Us</a><br>
+
+        <a
+          [routerLink]="['/terms_conditions']"
+          routerLinkActive="router-link-active"
+          >Read Terms & conditions</a
+        >
+        <br>
+        <a
+          [routerLink]="['/privacy_policy']"
+          routerLinkActive="router-link-active"
+          >Read Privacy Policy</a
+        >
       </div>
     </div>
     <div class="ui segment red container">
