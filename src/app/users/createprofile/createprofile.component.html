@@ -103,8 +103,12 @@
                 Provide Location
               </button>
               <div *ngIf="foundLocation">
-                your location is : {{ placeName }} Not your location then
-                provide goelocation
+                your location is : {{ placeName }}
+                <br>
+                <br>
+                <p style="color: rgba(82, 80, 80, 0.815);"> 
+                  {{locationMessage}}
+                </p>
               </div>
             </div>
             <div class="field">
@@ -115,6 +119,7 @@
                 [(ngModel)]="contact"
                 name="contact"
                 (blur)="onBlurValidateContact()"
+                (focus)="onFocus()"
               />
             </div>
             <div class="field">
@@ -131,6 +136,9 @@
               {{ message }}
             </div>
             <div *ngIf="isError" class="ui red message">
+              {{ message }}
+            </div>
+            <div *ngIf="invalidLocation" class="ui red message">
               {{ message }}
             </div>
             <div class="field">

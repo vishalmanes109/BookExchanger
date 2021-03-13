@@ -21,17 +21,26 @@ export class RegisterComponent implements OnInit {
   public message;
   public isUnique = false;
   public confirmpassword: string;
+  public isAvailable = false;
 
   ngOnInit(): void {}
   constructor(
     private authService: AuthService,
     private router: Router,
     private validationService: ValidationService
-  ) {}
+  ) {
+    this.isAvailable = false;
+  }
 
   isUniqueName() {
+    this.isAvailable = false;
+    this.isError=false;
+
     this.authService.isUserAvailable(this.username).subscribe(
-      (res) => {},
+      (res) => {
+        this.isAvailable = true;
+        this.message = "Username Available";
+      },
       (err) => {
         this.isError = true;
         this.message =
@@ -39,19 +48,18 @@ export class RegisterComponent implements OnInit {
       }
     );
   }
+  
   isValidEmail() {
+    this.isAvailable = false;
+
     if (!this.validationService.isValidEmail(this.email)) {
       this.isError = true;
       this.message = "Invalid Email";
       return;
     }
     this.authService.isEmailExist(this.email).subscribe(
-      (res) => {
-       
-       
-      },
+      (res) => {},
       (err) => {
-       
         this.isError = true;
         this.message = "Profile is already created with this email id.";
       }

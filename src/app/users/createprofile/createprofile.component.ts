@@ -27,13 +27,17 @@ export class CreateprofileComponent implements OnInit {
   public message;
   public isError = false;
   public contact;
+  public locationMessage;
+  public isGPSProvided = false;
+
   selectedFile: File = null;
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
   public imageUploadNote;
   public isImageUploaded = false;
-  public avatarUrl = "../../../assets/avatar/35.png";
+  public avatarUrl = "../../../assets/avatar/6.png";
+  public invalidLocation = false;
   constructor(
     private locationService: LocationService,
     private profileService: ProfileService,
@@ -83,7 +87,6 @@ export class CreateprofileComponent implements OnInit {
       { id: 36, text: "Travel" },
       { id: 37, text: "Young Adult" },
     ];
-
     this.dropdownSettings = {
       singleSelection: false,
       idField: "id",
@@ -164,6 +167,8 @@ export class CreateprofileComponent implements OnInit {
     );
   }
   getLocation(): void {
+    this.isGPSProvided = true;
+    this.locationMessage = "GPS location with 1.1 KM of range";
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
@@ -176,7 +181,11 @@ export class CreateprofileComponent implements OnInit {
               this.placeName = res.features[0].place_name;
               this.foundLocation = true;
             },
-            (err) => {}
+            (err) => {
+              this.isError = true;
+              this.locationMessage =
+                "Error while fetching location! have you provide the permission to access of GPS";
+            }
           );
       });
     } else {
@@ -184,13 +193,24 @@ export class CreateprofileComponent implements OnInit {
     }
   }
   onBlurGetLocation() {
+    this.invalidLocation = false;
+    this.isGPSProvided = false;
+    if (!this.location) {
+      this.invalidLocation = true;
+      this.message = "please Enter valid Location";
+      return;
+    }
     this.locationService.getPlaceName(this.location).subscribe((res) => {
       this.foundLocation = true;
       this.longitude = res.features[0].center[0];
 
       this.latitude = res.features[0].center[1];
       this.placeName = res.features[0].place_name;
-      (err) => {};
+      this.locationMessage = "If the location in not yours, please provide permission to access GPS by clicking on provide location button";
+      (err) => {
+        this.invalidLocation = true;
+        this.message = "please Enter valid Location";
+      };
     });
   }
   onBlurValidateContact() {
@@ -207,6 +227,9 @@ export class CreateprofileComponent implements OnInit {
       return false;
     }
     return true;
+  }
+  onFocus() {
+    this.isError = false;
   }
   submit() {
     if (!this.isAgree) {
