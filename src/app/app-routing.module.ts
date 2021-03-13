@@ -17,13 +17,15 @@ import { RegisterComponent } from "./users/register/register.component";
 import { UpdateprofileComponent } from "./users/updateprofile/updateprofile.component";
 import { AdvancesearchComponent } from "./postlist/advancesearch/advancesearch.component";
 import { LoaderComponent } from "./core/loader/loader.component";
+import { TermsComponent } from "./core/policy/terms/terms.component";
+import { PrivacyComponent } from "./core/policy/privacy/privacy.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
   { path: "contact", component: ContactComponent },
   { path: "about", component: AboutComponent },
-  { path: "profile/:username",  component: ProfileComponent },
+  { path: "profile/:username", component: ProfileComponent },
   { path: "loader", component: LoaderComponent },
   {
     path: "updateprofile",
@@ -67,6 +69,14 @@ const routes: Routes = [
   {
     path: "advancesearch",
     component: AdvancesearchComponent,
+  },
+  {
+    path: "terms_conditions",
+    component: TermsComponent,
+  },
+  {
+    path: "privacy_policy",
+    component: PrivacyComponent,
   },
 
   { path: "404", component: PagenotfoundComponent },

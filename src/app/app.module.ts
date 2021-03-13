@@ -34,6 +34,8 @@ import { AdvancesearchComponent } from './postlist/advancesearch/advancesearch.c
 import { LoaderComponent } from './core/loader/loader.component';
 import { NgHttpLoaderModule } from "ng-http-loader";
 import { NgxPaginationModule } from "ngx-pagination";
+import { TermsComponent } from './core/policy/terms/terms.component';
+import { PrivacyComponent } from './core/policy/privacy/privacy.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +56,8 @@ import { NgxPaginationModule } from "ngx-pagination";
     DeletepostComponent,
     DeleteprofileComponent,
     AdvancesearchComponent,
+    TermsComponent,
+    PrivacyComponent,
   ],
   imports: [
     BrowserModule,

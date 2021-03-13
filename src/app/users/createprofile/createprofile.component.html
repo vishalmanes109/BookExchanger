@@ -124,7 +124,7 @@
                   name="privacy"
                   [(ngModel)]="isAgree"
                 />
-                <label> I agree to the Terms and Conditions </label>
+            <label> I agree to the <span><a [routerLink]="['/terms_conditions']" routerLinkActive="router-link-active" > Terms and Conditions</a></span>  </label>
               </div>
             </div>
             <div *ngIf="isDone" class="ui info message">
