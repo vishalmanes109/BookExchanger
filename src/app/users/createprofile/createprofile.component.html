@@ -47,6 +47,9 @@
               <button class="ui button primary inverted" (click)="upload()">
                 Upload
               </button>
+              <span> Supported format: PNG JPG and JPEG ONLY</span>
+              <br />
+              <br />
               <div *ngIf="isImageUploaded">
                 {{ imageUploadNote }}
               </div>
@@ -99,15 +102,18 @@
                 />
               </div>
               <h3>OR</h3>
-              <button class="ui button primary inverted" (click)="getLocation()">
+              <button
+                class="ui button primary inverted"
+                (click)="getLocation()"
+              >
                 Provide Location
               </button>
               <div *ngIf="foundLocation">
                 your location is : {{ placeName }}
-                <br>
-                <br>
-                <p style="color: rgba(82, 80, 80, 0.815);"> 
-                  {{locationMessage}}
+                <br />
+                <br />
+                <p style="color: rgba(82, 80, 80, 0.815)">
+                  {{ locationMessage }}
                 </p>
               </div>
             </div>
@@ -124,12 +130,18 @@
             </div>
             <div class="field">
               <div class="ui checkbox">
-                <input
-                  type="checkbox"
-                  name="privacy"
-                  [(ngModel)]="isAgree"
-                />
-            <label> I agree to the <span><a [routerLink]="['/terms_conditions']" routerLinkActive="router-link-active" > Terms and Conditions</a></span>  </label>
+                <input type="checkbox" name="privacy" [(ngModel)]="isAgree" />
+                <label>
+                  I agree to the
+                  <span
+                    ><a
+                      [routerLink]="['/terms_conditions']"
+                      routerLinkActive="router-link-active"
+                    >
+                      Terms and Conditions</a
+                    ></span
+                  >
+                </label>
               </div>
             </div>
             <div *ngIf="isDone" class="ui info message">

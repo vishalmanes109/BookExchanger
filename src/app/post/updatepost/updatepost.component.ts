@@ -178,7 +178,7 @@ export class UpdatepostComponent implements OnInit {
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
       const max_size = 20971520;
-      const allowed_types = ["image/png", "image/jpeg"];
+      const allowed_types = ["image/png", "image/jpeg", "image/jpg"];
       const max_height = 15200;
       const max_width = 25600;
 
@@ -229,7 +229,7 @@ export class UpdatepostComponent implements OnInit {
       },
       (err) => {
         this.imageUploadNote =
-          "Failed Try Again Failed Try Again (png and jpeg are supported format) ";
+          "Failed! Please upload image of supported format and is issue persist then try to upload image with lower resolution.";
       }
     );
   }
@@ -239,7 +239,6 @@ export class UpdatepostComponent implements OnInit {
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.bookGenreList.push(this.selectedItems[i].id);
     }
-   
     let updatePostData = {
       postid: this.postId,
       title: this.title,

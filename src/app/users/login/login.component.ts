@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       this.isError = true;
 
       this.message =
-        "Password Must be minimum of 8 characterand maximum of 15 character long and must  contain atleast 1 upper case, 1 lower case, 1 numeric and 1 special character.";
+        "Password Must be minimum of 8 character and maximum of 15 character long and must  contain atleast 1 upper case, 1 lower case, 1 numeric and 1 special character.";
       this.validationService.isValidEmail(this.password);
     }
   }

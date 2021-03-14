@@ -2,7 +2,7 @@
 <br />
 <br />
 
-<div *ngIf="isError && !isDataFetch" class="ui segment message red ">
+<div *ngIf="isError && !isDataFetch" class="ui segment message red">
   {{ message }}
 </div>
 <div *ngIf="isDataFetch" class="ui raised segment container">
@@ -10,7 +10,7 @@
     <div class="row">
       <div class="twelve wide column">
         <p class="ui header teal centered">Update Post</p>
-        <div  class="ui form">
+        <div class="ui form">
           <div class="field">
             <label>Enter title of post (Max 100 characters allowed) </label>
             <input
@@ -95,8 +95,10 @@
                 (change)="fileChangeEvent($event)"
               />
               <button class="ui button primary inverted" (click)="upload()">
-                Upload
-              </button><span > Supported format: PNG and JPEG ONLY</span>
+                Upload</button
+              ><span> Supported format: PNG ,JPG and JPEG ONLY</span>
+              <br />
+              <br />
               <div *ngIf="isImageUploaded">
                 {{ imageUploadNote }}
               </div>
@@ -109,7 +111,7 @@
             </div>
             <div class="field">
               <input
-                class="ui green inverted  button"
+                class="ui green inverted button"
                 type="button"
                 (click)="update()"
                 value="Submit"
@@ -123,7 +125,7 @@
             </div>
           </div>
         </div>
-        <br>
+        <br />
         <div class="four wide column">
           <div class="ui segment">
             <div class="ui header red">Guidelines</div>

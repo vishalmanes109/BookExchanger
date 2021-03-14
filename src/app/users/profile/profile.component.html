@@ -177,10 +177,10 @@
         </div>
       </div>
       <br />
-      <div *ngIf="isYourProfile" class="ui raised segment">
+      <div *ngIf="isYourProfile && isSavePostExist" class="ui raised segment">
         <h3>Saved Post</h3>
 
-        <div *ngIf="isSavePostExist">
+        <div >
           <div
             *ngFor="
               let savePost of savePostData

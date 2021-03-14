@@ -114,7 +114,7 @@ export class CreateprofileComponent implements OnInit {
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
       const max_size = 20971520;
-      const allowed_types = ["image/png", "image/jpeg"];
+      const allowed_types = ["image/png", "image/jpeg","image/jpg"];
       const max_height = 15200;
       const max_width = 25600;
 
@@ -162,7 +162,8 @@ export class CreateprofileComponent implements OnInit {
         this.avatarUrl = res.message.secure_url;
       },
       (err) => {
-        this.imageUploadNote = "Failed Try Again ";
+        this.imageUploadNote =
+          "Failed! Please upload image of supported format and is issue persist then try to upload image with lower resolution. ";
       }
     );
   }

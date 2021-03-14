@@ -7,7 +7,7 @@
     <div class="row">
       <div class="twelve wide column">
         <h3 class="ui header centered">Create a post</h3>
-        <p class="note">Have you read the Guidelines, if not scoll down</p>
+        <p class="note">Have you read the Guidelines, if not scroll down</p>
 
         <form class="ui form">
           <div class="field">
@@ -96,7 +96,9 @@
             <button class="ui button primary inverted" (click)="upload()">
               Upload
             </button>
-            <span> Supported format: PNG and JPEG ONLY</span>
+            <span> Supported format: PNG JPG and JPEG ONLY</span>
+            <br>
+            <br>
             <div *ngIf="isImageUploaded">
               {{ imageUploadNote }}
             </div>
