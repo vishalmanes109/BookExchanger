@@ -80,7 +80,7 @@ const routes: Routes = [
   },
 
   { path: "404", component: PagenotfoundComponent },
-  { path: "", component: RegisterComponent },
+  { path: "", component: MyfeedComponent },
   { path: "**", redirectTo: "/404" },
 ];
 
