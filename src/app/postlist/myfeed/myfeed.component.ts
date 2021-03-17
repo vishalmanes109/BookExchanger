@@ -25,6 +25,7 @@ export class MyfeedComponent implements OnInit {
   public yourPost = false;
   public takeBookResult;
   public isNearByPost = false;
+  public tabname;
   public isUnauth;
   public message;
   public bookPost;
@@ -68,10 +69,35 @@ export class MyfeedComponent implements OnInit {
       this.isUnauth = true;
       this.note =
         "please login in order to access nearby post and your post. However you can access advance search and search by book without login";
+
+      this.tabname = "New Posts:";
+      this.isNearByPost = false;
+      this.isDataFetch = false;
+      this.postData = null;
+      this.yourPost = false;
+      this.newPostOffset = 0;
+
+      this.postService.getAllPost(this.newPostOffset, this.limit).subscribe(
+        (res) => {
+          this.isDataFetch = true;
+          this.postData = res.message;
+          this.totalPages = res.total;
+
+          this.message = this.totalPages + " Post/s found";
+          if (!this.postData.take_book_id) {
+            this.takeBook = "Book is not specified by user";
+            this.takeBookAuthor = "Book author is not specified by user";
+          }
+        },
+        (err) => {
+          this.note =
+            "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
+        }
+      );
     } else {
       this.note =
         "0 post found for corresponding result, Please invite your family, friends on bookXchanger to get much more benefits from priceless service.";
-
+      this.tabname = "Nearby Posts:";
       this.isNearByPost = true;
       this.profileId = localStorage.getItem("profileid");
       this.yourPost = false;
@@ -95,7 +121,7 @@ export class MyfeedComponent implements OnInit {
             if (err.status == 401) {
               localStorage.clear();
               this.note =
-                "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+                "please login in order to access nearby post and your post. However you can access advance search  and new post without login";
               return;
             }
             this.note =
@@ -109,10 +135,15 @@ export class MyfeedComponent implements OnInit {
     this.isCopy = false;
     this.sharePostId = postId;
 
-    this.shareLink = `https://bookxchanger-server.herokuapp.com/post/${postId}/${title.replace(
+    this.shareLink = `https://www.bookxchanger.ninja/post/${postId}/${title.replace(
       / /g,
       "_"
     )}`;
+    this.copyShareableLink(this.shareLink);
+
+    setTimeout(() => {
+      this.copyPostMessage = "";
+    }, 1000);
   }
   copyShareableLink(link) {
     let copyBox = document.createElement("textarea");
@@ -126,14 +157,14 @@ export class MyfeedComponent implements OnInit {
     copyBox.select();
     document.execCommand("copy");
     document.body.removeChild(copyBox);
-    this.isCopy = true;
-    this.copyPostMessage = "Copied!";
+    this.copyPostMessage = "Copied to clipboard!";
     setTimeout(() => {
-      this.copyPostMessage = "";
-      this.isPostSaved = false;
+      this.isCopy = true;
     }, 1000);
   }
   myFeedByLocation(page) {
+    this.tabname = "Nearby Posts:";
+
     this.isNearByPost = true;
     this.isDataFetch = false;
     this.postData = null;
@@ -146,7 +177,7 @@ export class MyfeedComponent implements OnInit {
       !localStorage.getItem("isUnauth")
     ) {
       this.note =
-        "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+        "please login in order to access nearby post and your post. However you can access advance search  and new post without login";
     } else {
       this.profileId = localStorage.getItem("profileid");
       this.postService
@@ -176,6 +207,8 @@ export class MyfeedComponent implements OnInit {
     }
   }
   myFeedByMyPost(page) {
+    this.tabname = "Your Posts:";
+
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
@@ -188,7 +221,7 @@ export class MyfeedComponent implements OnInit {
       !localStorage.getItem("isUnauth")
     ) {
       this.note =
-        "please login in order to access nearby post and your post. However you can access advance search and search post by book and new post without login";
+        "please login in order to access nearby post and your post. However you can access advance search  and new post without login";
     } else {
       this.postService
         .getPostByProfile(this.profileId, this.myPostOffset, this.limit)
@@ -219,6 +252,8 @@ export class MyfeedComponent implements OnInit {
     }
   }
   myFeedByNewPost(page) {
+    this.tabname = "New Posts:";
+
     this.isNearByPost = false;
     this.isDataFetch = false;
     this.postData = null;
@@ -267,16 +302,16 @@ export class MyfeedComponent implements OnInit {
   }
   editPost(postId) {
     this.editPostId = postId;
-     if (this.isUnauth) {
-       this.loginMessage = "please login ";
-       this.isShowLoginMessage = true;
-       setTimeout(() => {
-         this.loginMessage = "";
-         this.isShowLoginMessage = false;
-         this.editPostId = null;
-       }, 1000);
-       return;
-     }
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.editPostId = null;
+      }, 1000);
+      return;
+    }
     this.router
       .navigateByUrl("/updatepost", { skipLocationChange: true })
       .then(() => {
@@ -401,16 +436,16 @@ export class MyfeedComponent implements OnInit {
   }
   chat(postid) {
     this.chatPostId = postid;
-     if (this.isUnauth) {
-       this.loginMessage = "please login ";
-       this.isShowLoginMessage = true;
-       setTimeout(() => {
-         this.loginMessage = "";
-         this.isShowLoginMessage = false;
-         this.chatPostId = null;
-       }, 1000);
-       return;
-     }
+    if (this.isUnauth) {
+      this.loginMessage = "please login ";
+      this.isShowLoginMessage = true;
+      setTimeout(() => {
+        this.loginMessage = "";
+        this.isShowLoginMessage = false;
+        this.chatPostId = null;
+      }, 1000);
+      return;
+    }
     this.isChatError = true;
     this.chatMessage =
       "This feature is currently under production. You can communicate with user via email and mobile number mentioned in profile page. click on the username mention in the post. Sorry for the inconvenience";
@@ -420,6 +455,7 @@ export class MyfeedComponent implements OnInit {
     }, 10000);
   }
   openPost(postId, title) {
+    console.log(postId,title);
     this.router
       .navigateByUrl("/post", { skipLocationChange: true })
       .then(() => {

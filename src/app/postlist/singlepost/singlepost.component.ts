@@ -42,6 +42,7 @@ export class SinglepostComponent implements OnInit {
   public editPostId;
   public loginMessage;
   public isShowLoginMessage = false;
+  public copyPostMessage;
   constructor(
     private postService: PostService,
     private route: ActivatedRoute,
@@ -104,7 +105,7 @@ export class SinglepostComponent implements OnInit {
       });
   }
   editPost() {
-    this.editPostId=this.postId;
+    this.editPostId = this.postId;
     if (this.isUnauth) {
       this.loginMessage = "please login ";
       this.isShowLoginMessage = true;
@@ -137,11 +138,17 @@ export class SinglepostComponent implements OnInit {
   generateSharableLink(postId, title) {
     this.isShare = true;
     this.isCopy = false;
-
-    this.shareLink = `https://bookxchanger-server.herokuapp.com/post/${postId}/${title.replace(
+    this.copyPostMessage = "";
+    this.shareLink = `https://www.bookxchanger.ninja/post/${postId}/${title.replace(
       / /g,
       "_"
     )}`;
+
+    this.copyShareableLink(this.shareLink);
+
+    setTimeout(() => {
+      this.copyPostMessage = "";
+    }, 1000);
   }
   copyShareableLink(link) {
     let copyBox = document.createElement("textarea");
@@ -155,7 +162,10 @@ export class SinglepostComponent implements OnInit {
     copyBox.select();
     document.execCommand("copy");
     document.body.removeChild(copyBox);
-    this.isCopy = true;
+    this.copyPostMessage = "Copied to clipboard!";
+    setTimeout(() => {
+      this.isCopy = true;
+    }, 1000);
   }
 
   savePost(postId) {

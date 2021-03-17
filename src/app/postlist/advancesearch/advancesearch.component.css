@@ -6,7 +6,7 @@
     display: inline-block;
 }
 .sharelink{
-    overflow:scroll;
+    overflow:hidden;
 }
 .postname {
   color: #545556;

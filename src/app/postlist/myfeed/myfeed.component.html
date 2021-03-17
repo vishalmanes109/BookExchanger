@@ -29,9 +29,7 @@
     <br />
     <br />
     <div class="ui container">
-      <h5 *ngIf="isDataFetch" class="ui">
-        {{ message }}
-      </h5>
+      <h5 *ngIf="isDataFetch" class="ui">{{ tabname }} {{ message }}</h5>
     </div>
     <br />
     <div *ngIf="isDataFetch">
@@ -63,7 +61,6 @@
             </h3>
           </div>
           <br />
-
           <div class="ui grid container stackable">
             <div class="six wide column">
               <img
@@ -195,16 +192,6 @@
               >
                 <i class="bookmark icon"></i>
               </div>
-
-              <div *ngIf="!isCopy && isShare && post.postid == sharePostId">
-                <p class="ui sharelink">{{ shareLink }}</p>
-                <button
-                  class="ui button tiny primary"
-                  (click)="copyShareableLink(shareLink)"
-                >
-                  copy
-                </button>
-              </div>
               <div
                 class="ui message container"
                 *ngIf="isPostSaved && savePostId == post.postid"
@@ -227,6 +214,9 @@
                 "
               >
                 {{ loginMessage }}
+              </div>
+              <div class="ui message orange container" *ngIf="copyPostMessage && !isCopy && isShare && post.postid == sharePostId">
+                {{ copyPostMessage }}
               </div>
             </div>
           </div>
@@ -251,7 +241,7 @@
       <div class="ui segment">
         {{ note }}
 
-        <a href="www.bookxchanger.com">BookXchanger</a>
+        <a href="https://www.bookxchanger.ninja/">BookXchanger</a>
       </div>
       <h3>Most Popular books Available</h3>
 
@@ -331,14 +321,14 @@
       </div>
       <div class="ui segment purple container">
         <h3>Have a question?</h3>
-        <a href="mailto:help.bookxchanger@gmail.com">Ask Us</a><br>
+        <a href="mailto:help.bookxchanger@gmail.com">Ask Us</a><br />
 
         <a
           [routerLink]="['/terms_conditions']"
           routerLinkActive="router-link-active"
           >Read Terms & conditions</a
         >
-        <br>
+        <br />
         <a
           [routerLink]="['/privacy_policy']"
           routerLinkActive="router-link-active"

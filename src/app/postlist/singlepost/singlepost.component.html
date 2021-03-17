@@ -106,15 +106,7 @@
                 <i class="bookmark icon"></i>
               </div>
 
-              <div *ngIf="!isCopy && isShare">
-                <p class="ui sharelink">{{ shareLink }}</p>
-                <button
-                  class="ui button tiny primary"
-                  (click)="copyShareableLink(shareLink)"
-                >
-                  copy
-                </button>
-              </div>
+              
               <div
                 class="ui message container"
                 *ngIf="isPostSaved && savePostId == postData.postid"
@@ -132,6 +124,12 @@
                 *ngIf="isShowLoginMessage && (chatPostId==postData.postid || savePostId == postData.postid || editPostId==postData.postid )"
               >
                 {{ loginMessage }}
+              </div>
+              <div
+                class="ui message orange container"
+                *ngIf="copyPostMessage "
+              >
+                {{ copyPostMessage }}
               </div>
             </div>
             <div class="six wide column">
