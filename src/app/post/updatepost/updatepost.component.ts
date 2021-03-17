@@ -60,15 +60,14 @@ export class UpdatepostComponent implements OnInit {
     this.postService.getPostByPostId(this.postId).subscribe(
       (res) => {
         this.postData = res.message[0];
-       
 
-        //check if profile id of post is same as login user 
+        //check if profile id of post is same as login user
         // this will prevent the user from editing data of someother user
 
-        if(this.postData.profileid!=localStorage.getItem('profileid')){
-          this.isError=true;
-          this.isDataFetch=false;
-          this.message="Yor are trying to edit post which is not yours!"
+        if (this.postData.profileid != localStorage.getItem("profileid")) {
+          this.isError = true;
+          this.isDataFetch = false;
+          this.message = "Yor are trying to edit post which is not yours!";
           return;
         }
 
@@ -239,6 +238,8 @@ export class UpdatepostComponent implements OnInit {
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.bookGenreList.push(this.selectedItems[i].id);
     }
+    this.title = this.title.replace(/\//g, "_");
+
     let updatePostData = {
       postid: this.postId,
       title: this.title,
@@ -253,7 +254,7 @@ export class UpdatepostComponent implements OnInit {
       username: this.username,
       book_genre_list: this.bookGenreList,
     };
-   
+
     if (
       !this.title ||
       !this.description ||
@@ -270,37 +271,37 @@ export class UpdatepostComponent implements OnInit {
       this.message = "Maximun 140 characters allowed in description";
       return;
     }
-     if (this.title.length > 100) {
-       this.isError = true;
-       this.message = "Maximun 100 characters allowed in title";
-       return;
-     }
-     if (this.giveBookName.length > 100) {
-       this.isError = true;
-       this.message =
-         "Name of book entered is too long. Please enter valid book name ";
-       return;
-     }
-     if (this.giveBookAuthor.length > 100) {
-       this.isError = true;
-       this.message =
-         "Name of author entered is too long. Please enter valid author name ";
-       return;
-     }
-     if (this.takeBookName) {
-       if (this.takeBookName.length > 100) {
-         this.isError = true;
-         this.message =
-           "Name of book entered is too long. Please enter valid book name ";
-         return;
-       }
-       if (this.takeBookAuthor.length > 100) {
-         this.isError = true;
-         this.message =
-           "Name of author entered is too long. Please enter valid author name ";
-         return;
-       }
-     }
+    if (this.title.length > 100) {
+      this.isError = true;
+      this.message = "Maximun 100 characters allowed in title";
+      return;
+    }
+    if (this.giveBookName.length > 100) {
+      this.isError = true;
+      this.message =
+        "Name of book entered is too long. Please enter valid book name ";
+      return;
+    }
+    if (this.giveBookAuthor.length > 100) {
+      this.isError = true;
+      this.message =
+        "Name of author entered is too long. Please enter valid author name ";
+      return;
+    }
+    if (this.takeBookName) {
+      if (this.takeBookName.length > 100) {
+        this.isError = true;
+        this.message =
+          "Name of book entered is too long. Please enter valid book name ";
+        return;
+      }
+      if (this.takeBookAuthor.length > 100) {
+        this.isError = true;
+        this.message =
+          "Name of author entered is too long. Please enter valid author name ";
+        return;
+      }
+    }
     if (this.selectedItems.length < 2) {
       this.isError = true;
       this.message = "Please select alteast 2 genres";
@@ -322,9 +323,7 @@ export class UpdatepostComponent implements OnInit {
             ]);
           });
       },
-      (err) => {
-      
-      }
+      (err) => {}
     );
   }
 }
