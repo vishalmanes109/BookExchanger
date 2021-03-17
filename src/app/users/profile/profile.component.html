@@ -139,7 +139,7 @@
             "
             class="ui middle aligned animated list"
           >
-            <div (click)="openPost(post.postid)" class="item">
+            <div (click)="openPost(post.postid,post.title)" class="item">
               <img class="ui avatar image" src="{{ post.avatar }}" />
               <div class="content">
                 <div class="title">{{ post.title }}</div>
@@ -195,7 +195,7 @@
           >
             <div class="ui container grid">
               <div
-                (click)="openPost(savePost.postid)"
+                (click)="openPost(savePost.postid,savePost.title)"
                 class="item fourteen wide column"
               >
                 <div>

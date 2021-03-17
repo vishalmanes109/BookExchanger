@@ -136,9 +136,9 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  openPost(postId) {
-    this.title = this.postData[0].title;
-    this.router.navigate([`post/${postId}/${this.title.replace(/ /g, "_")}`]);
+  openPost(postId,title) {
+    //this.title = this.postData[0].title;
+    this.router.navigate([`post/${postId}/${title.replace(/ /g, "_")}`]);
   }
 
   EditProfile() {

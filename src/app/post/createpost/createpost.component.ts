@@ -156,6 +156,7 @@ export class CreatepostComponent implements OnInit {
   }
   addPost() {
     this.username = localStorage.getItem("username");
+    this.title = this.title.replace(/\//g, "_");
     let postData = {
       title: this.title,
       description: this.description,
