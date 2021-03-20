@@ -227,18 +227,18 @@ export class CreateprofileComponent implements OnInit {
     });
   }
   onBlurValidateContact() {
-    this.isError = false;
-    let mobile = this.contact;
-    try {
-      let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
-      if (!mobile.match(regex)) {
-        this.isError = true;
-        this.message = "Please enter valid mobile number";
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
+    // this.isError = false;
+    // let mobile = this.contact;
+    // try {
+    //   let regex = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+    //   if (!mobile.match(regex)) {
+    //     this.isError = true;
+    //     this.message = "Please enter valid mobile number";
+    //     return false;
+    //   }
+    // } catch (e) {
+    //   return false;
+    // }
     return true;
   }
   onFocus() {
