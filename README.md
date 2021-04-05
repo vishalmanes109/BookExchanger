@@ -5,9 +5,6 @@
   <a href="https://bookxchanger.ninja">
     <img src="mockups/logo3.png" alt="Logo" width="25%" height="25%">
   </a>
-
-  <h2 align="center" >BookXchanger</h2>
-
   <p align="center">
     Swap/Exchange  Books For Free!
     <br />
@@ -52,10 +49,13 @@
 BookXchanger is the place to swap/exchange/trade your books. Our goal is to allow people to easily trade books that have been collecting dust on their bookshelves for books they want for free.
 `vishalmanes109`, `BookXchanger`, `Swap/Exchanger Books`
     
-<img align="center" src="img/features.gif" alt="features.gif" width="80%" height="80%">
+<h3><a href="https://bookxchanger.ninja/"> Visit Now
+  </a></h3>
 
- <a href="https://bookxchanger.ninja/"> Visit Now
-  </a>
+   
+<h3><a href="https://www.youtube.com/watch?v=8_v5QmKua78"> Watch Youtube video
+  </a></h3>
+  
 
 ### screnshots
    
