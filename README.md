@@ -19,7 +19,10 @@
     <a href="https://github.com/vishalmanes109/BookExchanger/issues">Report Bug</a>
     ·
     <a href="https://github.com/vishalmanes109/BookExchanger/issues">Request Feature</a>
+    ·
+    <a href="https://www.youtube.com/watch?v=8_v5QmKua78">Watch Video</a>
   </p>
+  
 </p>
 
 
@@ -56,14 +59,17 @@ BookXchanger is the place to swap/exchange/trade your books. Our goal is to allo
 
 ### screnshots
    
-<img align="center" src="img/sc1.jpg" alt="sc1" width="80%" height="80%">
-
+<img align="center" src="mockups/homepage_laptop_cr.jpg" alt="desktop homepage" width="80%" height="80%">
+<br>
+<br>
    
-<img align="center" src="img/sc3.png" alt="sc3" width="80%" height="80%">
-
-<img align="center" src="img/sc4.png" alt="sc4" width="80%" height="80%">
-
-<img align="center" src="img/sc2.jpg" alt="sc2" width="80%" height="80%">
+<img align="center" src="mockups/tablet_cr.jpg" alt="tablet homeage" width="80%" height="80%">
+<br>
+<br>
+<img align="center" src="mockups/mobile.jpg" alt="sc4" width="80%" height="80%">
+<br>
+<br>
+<img align="center" src="mockups/post_tablet.jpg" alt="sc2" width="80%" height="80%">
 
 ### Built With
 
