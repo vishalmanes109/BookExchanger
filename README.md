@@ -42,8 +42,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://myjournalit.herokuapp.com/)
-
 ### JournalIT:
 * What is BookXchanger?
 BookXchanger is the place to swap/exchange/trade your books. Our goal is to allow people to easily trade books that have been collecting dust on their bookshelves for books they want for free.
